@@ -1,0 +1,21 @@
+#polygons {
+  position: absolute;
+  top: 60px;
+  bottom: 0;
+  left: 0;
+  width: 30%;
+  padding: 0 15px;
+}
+#map {
+  position: absolute;
+  top: 60px;
+  bottom: 0;
+  right: 0;
+  width: 70%;
+}
+.google-maps-container {
+  height: 100%;
+}
+.polygon {
+  padding-top: 10px;
+}
