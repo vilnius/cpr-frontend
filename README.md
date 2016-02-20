@@ -1,6 +1,6 @@
 <p align="center">
   <a href="http://codeforvilnius.lt" target="_blank">
-    ![Code for Vilnius](src/assets/img/c4v-logo.jpeg "Code for Vilnius")
+    <img src="https://raw.githubusercontent.com/vilnius/cpr-frontend/master/src/assets/img/c4v-logo.jpeg">
   </a>
 </p>
 
