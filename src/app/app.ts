@@ -11,7 +11,6 @@ import {Index} from './index/index';
 import {LaneMap} from './lanemap/lanemap';
 import {Cameras, Videos, Penalties} from './static';
 
-
 /*
  * App Component
  * Top Level Component
@@ -57,7 +56,7 @@ import {Cameras, Videos, Penalties} from './static';
                 <a [routerLink]=" ['Penalties'] ">Penalties</a>
               </li>
               <li router-active>
-                <a [routerLink]=" ['LaneMap'] " style="color: #C66">Lane Map</a>
+                <a [routerLink]=" ['LaneMap'] ">Lane Map</a>
               </li>
               <li router-active>
                 <a [routerLink]=" ['About'] ">About</a>

@@ -1,4 +1,4 @@
-#polygons {
+#map-controls {
   position: absolute;
   top: 60px;
   bottom: 0;
@@ -12,10 +12,4 @@
   bottom: 0;
   right: 0;
   width: 70%;
-}
-.google-maps-container {
-  height: 100%;
-}
-.polygon {
-  padding-top: 10px;
 }
