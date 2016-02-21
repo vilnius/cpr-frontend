@@ -1,9 +1,9 @@
 {
-  "name": "angular2-webpack-starter",
-  "version": "2.0.0",
-  "description": "An Angular 2 Webpack Starter kit featuring Angular 2 (Router, Http, Forms, Services, Tests, E2E, Coverage), Karma, Protractor, Jasmine, Istanbul, TypeScript, and Webpack by AngularClass",
-  "author": "Patrick Stapleton <patrick@angularclass.com>",
-  "homepage": "https://github.com/angularclass/angular2-webpack-starter",
+  "name": "cpr-frontend",
+  "version": "1.0.0",
+  "description": "Code For Vilnius - Frontend",
+  "author": "Code For Vilnius <matas.seimys@gmail.com>",
+  "homepage": "https://github.com/vilnius/cpr-frontend",
   "license": "MIT",
   "scripts": {
     "clean": "npm cache clean && rimraf node_modules doc typings coverage dist",
@@ -44,13 +44,13 @@
     "postversion": "git push && git push --tags"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.3",
+    "angular2": "^2.0.0-beta.7",
     "angular2-google-maps": "^0.6.1",
     "es6-promise": "^3.0.2",
     "es6-shim": "^0.33.3",
     "es7-reflect-metadata": "^1.5.5",
-    "rxjs": "5.0.0-beta.0",
-    "zone.js": "0.5.11"
+    "rxjs": "^5.0.0-beta.2",
+    "zone.js": "^0.5.11"
   },
   "devDependencies": {
     "compression-webpack-plugin": "^0.3.0",
@@ -100,10 +100,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/angularclass/angular2-webpack-starter.git"
+    "url": "https://github.com/vilnius/cpr-frontend.git"
   },
   "bugs": {
-    "url": "https://github.com/angularclass/angular2-webpack-starter/issues"
+    "url": "https://github.com/vilnius/cpr-frontend/issues"
   },
   "engines": {
     "node": ">= 4.2.1 <= 5",

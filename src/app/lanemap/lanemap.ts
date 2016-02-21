@@ -3,9 +3,14 @@ import {Map} from './map';
 import {MapDataService} from './map-data-service';
 
 @Component({
-  selector: 'map-info'
+  selector: 'map-info',
+  template: `<p>Polygons: {{ data.polygons }}</p>
+  `
 })
-export class MapInfo {}
+export class MapInfo {
+  @Input() data: any;
+  constructor() {}
+}
 
 @Component({
   selector: 'lane-map',
@@ -14,6 +19,7 @@ export class MapInfo {}
   ],
   directives: [
     Map,
+    MapInfo,
   ],
   styles: [ require('./lanemap.css') ],
   template: `
@@ -23,29 +29,27 @@ export class MapInfo {}
       <button (click)="mapWidget.reload()" class="btn btn-default">Reload</button>
       <button (click)="mapWidget.clear()" class="btn btn-warning">Clear</button>
       <hr/>
-      <p>
-        Total polygons: {{ mapInfo.polygons }}
-      </p>
+      <map-info [data]="mapInfo"></map-info>
     </div>
     <map #mapWidget></map>
   `
 })
 export class LaneMap {
-  public mapInfo: any;
+  public mapInfo: any = { polygons: 0 };
 
-  constructor(private mapDataService: MapDataService) {
-    this.mapInfo = {}
-  }
+  constructor(private mapDataService: MapDataService) {}
 
   ngOnInit() {
-    this.mapDataService.data$.subscribe(data => {
-      if (!data) {
-        data = { features: [] };
-      };
-      this.mapInfo = {
-        polygons: data.features.length
-      }
-    });
+    this.mapDataService.data$.subscribe((data) => this.updateMapInfo(data));
+  }
+
+  updateMapInfo(data) {
+    if (!data) {
+      data = { features: [] };
+    }
+    this.mapInfo = {
+      polygons: data.features.length
+    };
   }
 
 }

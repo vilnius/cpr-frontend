@@ -1,4 +1,4 @@
-import {Component, ElementRef} from 'angular2/core';
+import {Component, ElementRef, Output, EventEmitter} from 'angular2/core';
 import {MapDataService} from './map-data-service';
 import {GoogleMapsAPI} from './google-maps-api';
 
@@ -22,12 +22,19 @@ export class Map {
   ngOnInit() {
     const container = this._elem.nativeElement.querySelector('#map');
     this.mapDataService.data$.subscribe(data => this.api.setGeoJson(data));
-    this.api.createMap(container, {
-      center: {lat: 54.69, lng: 25.27},
-      zoom: 14,
-      disableDefaultUI: true
+    this.api.createMap({
+        el: container,
+        mapOptions: {
+          center: {lat: 54.69, lng: 25.27},
+          zoom: 14,
+          disableDefaultUI: true
+        }
     }).then(() => {
-      this.mapDataService.loadMapData();
+      this.reload();
+      this.api.subscribeToMapDataEvent<void>('addfeature').subscribe((data) => {
+        console.log("Added polygon!");
+        this.api.getGeoJson(this.mapDataService.updateMapData);
+    });
     });
   };
 
@@ -40,6 +47,6 @@ export class Map {
   }
 
   clear() {
-    this.mapDataService.saveMapData(/* empty */);
+    this.mapDataService.updateMapData(/* empty */);
   }
 }
