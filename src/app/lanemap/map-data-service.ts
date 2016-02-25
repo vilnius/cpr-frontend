@@ -12,7 +12,7 @@ export class MapDataService {
 
   constructor(private http: Http) {
     this._data = {};
-    this.data$ = new Observable(observer => {
+    this.data$ = Observable.create(observer => {
       this._dataObserver = observer;
     }).share();
   }

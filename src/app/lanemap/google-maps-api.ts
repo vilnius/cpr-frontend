@@ -1,6 +1,7 @@
 import {Injectable, NgZone} from 'angular2/core';
 import {Observer} from 'rxjs/Observer';
 import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/share';
 
 declare var google: any;
 declare var window: any;
@@ -15,8 +16,15 @@ let LatLng = function(lat, lng): google.maps.LatLng {
 export class GoogleMapsAPI {
   private _map: google.maps.Map;
   private _scriptLoadingPromise: Promise<void>;
+  private _observers: any = {};
 
-  constructor(private _zone: NgZone) {}
+  public events: any = {
+    addfeature$: Observable.create(observer => { this._observers.addfeature = observer; }).share()
+  }
+
+  constructor(private _zone: NgZone) {
+
+  }
 
   load(): Promise<void> {
     if (this._scriptLoadingPromise) {
@@ -39,10 +47,10 @@ export class GoogleMapsAPI {
     return this._scriptLoadingPromise;
   }
 
-  subscribeToMapDataEvent<E>(eventName: string): Observable<E> {
-    return Observable.create((observer: Observer<E>) => {
-        this._map.data.addListener(eventName, (arg: E) => { this._zone.run(() => observer.next(arg)); });
-    });
+  setupObservers() {
+    for (var key in this._observers) {
+      this._map.data.addListener(key, (arg: any) => this._zone.run(() => { this._observers[key].next(arg); }));
+    }
   }
 
   createMap(options: {el: HTMLElement, mapOptions: any}): Promise<void> {
@@ -69,6 +77,7 @@ export class GoogleMapsAPI {
       newData.addGeoJson(data);
       this._map.data.setMap(null);
       this._map.data = newData;
+      this.setupObservers();
     } catch (error) {
       newData.setMap(null);
     }

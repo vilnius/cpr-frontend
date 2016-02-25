@@ -4,9 +4,6 @@ import {GoogleMapsAPI} from './google-maps-api';
 
 @Component({
   selector: 'map',
-  providers: [
-      GoogleMapsAPI
-  ],
   styles: [ require('./lanemap.css') ],
   template: `
     <div id="map"></div>
@@ -22,6 +19,11 @@ export class Map {
   ngOnInit() {
     const container = this._elem.nativeElement.querySelector('#map');
     this.mapDataService.data$.subscribe(data => this.api.setGeoJson(data));
+    this.api.events.addfeature$.subscribe((data) => {
+      // Updates data on data service
+      this.api.getGeoJson(this.mapDataService.updateMapData);
+    });
+
     this.api.createMap({
         el: container,
         mapOptions: {
@@ -31,10 +33,6 @@ export class Map {
         }
     }).then(() => {
       this.reload();
-      this.api.subscribeToMapDataEvent<void>('addfeature').subscribe((data) => {
-        console.log("Added polygon!");
-        this.api.getGeoJson(this.mapDataService.updateMapData);
-    });
     });
   };
 

@@ -11,13 +11,19 @@ import {Index} from './index/index';
 import {LaneMap} from './lanemap/lanemap';
 import {Cameras, Videos, Penalties} from './static';
 
+
+import {GoogleMapsAPI} from './lanemap/google-maps-api';
+
 /*
  * App Component
  * Top Level Component
  */
 @Component({
   selector: 'app',
-  providers: [ ...FORM_PROVIDERS ],
+  providers: [
+    ...FORM_PROVIDERS,
+    GoogleMapsAPI,  // this causes our service to maintain state even when switching routes
+  ],
   directives: [ ...ROUTER_DIRECTIVES, RouterActive ],
   pipes: [],
   styles: [`
