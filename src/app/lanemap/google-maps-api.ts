@@ -8,23 +8,14 @@ declare var window: any;
 
 const GOOGLE_MAPS_API = 'https://maps.googleapis.com/maps/api/js?';
 
-let LatLng = function(lat, lng): google.maps.LatLng {
-  return new google.maps.LatLng(lat, lng);
-};
-
 @Injectable()
 export class GoogleMapsAPI {
   private _map: google.maps.Map;
   private _scriptLoadingPromise: Promise<void>;
-  private _observers: any = {};
+  private _updatedDataObserver: any;
+  public updatedData$: Observable<any> = Observable.create(observer => { this._updatedDataObserver = observer; }).share();
 
-  public events: any = {
-    addfeature$: Observable.create(observer => { this._observers.addfeature = observer; }).share()
-  }
-
-  constructor(private _zone: NgZone) {
-
-  }
+  constructor(private _zone: NgZone) {}
 
   load(): Promise<void> {
     if (this._scriptLoadingPromise) {
@@ -47,10 +38,20 @@ export class GoogleMapsAPI {
     return this._scriptLoadingPromise;
   }
 
-  setupObservers() {
-    for (var key in this._observers) {
-      this._map.data.addListener(key, (arg: any) => this._zone.run(() => { this._observers[key].next(arg); }));
-    }
+  sendUpdatedData = () => {
+    this._zone.run(() => {
+      this.getGeoJson((data) => this._updatedDataObserver.next(data));
+    });
+  }
+
+  setupEventListeners() {
+    this._map.data.addListener('addfeature', this.sendUpdatedData);
+    this._map.data.addListener('removefeature', this.sendUpdatedData);
+    this._map.data.addListener('mouseup', this.sendUpdatedData);
+    this._map.data.addListener('rightclick', (event) => {
+      this._map.data.remove(event.feature);
+      this.sendUpdatedData();
+    });
   }
 
   createMap(options: {el: HTMLElement, mapOptions: any}): Promise<void> {
@@ -77,7 +78,7 @@ export class GoogleMapsAPI {
       newData.addGeoJson(data);
       this._map.data.setMap(null);
       this._map.data = newData;
-      this.setupObservers();
+      this.setupEventListeners();
     } catch (error) {
       newData.setMap(null);
     }
@@ -86,4 +87,5 @@ export class GoogleMapsAPI {
   getGeoJson(callback: any) {
     this._map.data.toGeoJson(callback);
   }
+
 }

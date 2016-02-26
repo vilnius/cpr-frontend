@@ -1,16 +1,25 @@
-import {Component, Input} from 'angular2/core';
+import {Component, Input, OnChanges} from 'angular2/core';
 import {Map} from './map';
 import {MapDataService} from './map-data-service';
 
+
 @Component({
   selector: 'map-info',
-  template: `<p>Polygons: {{ data.polygons }}</p>
-  `
+  template: `<p>Polygons: {{ polygons }}</p>`
 })
-export class MapInfo {
+export class MapInfo implements OnChanges {
   @Input() data: any;
+  public polygons: number;
   constructor() {}
+
+  ngOnChanges() {
+    if (!this.data) {
+      this.data = { features: [] };
+    }
+    this.polygons = this.data.features.length;
+  }
 }
+
 
 @Component({
   selector: 'lane-map',
@@ -25,31 +34,27 @@ export class MapInfo {
   template: `
     <div id="map-controls">
       <h2>Lane Map</h2>
-      <button (click)="mapWidget.save()" class="btn btn-primary">Save</button>
-      <button (click)="mapWidget.reload()" class="btn btn-default">Reload</button>
-      <button (click)="mapWidget.clear()" class="btn btn-warning">Clear</button>
+      <p>Draw using menu in the top left corner of the map. Right click to delete a polygon</p>
+      <button (click)="map.clear()" class="btn btn-default">Clear Map</button>
+      <button (click)="map.reload()" [class.hidden]="!mapDataService.dirty" class="btn btn-default">Reload</button>
+      <button (click)="map.save()" [class.hidden]="!mapDataService.dirty" class="btn btn-success">Save</button>
       <hr/>
-      <map-info [data]="mapInfo"></map-info>
+      <map-info [data]="mapData"></map-info>
     </div>
-    <map #mapWidget></map>
+    <map #map></map>
   `
 })
 export class LaneMap {
-  public mapInfo: any = { polygons: 0 };
+  public mapData: any;
 
-  constructor(private mapDataService: MapDataService) {}
+  constructor(public mapDataService: MapDataService) {}
 
   ngOnInit() {
-    this.mapDataService.data$.subscribe((data) => this.updateMapInfo(data));
+    this.mapDataService.data$.subscribe((data) => this.updateMapData(data));
   }
 
-  updateMapInfo(data) {
-    if (!data) {
-      data = { features: [] };
-    }
-    this.mapInfo = {
-      polygons: data.features.length
-    };
+  updateMapData(data) {
+    this.mapData = data;
   }
 
 }

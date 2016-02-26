@@ -1,4 +1,4 @@
-import {Component, ElementRef, Output, EventEmitter} from 'angular2/core';
+import {Component, ElementRef, Input, Output, EventEmitter} from 'angular2/core';
 import {MapDataService} from './map-data-service';
 import {GoogleMapsAPI} from './google-maps-api';
 
@@ -10,6 +10,7 @@ import {GoogleMapsAPI} from './google-maps-api';
   `
 })
 export class Map {
+
   constructor(
     private _elem: ElementRef,
     private api: GoogleMapsAPI,
@@ -18,10 +19,9 @@ export class Map {
 
   ngOnInit() {
     const container = this._elem.nativeElement.querySelector('#map');
-    this.mapDataService.data$.subscribe(data => this.api.setGeoJson(data));
-    this.api.events.addfeature$.subscribe((data) => {
-      // Updates data on data service
-      this.api.getGeoJson(this.mapDataService.updateMapData);
+    //this.mapDataService.data$.subscribe(data => data));
+    this.api.updatedData$.subscribe((data) => {
+      this.mapDataService.update(data)
     });
 
     this.api.createMap({
@@ -37,14 +37,15 @@ export class Map {
   };
 
   save() {
-    this.api.getGeoJson(this.mapDataService.saveMapData);
+    this.mapDataService.save();
   }
 
   reload() {
-    this.mapDataService.loadMapData();
+    this.api.setGeoJson(this.mapDataService.load());
   }
 
   clear() {
-    this.mapDataService.updateMapData(/* empty */);
+    this.mapDataService.update(/* empty */);
   }
+
 }

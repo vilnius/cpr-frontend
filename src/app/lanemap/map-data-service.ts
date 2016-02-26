@@ -6,6 +6,7 @@ import 'rxjs/add/operator/share';
 
 @Injectable()
 export class MapDataService {
+  public dirty: boolean = false;
   public data$: Observable<any>;
   private _dataObserver: any;
   private _data: any;
@@ -17,25 +18,27 @@ export class MapDataService {
     }).share();
   }
 
-  updateMapData = (data?: any) => {
+  update = (data: any = null) => {
+    this.dirty = true;
     this._data = data;
     this._dataObserver.next(this._data);
   };
 
-  loadMapData = () => {
-    console.log('Loading map data');
+  load = () => {
     // this.http.get('data.json').map(response => response.json()).subscribe(data => {
     //   // Update data store
     //   this._data = data;
     //   // Push this new data into the Observable stream
     //   this._dataObserver.next(this._data);
     // }, error => console.error('Could not load data!', error));
-    this.updateMapData(JSON.parse(localStorage.getItem('lane-data')))
+    let laneData = JSON.parse(localStorage.getItem('lane-data'));
+    this.update(laneData);
+    this.dirty = false;
+    return laneData;
   };
 
-  saveMapData = (data: any) => {
-    console.log('Saving map data');
-    localStorage.setItem('lane-data', JSON.stringify(data));
-    this.updateMapData(data);
+  save = () => {
+    localStorage.setItem('lane-data', JSON.stringify(this._data));
+    this.dirty = false;
   };
 }
