@@ -1,4 +1,4 @@
-import {Injectable} from 'angular2/core';
+import {Injectable, NgZone} from 'angular2/core';
 import {Http} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -9,19 +9,18 @@ export class MapDataService {
   public dirty: boolean = false;
   public data$: Observable<any>;
   private _dataObserver: any;
-  private _data: any;
+  private _data: any = {};
 
-  constructor(private http: Http) {
-    this._data = {};
-    this.data$ = Observable.create(observer => {
-      this._dataObserver = observer;
-    }).share();
+  constructor(private http: Http, private _zone: NgZone) {
+    this.data$ = Observable.create(observer => this._dataObserver = observer).share();
   }
 
-  update = (data: any = null) => {
+  update = (data: any) => {
     this.dirty = true;
     this._data = data;
-    this._dataObserver.next(this._data);
+    this._zone.run(() => {
+        this._dataObserver.next(data);
+    });
   };
 
   load = () => {

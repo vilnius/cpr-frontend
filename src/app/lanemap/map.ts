@@ -19,10 +19,7 @@ export class Map {
 
   ngOnInit() {
     const container = this._elem.nativeElement.querySelector('#map');
-    //this.mapDataService.data$.subscribe(data => data));
-    this.api.updatedData$.subscribe((data) => {
-      this.mapDataService.update(data)
-    });
+    this.api.updatedData$.subscribe(data => this.mapDataService.update(data));
 
     this.api.createMap({
         el: container,
@@ -45,7 +42,8 @@ export class Map {
   }
 
   clear() {
-    this.mapDataService.update(/* empty */);
+    this.api.setGeoJson(null);
+    this.mapDataService.update(null);
   }
 
 }

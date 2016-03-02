@@ -10,12 +10,14 @@ const GOOGLE_MAPS_API = 'https://maps.googleapis.com/maps/api/js?';
 
 @Injectable()
 export class GoogleMapsAPI {
+  public updatedData$: Observable<any>;
   private _map: google.maps.Map;
   private _scriptLoadingPromise: Promise<void>;
   private _updatedDataObserver: any;
-  public updatedData$: Observable<any> = Observable.create(observer => { this._updatedDataObserver = observer; }).share();
 
-  constructor(private _zone: NgZone) {}
+  constructor(private _zone: NgZone) {
+      this.updatedData$ = Observable.create(observer => this._updatedDataObserver = observer).share();
+  }
 
   load(): Promise<void> {
     if (this._scriptLoadingPromise) {
@@ -40,9 +42,9 @@ export class GoogleMapsAPI {
 
   sendUpdatedData = () => {
     this._zone.run(() => {
-      this.getGeoJson((data) => this._updatedDataObserver.next(data));
+      this.getGeoJson(data => this._updatedDataObserver.next(data));
     });
-  }
+  };
 
   setupEventListeners() {
     this._map.data.addListener('addfeature', this.sendUpdatedData);
