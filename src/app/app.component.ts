@@ -91,8 +91,8 @@ import {GoogleMapsAPI} from './lanemap/google-maps-api';
   { path: '/cameras', component: Cameras, name: 'Cameras' },
   { path: '/videos', component: Videos, name: 'Videos' },
   { path: '/penalties', component: Penalties, name: 'Penalties' },
-  // Async load a component using Webpack's require with es6-promise-loader
-  { path: '/about', loader: () => require('./about/about')('About'), name: 'About' },
+  // Async load a component using Webpack's require with es6-promise-loader and webpack `require`
+  { path: '/about', name: 'About', loader: () => require('es6-promise!./about')('About') },
   { path: '/**', redirectTo: ['Index'] }
 ])
 export class App {

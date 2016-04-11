@@ -7,7 +7,7 @@
 # Car Plate Reader - Frontend
 
 > **This repository is just for frontend code!** Backend code is located at
-[cpr-server](https://github.com/vilnius/cpr-server) (not available yet).
+[cpr-server](https://github.com/vilnius/cpr-server).
 
 > This code is written in [TypeScript](http://www.typescriptlang.org/) and is based
 on [Angular2 Webpack Starter Kit](https://github.com/AngularClass/angular2-webpack-starter)
