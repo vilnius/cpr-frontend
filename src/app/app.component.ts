@@ -9,8 +9,11 @@ import {RouterActive} from './directives/router-active';
 import {Home} from './home/home';
 import {Index} from './index/index';
 import {LaneMap} from './lanemap/lanemap';
-import {Cameras, Videos, Penalties} from './static';
+import {Login} from './login/login';
+import {Penalties} from './static';
 
+import {Authentication} from './services/authentication';
+import {isLoggedin}  from './services/is-loggedin';
 
 import {GoogleMapsAPI} from './lanemap/google-maps-api';
 
@@ -27,9 +30,9 @@ import {GoogleMapsAPI} from './lanemap/google-maps-api';
   directives: [ ...ROUTER_DIRECTIVES, RouterActive ],
   pipes: [],
   styles: [`
-  main {
-    padding-top: 60px;
-  }
+    main {
+      padding-top: 60px;
+    }
   `],
   template: `
     <header>
@@ -53,12 +56,6 @@ import {GoogleMapsAPI} from './lanemap/google-maps-api';
                 <a [routerLink]=" ['Home'] ">Home</a>
               </li>-->
               <li router-active>
-                <a [routerLink]=" ['Cameras'] ">Cameras</a>
-              </li>
-              <li router-active>
-                <a [routerLink]=" ['Videos'] ">Videos</a>
-              </li>
-              <li router-active>
                 <a [routerLink]=" ['Penalties'] ">Penalties</a>
               </li>
               <li router-active>
@@ -66,6 +63,9 @@ import {GoogleMapsAPI} from './lanemap/google-maps-api';
               </li>
               <li router-active>
                 <a [routerLink]=" ['About'] ">About</a>
+              </li>
+              <li router-active>
+                <a [routerLink]=" ['Login'] ">Login</a>
               </li>
             </ul>
           </div>
@@ -88,11 +88,10 @@ import {GoogleMapsAPI} from './lanemap/google-maps-api';
   { path: '/', component: Index, name: 'Index' },
   { path: '/home', component: Home, name: 'Home' },
   { path: '/lane-map', component: LaneMap, name: 'LaneMap' },
-  { path: '/cameras', component: Cameras, name: 'Cameras' },
-  { path: '/videos', component: Videos, name: 'Videos' },
   { path: '/penalties', component: Penalties, name: 'Penalties' },
   // Async load a component using Webpack's require with es6-promise-loader and webpack `require`
   { path: '/about', name: 'About', loader: () => require('es6-promise!./about')('About') },
+  { path: '/login', component: Login, name: 'Login' },
   { path: '/**', redirectTo: ['Index'] }
 ])
 export class App {
