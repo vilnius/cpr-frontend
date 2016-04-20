@@ -5,9 +5,13 @@ import {Observable} from 'rxjs/Rx';
 @Injectable()
 export class Authentication {
   token: string;
+  loggedIn: boolean = false;
 
   constructor() {
     this.token = localStorage.getItem('token');
+    if (this.token) {
+      this.loggedIn = true;
+    }
   }
 
   login(username: String, password: String) {
@@ -35,6 +39,7 @@ export class Authentication {
 
     if (username === 'admin' && password === 'admin') {
       this.token = 'token';
+      this.loggedIn = true;
       localStorage.setItem('token', this.token);
       observable = Observable.of('token');
     } else {
@@ -60,6 +65,7 @@ export class Authentication {
      */
 
     this.token = undefined;
+    this.loggedIn = false;
     localStorage.removeItem('token');
 
     return Observable.of(true);

@@ -52,6 +52,11 @@ import {GoogleMapsAPI} from './lanemap/google-maps-api';
               <li router-active>
                 <a [routerLink]=" ['Index'] ">Index</a>
               </li>
+              <li router-active *ngIf="!auth.loggedIn">
+                <a [routerLink]=" ['Login'] ">Login</a>
+              </li>
+            </ul>
+            <ul *ngIf="auth.loggedIn" class="nav navbar-nav">
               <!--<li router-active>
                 <a [routerLink]=" ['Home'] ">Home</a>
               </li>-->
@@ -65,7 +70,7 @@ import {GoogleMapsAPI} from './lanemap/google-maps-api';
                 <a [routerLink]=" ['About'] ">About</a>
               </li>
               <li router-active>
-                <a [routerLink]=" ['Login'] ">Login</a>
+                <a href="#" (click)="logout($event)">Logout</a>
               </li>
             </ul>
           </div>
@@ -96,7 +101,10 @@ import {GoogleMapsAPI} from './lanemap/google-maps-api';
 ])
 export class App {
   name = 'Car Plate Reader';
-  constructor() {
-
+  constructor(public auth: Authentication, public router: Router) {}
+  logout(event: any) {
+    event.preventDefault();
+    this.auth.logout();
+    this.router.navigate(['Index'])
   }
 }
