@@ -1,45 +1,49 @@
 import {Component} from 'angular2/core';
 import {Http, Headers} from 'angular2/http';
 
+import {GPS} from './gps';
 
 @Component({
   selector: 'penalties',
+  directives: [ GPS ],
   template: `<h2>Penalties</h2>
-  <pre>{{penalties}}</pre>
   <table class="table">
     <thead>
       <tr>
         <th>ID</th>
-        <th>Video</th>
+        <th>Image</th>
         <th>Plate number</th>
-        <th>Status</th>
+        <th>Coordinates</th>
+        <th>Time</th>
         <th>Actions</th>
       </tr>
     </thead>
-    <tr>
-      <td>1</td>
-      <td><a href="#/videos"><img height="40"
+    <tr *ngFor="#penalty of penalties; #i = index">
+      <td>{{i + 1}}</td>
+      <td><a href="#"><img height="40"
 src="http://www.gdsimage.com/smr/Lukas/images/Lukas-LK-5900HD-DUO/Lukas-LK-5900HD-DUO-16GB-F2.2-Wide-Angle-HD-2Ch-Dash-Cam-Car-Camera-Black-Box-03.jpg"/>
 </a></td>
-      <td>ABC123</td>
-      <td><span class="label label-default">Closed</span></td>
+      <td>{{penalty.plate}}</td>
+      <td><gps [coords]="penalty.gps"></gps></td>
+      <td>{{printDate(penalty.shotAt)}}</td>
       <td><a href="#">Send to Delfi.lt</a> | <a href="#">Send to Avilys</a></td>
     </tr>
   </table>
   `
 })
 export class Penalties {
-  penalties: string;
+  penalties: any;
 
-  constructor(public http: Http) {
-
-  }
+  constructor(public http: Http) {}
   ngOnInit() {
     this.getPenalties();
   }
+  printDate(dateString) {
+    return dateString.replace(/T/, ' ').replace(/\..*/, '')
+  }
   getPenalties() {
     this.http.get('/api/penalties')
-    .map(res => res.text())
+    .map(res => res.json())
     .subscribe(
       data => this.penalties = data,
       err => this.logError(err)
