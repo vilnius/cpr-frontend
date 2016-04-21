@@ -1,13 +1,14 @@
 // authentication.ts
 import {Injectable} from 'angular2/core';
 import {Observable} from 'rxjs/Rx';
+import {Http, Headers} from 'angular2/http';
 
 @Injectable()
 export class Authentication {
   token: string;
   loggedIn: boolean = false;
 
-  constructor() {
+  constructor(public http: Http) {
     this.token = localStorage.getItem('token');
     if (this.token) {
       this.loggedIn = true;
@@ -15,9 +16,6 @@ export class Authentication {
   }
 
   login(username: String, password: String) {
-    /*
-     * If we had a login api, we would have done something like this
-
     return this.http.post('/api/auth/login', JSON.stringify({
         username: username,
         password: password
@@ -26,15 +24,15 @@ export class Authentication {
           'Content-Type': 'application/json'
         })
       })
-      .map((res : any) => {
-        let data = res.json();
+      .map(res => res.json())
+      .map(data => {
+        console.log("BABABA")
         this.token = data.token;
+        this.loggedIn = true;
         localStorage.setItem('token', this.token);
       });
 
-      for the purpose of this cookbook, we will juste simulate that
-    */
-
+    /*
     let observable;
 
     if (username === 'admin' && password === 'admin') {
@@ -47,27 +45,30 @@ export class Authentication {
     }
 
     return observable;
+    */
   }
 
   logout() {
-    /*
-     * If we had a login api, we would have done something like this
 
-    return this.http.post('/api/auth/logout', {
+    return this.http.post('/api/auth/logout', null, {
       headers: new Headers({
-        'x-security-token': this.token
+        'Token': this.token
       })
-    })
-    .map((res : any) => {
-      this.token = undefined;
-      localStorage.removeItem('token');
-    });
-     */
+    }).subscribe(
+      data => {
+        this.token = undefined;
+        this.loggedIn = false;
+        localStorage.removeItem('token');
+      },
+      err => console.error(err)
+    );
 
+    /*
     this.token = undefined;
     this.loggedIn = false;
     localStorage.removeItem('token');
 
     return Observable.of(true);
+    */
   }
 }

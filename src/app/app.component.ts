@@ -10,7 +10,7 @@ import {Home} from './home/home';
 import {Index} from './index/index';
 import {LaneMap} from './lanemap/lanemap';
 import {Login} from './login/login';
-import {Penalties} from './static';
+import {Penalties} from './penalties/penalties';
 
 import {Authentication} from './services/authentication';
 import {isLoggedin}  from './services/is-loggedin';

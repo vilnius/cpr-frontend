@@ -8,28 +8,14 @@ import {Authentication} from '../services/authentication';
   selector: 'login',
   directives: [ FORM_DIRECTIVES, NgIf ],
   styles: [`form {margin-top: 20px;}`],
-  template: `
-    <form [ngFormModel]="form">
-      <span>Use: admin/admin</span>
-      <div>
-        <label for="username">Username</label>
-        <input type="text" ngControl="username">
-      </div>
-      <div>
-        <label for="password">Password</label>
-        <input type="password" ngControl="password">
-      </div>
-      <div class="form-group">
-        <div *ngIf="error">Check your password</div>
-        <button type="submit" [disabled]="!form.valid" (click)="onSubmit($event, form.value)">Login</button>
-      </div>
-    </form>
-  `
+  template: require('./login.html')
 })
 
 export class Login {
   form: ControlGroup;
   error: boolean = false;
+  errorMessage: string;
+
   constructor(fb: FormBuilder, public auth: Authentication, public router: Router) {
     this.form = fb.group({
       username:  ['', Validators.required],
@@ -43,7 +29,11 @@ export class Login {
     this.auth.login(value.username, value.password)
       .subscribe(
         (token: any) => this.router.navigate(['Index']),
-        () => { this.error = true; }
+        (error: any) => {
+          this.error = true;
+          this.errorMessage = error.status === 401 ?
+             "Bad username and/or password": "Unable to login"
+        }
       );
   }
 }

@@ -1,8 +1,11 @@
 import {Component} from 'angular2/core';
+import {Http, Headers} from 'angular2/http';
+
 
 @Component({
   selector: 'penalties',
   template: `<h2>Penalties</h2>
+  <pre>{{penalties}}</pre>
   <table class="table">
     <thead>
       <tr>
@@ -25,4 +28,24 @@ src="http://www.gdsimage.com/smr/Lukas/images/Lukas-LK-5900HD-DUO/Lukas-LK-5900H
   </table>
   `
 })
-export class Penalties {}
+export class Penalties {
+  penalties: string;
+
+  constructor(public http: Http) {
+
+  }
+  ngOnInit() {
+    this.getPenalties();
+  }
+  getPenalties() {
+    this.http.get('/api/penalties')
+    .map(res => res.text())
+    .subscribe(
+      data => this.penalties = data,
+      err => this.logError(err)
+    );
+  }
+  logError(err) {
+    console.error('There was an error: ' + err);
+  }
+}
