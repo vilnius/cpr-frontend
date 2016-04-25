@@ -20,9 +20,7 @@ import {GPS} from './gps';
     </thead>
     <tr *ngFor="#penalty of penalties; #i = index">
       <td>{{i + 1}}</td>
-      <td><a href="#"><img height="40"
-src="http://www.gdsimage.com/smr/Lukas/images/Lukas-LK-5900HD-DUO/Lukas-LK-5900HD-DUO-16GB-F2.2-Wide-Angle-HD-2Ch-Dash-Cam-Car-Camera-Black-Box-03.jpg"/>
-</a></td>
+      <td><a href="/api/images/{{penalty.image}}" target="_blank"><img height="40" src="/api/images/{{penalty.image}}"/></a></td>
       <td>{{penalty.plate}}</td>
       <td><gps [coords]="penalty.gps"></gps></td>
       <td>{{printDate(penalty.shotAt)}}</td>

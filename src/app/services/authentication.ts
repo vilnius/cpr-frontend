@@ -26,7 +26,6 @@ export class Authentication {
       })
       .map(res => res.json())
       .map(data => {
-        console.log("BABABA")
         this.token = data.token;
         this.loggedIn = true;
         localStorage.setItem('token', this.token);
@@ -49,7 +48,6 @@ export class Authentication {
   }
 
   logout() {
-
     return this.http.post('/api/auth/logout', null, {
       headers: new Headers({
         'Token': this.token
