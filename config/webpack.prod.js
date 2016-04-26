@@ -49,7 +49,7 @@ module.exports = webpackMerge(commonConfig, {
     // The output directory as absolute path (required).
     //
     // See: http://webpack.github.io/docs/configuration.html#output-path
-    path: helpers.root('dist'),
+    path: helpers.root('../cpr-server/src/public'),
 
     // Specifies the name of each output file on disk.
     // IMPORTANT: You must not specify an absolute path here!
