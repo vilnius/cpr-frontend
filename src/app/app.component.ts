@@ -11,6 +11,7 @@ import {Index} from './index/index';
 import {LaneMap} from './lanemap/lanemap';
 import {Login} from './login/login';
 import {Penalties} from './penalties/penalties';
+import {Whitelist} from './whitelist/whitelist';
 
 import {Authentication} from './services/authentication';
 import {isLoggedin}  from './services/is-loggedin';
@@ -70,6 +71,9 @@ import {GoogleMapsAPI} from './lanemap/google-maps-api';
                 <a [routerLink]=" ['About'] ">About</a>
               </li>
               <li router-active>
+                <a [routerLink]=" ['Whitelist'] ">Whitelist</a>
+              </li>
+              <li router-active>
                 <a href="#" (click)="logout($event)">Logout</a>
               </li>
             </ul>
@@ -94,6 +98,7 @@ import {GoogleMapsAPI} from './lanemap/google-maps-api';
   { path: '/home', component: Home, name: 'Home' },
   { path: '/lane-map', component: LaneMap, name: 'LaneMap' },
   { path: '/penalties', component: Penalties, name: 'Penalties' },
+  { path: '/whitelist', component: Whitelist, name: 'Whitelist' },
   // Async load a component using Webpack's require with es6-promise-loader and webpack `require`
   { path: '/about', name: 'About', loader: () => require('es6-promise!./about')('About') },
   { path: '/login', component: Login, name: 'Login' },
