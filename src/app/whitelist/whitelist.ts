@@ -1,11 +1,16 @@
 import {Component} from 'angular2/core';
+import {WhitePlateAdder} from "./white-plate-adder"
 import {Http, Headers, RequestOptions} from 'angular2/http';
 
 
 @Component({
   selector: 'whitelist',
-  directives: [],
+  directives: [WhitePlateAdder],
   template: `<h2>Whitelist</h2>
+  <div [hidden]="isAdderVisible()" title="this plate will not be penalised">
+    <div (click)="createPlate()" class="btn">Add New White Plate</div>
+  </div>
+  <div [hidden]="!isAdderVisible()"><white-plate-adder [onChange]="changeCallback"></white-plate-adder></div>
   <table class="table">
     <thead>
       <tr>
@@ -16,28 +21,25 @@ import {Http, Headers, RequestOptions} from 'angular2/http';
         <th>Action</th>
       </tr>
     </thead>
-    <tr>
-      <td>N/A</td>
-      <td><input type="text" [(ngModel)]="newDescription" ></td>
-      <td><input type="text" [(ngModel)]="newPlateNumber" ></td>
-      <td>N/A</td>
-      <td><div (click)="createPlate(newDescription, newPlateNumber)" class="btn">Add</div></td>
-    </tr>
     <tr *ngFor="#whitePlate of whitePlates; #i = index">
       <td>{{i + 1}}</td>
       <td>{{whitePlate.description}}</td>
       <td>{{whitePlate.plate}}</td>
       <td>{{printDate(whitePlate.createdAt)}}</td>
-      <td><div (click)='removePlate(whitePlate._id)' class="btn warning">Remove</div></td>
+      <td><div (click)='deletePlate(whitePlate._id)' class="btn warning">Remove</div></td>
     </tr>
   </table>
   `
 })
 export class Whitelist {
   whitePlates: any;
-
+  adderVisible: boolean;
+  public changeCallback = (visible) => {
+    this.setAdderVisibility(visible);
+  }
   constructor(public http: Http) { }
   ngOnInit() {
+    this.adderVisible = false;
     this.getPlates();
   }
   printDate(dateString) {
@@ -65,16 +67,14 @@ export class Whitelist {
         err => this.logError(err)
       );
   }
-  createPlate(description, plate) {
-    let body = JSON.stringify({ description, plate });
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-
-    return this.http.post('/api/whitelist', body, options)
-      .map(res => res.json())
-      .subscribe(
-        data => this.whitePlates.push(data),
-        err => this.logError(err)
-      );
+  createPlate() {
+    this.setAdderVisibility(true);
+  }
+  setAdderVisibility(visible) {
+    this.adderVisible = visible;
+    this.getPlates();
+  }
+  isAdderVisible() {
+    return this.adderVisible
   }
 }
