@@ -18,7 +18,7 @@ import {GPS} from './gps';
         <th>Actions</th>
       </tr>
     </thead>
-    <tr *ngFor="#penalty of penalties; #i = index">
+    <tr *ngFor="let penalty of penalties; let i = index">
       <td>{{i + 1}}</td>
       <td><a href="/api/images/{{penalty.image}}" target="_blank"><img height="40" src="/api/images/{{penalty.image}}"/></a></td>
       <td>{{penalty.plate}}</td>

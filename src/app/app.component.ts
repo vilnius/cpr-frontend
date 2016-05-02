@@ -71,7 +71,7 @@ import {GoogleMapsAPI} from './lanemap/google-maps-api';
                 <a [routerLink]=" ['About'] ">About</a>
               </li>
               <li router-active>
-                <a [routerLink]=" ['Whitelist'] ">Whitelist</a>
+                <a [routerLink]=" ['Whitelist'] ">Plate Whitelist</a>
               </li>
               <li router-active>
                 <a href="#" (click)="logout($event)">Logout</a>

@@ -6,16 +6,33 @@ import {Http, Headers, RequestOptions} from 'angular2/http';
   selector: 'white-plate-adder',
   directives: [],
   template: `
-  <div>
-    <span>Description</span><span><input type="text" [(ngModel)]="newDescription"></span>
-    <span>Plate number</span><span><input type="text" [(ngModel)]="newPlateNumber"></span>
-    <span (click)="createPlate(newDescription, newPlateNumber)" class="btn">Add</span>
-    <span (click)="cancel()" class="btn">Cancel</span>
+  <div class="well bs-component col-xs-6">
+    <form class="form-horizontal" (submit)="createPlate(newDescription, newPlateNumber)">
+      <div class="form-group">
+        <label for="inputEmail" class="col-lg-2 control-label">Plate number</label>
+        <div class="col-lg-10">
+          <input type="text" class="form-control" placeholder="Plate number" [(ngModel)]="newPlateNumber">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputEmail" class="col-lg-2 control-label">Description</label>
+        <div class="col-lg-10">
+          <input type="text" class="form-control" placeholder="Description" [(ngModel)]="newDescription">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+          <button type="reset" class="btn btn-default" (click)="cancel()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+      </div>
+    </form>
   </div>
   `
 })
 export class WhitePlateAdder {
-  @Input() public onChange: Function;
+  @Input() onCancel: Function;
+  @Input() onPlateAdded: Function;
   whitePlates: any;
   newDescription: string;
   newPlateNumber: string;
@@ -37,15 +54,15 @@ export class WhitePlateAdder {
     .map(res => res.json())
     .subscribe(
       _ => {
-        this.onChange(false);
+        this.onPlateAdded();
         this.clearInputs()
       },
       err => this.logError(err)
     );
   }
   cancel() {
-    this.onChange(false);
     this.clearInputs()
+    this.onCancel();
   }
   clearInputs() {
     this.newDescription = "";
