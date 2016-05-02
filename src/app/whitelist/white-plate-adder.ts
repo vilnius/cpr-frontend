@@ -1,22 +1,25 @@
 import {Component, Input} from 'angular2/core';
 import {Http, Headers, RequestOptions} from 'angular2/http';
-
+import {Plate} from './plate';
 
 @Component({
   selector: 'white-plate-adder',
   directives: [],
+  styles: [`
+    .padding-5{ padding: 5px;}
+  `],
   template: `
   <div>
-    <span>Description</span><span><input type="text" [(ngModel)]="newDescription"></span>
-    <span>Plate number</span><span><input type="text" [(ngModel)]="newPlateNumber"></span>
-    <span (click)="createPlate(newDescription, newPlateNumber)" class="btn">Add</span>
+    <span>Description</span><span><input type="text" class="padding-5" [(ngModel)]="newDescription"></span>
+    <span>Plate number</span><span><input type="text" class="padding-5" [(ngModel)]="newPlateNumber"></span>
+    <span (click)="createPlate(newDescription, newPlateNumber)" class="btn">Add New</span>
     <span (click)="cancel()" class="btn">Cancel</span>
   </div>
   `
 })
 export class WhitePlateAdder {
   @Input() public onChange: Function;
-  whitePlates: any;
+  whitePlates: Plate[];
   newDescription: string;
   newPlateNumber: string;
   constructor(public http: Http) { }

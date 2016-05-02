@@ -1,45 +1,30 @@
 import {Component} from 'angular2/core';
 import {WhitePlateAdder} from "./white-plate-adder"
+import {WhitePlateEditer} from "./white-plate-editer"
 import {Http, Headers, RequestOptions} from 'angular2/http';
-
+import {Plate} from './plate';  
 
 @Component({
   selector: 'whitelist',
-  directives: [WhitePlateAdder],
-  template: `<h2>Whitelist</h2>
-  <div [hidden]="isAdderVisible()" title="this plate will not be penalised">
-    <div (click)="createPlate()" class="btn">Add New White Plate</div>
-  </div>
-  <div [hidden]="!isAdderVisible()"><white-plate-adder [onChange]="changeCallback"></white-plate-adder></div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Description</th>
-        <th>Plate number</th>
-        <th>Date Added</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tr *ngFor="#whitePlate of whitePlates; #i = index">
-      <td>{{i + 1}}</td>
-      <td>{{whitePlate.description}}</td>
-      <td>{{whitePlate.plate}}</td>
-      <td>{{printDate(whitePlate.createdAt)}}</td>
-      <td><div (click)='deletePlate(whitePlate._id)' class="btn warning">Remove</div></td>
-    </tr>
-  </table>
-  `
+  directives: [WhitePlateAdder, WhitePlateEditer],
+  template: require('./whitelist.html')
 })
 export class Whitelist {
-  whitePlates: any;
+  whitePlates: Plate[];
   adderVisible: boolean;
-  public changeCallback = (visible) => {
+  editerVisible: boolean;
+  editerPlate: Plate;
+  public changeAdderCallback = (visible) => {
     this.setAdderVisibility(visible);
+  }  
+  public changeEditerCallback = (visible) => {
+    this.setEditerVisibility(visible);
   }
   constructor(public http: Http) { }
   ngOnInit() {
+    this.editerPlate = {_id: 1, description:'test', plate:''};
     this.adderVisible = false;
+    this.editerVisible = false;
     this.getPlates();
   }
   printDate(dateString) {
@@ -70,11 +55,24 @@ export class Whitelist {
   createPlate() {
     this.setAdderVisibility(true);
   }
+
+  editPlate(plate) {
+    this.editerPlate = plate;
+    this.setEditerVisibility(true);
+  }
+
   setAdderVisibility(visible) {
     this.adderVisible = visible;
     this.getPlates();
   }
   isAdderVisible() {
     return this.adderVisible
+  }
+  setEditerVisibility(visible) {
+    this.editerVisible = visible;
+    this.getPlates();
+  }
+  isEditerVisible() {
+    return this.editerVisible;
   }
 }
