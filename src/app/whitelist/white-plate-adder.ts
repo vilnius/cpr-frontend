@@ -1,6 +1,6 @@
 import {Component, Input} from 'angular2/core';
 import {Http, Headers, RequestOptions} from 'angular2/http';
-
+import {Plate} from './plate';
 
 @Component({
   selector: 'white-plate-adder',
@@ -33,7 +33,8 @@ import {Http, Headers, RequestOptions} from 'angular2/http';
 export class WhitePlateAdder {
   @Input() onCancel: Function;
   @Input() onPlateAdded: Function;
-  whitePlates: any;
+
+  whitePlates: Plate[];
   newDescription: string;
   newPlateNumber: string;
   constructor(public http: Http) { }

@@ -1,0 +1,27 @@
+<h2>Plate Whitelist</h2>
+<div [hidden]="adderVisible || editerVisible">
+  <button (click)="showAdder()" class="btn btn-primary">Add New Plate</button>
+</div>
+<white-plate-adder [hidden]="!adderVisible" [onCancel]="hideAdder" [onPlateAdded]="handlePlateAdded"></white-plate-adder>
+<white-plate-editer [hidden]="!isEditerVisible()" [whitePlate]="editerPlate" [onChange]="changeEditerCallback"></white-plate-editer>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Plate number</th>
+      <th>Description</th>
+      <th>Date Added</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tr *ngFor="let whitePlate of whitePlates; let i=index">
+    <td>{{i + 1}}</td>
+    <td>{{whitePlate.plate}}</td>
+    <td>{{whitePlate.description}}</td>
+    <td>{{printDate(whitePlate.createdAt)}}</td>
+    <td>
+      <div (click)='deletePlate(whitePlate._id)' class="btn btn-warning">Remove</div>
+      <div (click)="editPlate(whitePlate)" class="btn">Edit</div>
+    </td>
+  </tr>
+</table>
