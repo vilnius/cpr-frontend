@@ -14,6 +14,8 @@ on [Angular2 Webpack Starter Kit](https://github.com/AngularClass/angular2-webpa
 from [AngularClass](https://angularclass.com). Please read their great readme file for
 all additional information.
 
+> Style is based on Bootstrap [Paper theme](https://bootswatch.com/paper/)
+
 ## Quick start
 
 ```bash
