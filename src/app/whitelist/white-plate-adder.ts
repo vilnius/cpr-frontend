@@ -9,15 +9,15 @@ import {Plate} from './plate';
   <div class="well bs-component col-xs-6">
     <form class="form-horizontal" (submit)="createPlate(newDescription, newPlateNumber)">
       <div class="form-group">
-        <label for="inputEmail" class="col-lg-2 control-label">Plate number</label>
+        <label for="inputPlate" class="col-lg-2 control-label">Plate number</label>
         <div class="col-lg-10">
-          <input type="text" class="form-control" placeholder="Plate number" [(ngModel)]="newPlateNumber">
+          <input id="inputPlate" type="text" class="form-control" placeholder="Plate number" [(ngModel)]="newPlateNumber">
         </div>
       </div>
       <div class="form-group">
-        <label for="inputEmail" class="col-lg-2 control-label">Description</label>
+        <label for="inputDescription" class="col-lg-2 control-label">Description</label>
         <div class="col-lg-10">
-          <input type="text" class="form-control" placeholder="Description" [(ngModel)]="newDescription">
+          <input id="inputDescription" type="text" class="form-control" placeholder="Description" [(ngModel)]="newDescription">
         </div>
       </div>
       <div class="form-group">
