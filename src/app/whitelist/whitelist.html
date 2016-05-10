@@ -14,7 +14,7 @@
       <th>Action</th>
     </tr>
   </thead>
-  <tr *ngFor="let whitePlate of whitePlates; let i=index">
+  <tr *ngFor="let whitePlate of whitePlates | paginate: { itemsPerPage: 10, currentPage: p }; let i=index">
     <td>{{i + 1}}</td>
     <td>{{whitePlate.plate}}</td>
     <td>{{whitePlate.description}}</td>
@@ -25,3 +25,6 @@
     </td>
   </tr>
 </table>
+<div class="pagination-container">
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>

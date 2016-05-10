@@ -7,11 +7,27 @@ import {Plate} from './plate';
   directives: [],
   styles: [`.padding-5{ padding: 5px;}`],
   template: `
-  <div>
-    <span>Description</span><span><input type="text" class="padding-5" [(ngModel)]="whitePlate.description"></span>
-    <span>Plate number</span><span><input type="text" class="padding-5" [(ngModel)]="whitePlate.plate"></span>
-    <span (click)="updatePlate()" class="btn">Update</span>
-    <span (click)="cancel()" class="btn">Cancel</span>
+  <div class="well bs-component col-xs-6">
+    <form class="form-horizontal" (submit)="updatePlate()">
+      <div class="form-group">
+        <label for="inputPlate" class="col-lg-2 control-label">Plate number</label>
+        <div class="col-lg-10">
+          <input id="inputPlate" type="text" class="form-control" placeholder="Plate number" [(ngModel)]="whitePlate.plate">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputDescription" class="col-lg-2 control-label">Description</label>
+        <div class="col-lg-10">
+          <input id="inputDescription" type="text" class="form-control" placeholder="Description" [(ngModel)]="whitePlate.description">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+          <button type="reset" class="btn btn-default" (click)="cancel()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </div>
+    </form>
   </div>
   `
 })

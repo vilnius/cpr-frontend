@@ -4,10 +4,15 @@ import {WhitePlateEditer} from "./white-plate-editer"
 import {Http, Headers, RequestOptions} from 'angular2/http';
 import {Plate} from './plate';
 
+import {PaginatePipe, PaginationControlsCmp, PaginationService} from 'ng2-pagination';
+
 @Component({
   selector: 'whitelist',
-  directives: [WhitePlateAdder, WhitePlateEditer],
-  template: require('./whitelist.html')
+  directives: [WhitePlateAdder, WhitePlateEditer, PaginationControlsCmp],
+  template: require('./whitelist.html'),
+  pipes: [PaginatePipe],
+  providers: [PaginationService],
+  styles: ['.pagination-container{text-align: center;}']
 })
 export class Whitelist {
   whitePlates: Plate[];
