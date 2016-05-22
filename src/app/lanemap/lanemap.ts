@@ -35,6 +35,7 @@ export class MapInfo implements OnChanges {
     <div id="map-controls">
       <h2>Lane Map</h2>
       <p>Draw using menu in the top left corner of the map. Right click to delete a polygon</p>
+      <button (click)="mapDataService.new()" class="btn btn-primary" [class.hidden]="!mapDataService.isNew">New</button>
       <button (click)="map.clear()" class="btn btn-default">Clear Map</button>
       <button (click)="map.reload()" [class.hidden]="!mapDataService.dirty" class="btn btn-default">Reload</button>
       <button (click)="map.save()" [class.hidden]="!mapDataService.dirty" class="btn btn-success">Save</button>
