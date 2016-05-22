@@ -1,6 +1,4 @@
-import {Component} from 'angular2/core';
-import {CanActivate} from 'angular2/router';
-import {isLoggedin}  from '../services/is-loggedin';
+import {Component} from '@angular/core';
 
 /*
  * We're loading this component asynchronously
@@ -18,15 +16,11 @@ console.log('`About` component loaded asynchronously');
     }
   `],
   template: `
-  <md-card>
     <h3>
       About Car Plate Reader
     </h3>
-  </md-card>
-
   `
 })
-@CanActivate(() => isLoggedin())
 export class About {
   constructor() {
 

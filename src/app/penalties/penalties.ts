@@ -1,5 +1,5 @@
-import {Component} from 'angular2/core';
-import {Http, Headers} from 'angular2/http';
+import {Component} from '@angular/core';
+import {Http, Headers} from '@angular/http';
 
 import {GPS} from './gps';
 

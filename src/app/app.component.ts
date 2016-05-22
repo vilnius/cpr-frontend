@@ -1,21 +1,19 @@
 /*
  * Angular 2 decorators and services
  */
-import {Component} from 'angular2/core';
-import {RouteConfig, Router, ROUTER_DIRECTIVES} from 'angular2/router';
-import {FORM_PROVIDERS} from 'angular2/common';
+import { Component } from '@angular/core';
+import { RouteConfig, ROUTER_DIRECTIVES, Router, ROUTER_PROVIDERS } from '@angular/router-deprecated';
+import {FORM_PROVIDERS} from '@angular/common';
 
-import {RouterActive} from './directives/router-active';
-import {Home} from './home/home';
+import {RouterActive, LoggedInRouterOutlet} from './directives';
+import {Home} from './home/home.component';
 import {Index} from './index/index';
+import {About} from './about';
 import {LaneMap} from './lanemap/lanemap';
 import {Login} from './login/login';
 import {Penalties} from './penalties/penalties';
 import {Whitelist} from './whitelist/whitelist';
-
 import {Authentication} from './services/authentication';
-import {isLoggedin}  from './services/is-loggedin';
-
 import {GoogleMapsAPI} from './lanemap/google-maps-api';
 
 /*
@@ -26,9 +24,12 @@ import {GoogleMapsAPI} from './lanemap/google-maps-api';
   selector: 'app',
   providers: [
     ...FORM_PROVIDERS,
-    GoogleMapsAPI,  // this causes our service to maintain state even when switching routes
+    GoogleMapsAPI,
   ],
-  directives: [ ...ROUTER_DIRECTIVES, RouterActive ],
+  directives: [
+    RouterActive,
+    LoggedInRouterOutlet,
+  ],
   pipes: [],
   styles: [`
     main {
@@ -99,8 +100,7 @@ import {GoogleMapsAPI} from './lanemap/google-maps-api';
   { path: '/lane-map', component: LaneMap, name: 'LaneMap' },
   { path: '/penalties', component: Penalties, name: 'Penalties' },
   { path: '/whitelist', component: Whitelist, name: 'Whitelist' },
-  // Async load a component using Webpack's require with es6-promise-loader and webpack `require`
-  { path: '/about', name: 'About', loader: () => require('es6-promise!./about')('About') },
+  { path: '/about', component: About, name: 'About' },
   { path: '/login', component: Login, name: 'Login' },
   { path: '/**', redirectTo: ['Index'] }
 ])
@@ -110,6 +110,6 @@ export class App {
   logout(event: any) {
     event.preventDefault();
     this.auth.logout();
-    this.router.navigate(['Index'])
+    this.router.navigate(['Login'])
   }
 }
