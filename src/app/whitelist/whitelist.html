@@ -1,4 +1,7 @@
 <h2>Plate Whitelist</h2>
+<div>
+  <white-plate-importer [onPlateImported]="onPlateImported"></white-plate-importer>
+</div>
 <div [hidden]="adderVisible || editerVisible">
   <button (click)="showAdder()" class="btn btn-primary">Add New Plate</button>
 </div>
