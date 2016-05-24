@@ -68,6 +68,7 @@
   },
   "devDependencies": {
     "angular2-hmr": "~0.7.0",
+    "angular2-moment": "^0.8.0",
     "awesome-typescript-loader": "~0.17.0",
     "codelyzer": "~0.0.19",
     "compression-webpack-plugin": "^0.3.1",

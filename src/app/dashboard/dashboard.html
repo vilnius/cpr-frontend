@@ -1,26 +1,26 @@
-<table *ngIf="piStatuses && piStatuses.length" class="table table-striped">
+<table *ngIf="!piStatuses?.error" class="table table-striped">
   <thead>
     <tr>
-      <th>id</th>
-      <th>connected</th>
-      <th>createdAt</th>
-      <th>ip</th>
+      <th>ID</th>
+      <th>Live</th>
+      <th>First Reg</th>
+      <th>IP</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let piStatus of piStatuses; let i = index">
       <td>{{ piStatus.id }}</td>
-      <td>{{ piStatus.connected }}</td>
-      <td>{{ piStatus.createdAt }}</td>
+      <td>{{ piStatus.connected ? 'Yes' : 'No' }}</td>
+      <td>{{ piStatus.createdAt | amTimeAgo }}</td>
       <td>{{ piStatus.ip }}</td>
     </tr>
   </tbody>
 </table>
-<div *ngIf="piStatuses && !piStatuses.length">
+<div *ngIf="piStatuses?.error">
     <div class="alert alert-warning" role="alert">
         <strong>
-            No Data.
+          Error ocured
         </strong>
-        Where is no Pi Statuses logged at this time.
+        {{ piStatuses.error }}
     </div>
 </div>
