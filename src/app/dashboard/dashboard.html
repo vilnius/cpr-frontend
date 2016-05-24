@@ -1,0 +1,26 @@
+<table *ngIf="piStatuses && piStatuses.length" class="table table-striped">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>connected</th>
+      <th>createdAt</th>
+      <th>ip</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let piStatus of piStatuses; let i = index">
+      <td>{{ piStatus.id }}</td>
+      <td>{{ piStatus.connected }}</td>
+      <td>{{ piStatus.createdAt }}</td>
+      <td>{{ piStatus.ip }}</td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="piStatuses && !piStatuses.length">
+    <div class="alert alert-warning" role="alert">
+        <strong>
+            No Data.
+        </strong>
+        Where is no Pi Statuses logged at this time.
+    </div>
+</div>
