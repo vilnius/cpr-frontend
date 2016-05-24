@@ -1,8 +1,8 @@
 /*
  * Angular 2 decorators and services
  */
-import { Component } from '@angular/core';
-import { RouteConfig, ROUTER_DIRECTIVES, Router, ROUTER_PROVIDERS } from '@angular/router-deprecated';
+import {Component} from '@angular/core';
+import {RouteConfig, Router} from '@angular/router-deprecated';
 import {FORM_PROVIDERS} from '@angular/common';
 
 import {RouterActive, LoggedInRouterOutlet} from './directives';
@@ -14,7 +14,6 @@ import {Login} from './login/login';
 import {Penalties} from './penalties/penalties';
 import {Whitelist} from './whitelist/whitelist';
 import {Authentication} from './services/authentication';
-import {GoogleMapsAPI} from './lanemap/google-maps-api';
 
 /*
  * App Component
@@ -24,7 +23,6 @@ import {GoogleMapsAPI} from './lanemap/google-maps-api';
   selector: 'app',
   providers: [
     ...FORM_PROVIDERS,
-    GoogleMapsAPI,
   ],
   directives: [
     RouterActive,

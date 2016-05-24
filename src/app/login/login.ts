@@ -17,6 +17,7 @@ export class Login {
   errorMessage: string;
 
   constructor(fb: FormBuilder, public auth: Authentication, public router: Router) {
+    this.auth.logout();
     this.form = fb.group({
       username:  ['', Validators.required],
       password:  ['', Validators.required]
