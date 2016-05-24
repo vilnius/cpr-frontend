@@ -1,5 +1,5 @@
-import {Component} from 'angular2/core';
-import {Http, Headers} from 'angular2/http';
+import {Component} from '@angular/core';
+import {Http, Headers} from '@angular/http';
 
 import {GPS} from './gps';
 
@@ -41,11 +41,11 @@ export class Penalties {
   }
   getPenalties() {
     this.http.get('/api/penalties')
-    .map(res => res.json())
-    .subscribe(
-      data => this.penalties = data,
-      err => this.logError(err)
-    );
+      .map(res => res.json())
+      .subscribe(
+        data => this.penalties = data,
+        err => this.logError(err)
+      );
   }
   logError(err) {
     console.error('There was an error: ' + err);

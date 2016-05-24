@@ -2,21 +2,12 @@
  * These are globally available services in any component or any other service
  */
 
-
-import {provide} from 'angular2/core';
-
 // Angular 2
-import {FORM_PROVIDERS} from 'angular2/common';
-
+import { FORM_PROVIDERS, HashLocationStrategy, LocationStrategy } from '@angular/common';
 // Angular 2 Http
-import {HTTP_PROVIDERS} from 'angular2/http';
+import { HTTP_PROVIDERS } from '@angular/http';
 // Angular 2 Router
-import {ROUTER_PROVIDERS } from 'angular2/router';
-import {LocationStrategy, HashLocationStrategy} from 'angular2/platform/common';
-
-// Angular 2 Material
-// TODO(gdi2290): replace with @angular2-material/all
-//import {MATERIAL_PROVIDERS} from './angular2-material2';
+import { ROUTER_PROVIDERS } from '@angular/router-deprecated';
 
 /*
 * Application Providers/Directives/Pipes
@@ -25,9 +16,8 @@ import {LocationStrategy, HashLocationStrategy} from 'angular2/platform/common';
 export const APPLICATION_PROVIDERS = [
   ...FORM_PROVIDERS,
   ...HTTP_PROVIDERS,
-//  ...MATERIAL_PROVIDERS,
   ...ROUTER_PROVIDERS,
-  provide(LocationStrategy, { useClass: HashLocationStrategy }),
+  {provide: LocationStrategy, useClass: HashLocationStrategy }
 ];
 
 export const PROVIDERS = [

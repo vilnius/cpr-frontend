@@ -1,10 +1,11 @@
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
+import {Http, Headers, RequestOptions} from '@angular/http';
+import {PaginatePipe, PaginationControlsCmp, PaginationService} from 'ng2-pagination';
+
 import {WhitePlateAdder} from "./white-plate-adder"
 import {WhitePlateEditer} from "./white-plate-editer"
-import {Http, Headers, RequestOptions} from 'angular2/http';
 import {Plate} from './plate';
 
-import {PaginatePipe, PaginationControlsCmp, PaginationService} from 'ng2-pagination';
 
 @Component({
   selector: 'whitelist',

@@ -1,12 +1,16 @@
-import {Injectable, NgZone} from 'angular2/core';
-import {Http} from 'angular2/http';
+import {Injectable, NgZone} from '@angular/core';
+import {Http, Headers, RequestOptions} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/share';
 
+const headers = new Headers({ 'Content-Type': 'application/json' });
+const httpOptions = new RequestOptions({ headers: headers });
+
 @Injectable()
 export class MapDataService {
   public dirty: boolean = false;
+  public isNew: boolean = false;
   public data$: Observable<any>;
   private _dataObserver: any;
   private _data: any = {};
@@ -23,21 +27,44 @@ export class MapDataService {
     });
   };
 
+  new = () => {
+    const lanemap = { _id: "vilnius", name: "vilnius", geoJSON: {} };
+    this.http.post('/api/lanemaps', JSON.stringify(lanemap), httpOptions)
+      .map(res => res.json())
+      .subscribe(
+        _ => {
+          this.isNew = false;
+          this.dirty = true;
+        },
+        err => console.error(err)
+    );
+  };
+
   load = () => {
-    // this.http.get('data.json').map(response => response.json()).subscribe(data => {
-    //   // Update data store
-    //   this._data = data;
-    //   // Push this new data into the Observable stream
-    //   this._dataObserver.next(this._data);
-    // }, error => console.error('Could not load data!', error));
-    let laneData = JSON.parse(localStorage.getItem('lane-data'));
-    this.update(laneData);
-    this.dirty = false;
-    return laneData;
+    this.http.get('/api/lanemaps/vilnius')
+      .map(res => res.json())
+      .subscribe(
+        data => {
+          this.update(data.geoJSON);
+          this.isNew = false;
+          this.dirty = false;
+        },
+        err => {
+          console.error(err);
+          if (err.status === 404) {
+            this.isNew = true;
+          }
+        }
+      );
   };
 
   save = () => {
-    localStorage.setItem('lane-data', JSON.stringify(this._data));
-    this.dirty = false;
+    const lanemap = { _id: "vilnius", name: "vilnius", geoJSON: this._data || {} };
+    this.http.post('/api/lanemaps/vilnius', JSON.stringify(lanemap), httpOptions)
+      .map(res => res.json())
+      .subscribe(
+        _ => this.dirty = false,
+        err => console.error(err)
+    );
   };
 }

@@ -1,7 +1,7 @@
 // login.ts
-import {Component} from 'angular2/core';
-import {FORM_DIRECTIVES, FormBuilder, Validators, ControlGroup, NgIf} from 'angular2/common';
-import {Router} from 'angular2/router';
+import {Component} from '@angular/core';
+import {FORM_DIRECTIVES, FormBuilder, Validators, ControlGroup, NgIf} from '@angular/common';
+import { Router } from '@angular/router-deprecated';
 import {Authentication} from '../services/authentication';
 
 @Component({

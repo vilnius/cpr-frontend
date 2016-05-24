@@ -1,5 +1,5 @@
-import {Component, Input} from 'angular2/core';
-import {Http, Headers, RequestOptions} from 'angular2/http';
+import {Component, Input} from '@angular/core';
+import {Http, Headers, RequestOptions} from '@angular/http';
 import {Plate} from './plate';
 
 @Component({

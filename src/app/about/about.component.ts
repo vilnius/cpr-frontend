@@ -1,14 +1,4 @@
-import {Component} from 'angular2/core';
-import {CanActivate} from 'angular2/router';
-import {isLoggedin}  from '../services/is-loggedin';
-
-/*
- * We're loading this component asynchronously
- * We are using some magic with es6-promise-loader that will wrap the module with a Promise
- * see https://github.com/gdi2290/es6-promise-loader for more info
- */
-
-console.log('`About` component loaded asynchronously');
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'about',
@@ -18,15 +8,11 @@ console.log('`About` component loaded asynchronously');
     }
   `],
   template: `
-  <md-card>
     <h3>
       About Car Plate Reader
     </h3>
-  </md-card>
-
   `
 })
-@CanActivate(() => isLoggedin())
 export class About {
   constructor() {
 
