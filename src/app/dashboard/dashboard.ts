@@ -15,10 +15,6 @@ export class Dashboard {
     this.getDashbaord();
   }
 
-  log() {
-    console.log(arguments);
-  }
-
   getDashbaord() {
     this.http.get('/api/pistatus')
       .map(res => res.json())
