@@ -38,7 +38,7 @@ export class WhitePlateImporter {
         var formData: any = new FormData();
         var xhr = new XMLHttpRequest();
         for(var i = 0; i < files.length; i++) {
-            formData.append("uploads[]", files[i], files[i].name);
+            formData.append("uploads", files[i], files[i].name);
         }
         var requestfinished = 4;
         xhr.onreadystatechange = function () {
