@@ -1,0 +1,26 @@
+<table *ngIf="!error" class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Live</th>
+      <th>First Reg</th>
+      <th>IP</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let piStatus of piStatuses; let i = index">
+      <td>{{ piStatus.id }}</td>
+      <td>{{ piStatus.connected ? 'Yes' : 'No' }}</td>
+      <td>{{ piStatus.createdAt | amTimeAgo }}</td>
+      <td>{{ piStatus.ip }}</td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="error">
+    <div class="alert alert-warning" role="alert">
+        <strong>
+          Error ocured
+        </strong>
+        {{ error }}
+    </div>
+</div>
