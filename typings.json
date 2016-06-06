@@ -2,6 +2,7 @@
   "globalDependencies": {
     "angular-protractor": "registry:dt/angular-protractor#1.5.0+20160425143459",
     "core-js": "registry:dt/core-js#0.0.0+20160317120654",
+    "google.maps": "registry:dt/google.maps#3.20.0+20160414124451",
     "hammerjs": "registry:dt/hammerjs#2.0.4+20160417130828",
     "jasmine": "registry:dt/jasmine#2.2.0+20160505161446",
     "node": "registry:dt/node#6.0.0+20160514165920",
