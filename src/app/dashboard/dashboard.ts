@@ -1,5 +1,5 @@
-import {Component} from 'angular2/core';
-import {Http, Headers, RequestOptions} from 'angular2/http';
+import {Component} from '@angular/core';
+import {Http, Headers, RequestOptions} from '@angular/http';
 import {TimeAgoPipe} from 'angular2-moment';
 
 @Component({
@@ -7,7 +7,8 @@ import {TimeAgoPipe} from 'angular2-moment';
   pipes: [TimeAgoPipe],
 })
 export class Dashboard {
-  piStatuses: any;
+  error: string;
+  piStatuses: any[];
 
   constructor(public http: Http) { }
 
@@ -20,13 +21,15 @@ export class Dashboard {
       .map(res => res.json())
       .subscribe(
         data => {
-          if (data.length)
+          if (data.length) {
+            this.error = null;
             this.piStatuses = data;
-          else
-            this.piStatuses = { error: 'No data' };
+          } else {
+            this.error = 'No PIs found';
+          }
         },
         err => {
-          this.piStatuses = { error: 'Bad response from server' };
+          this.error = 'Bad response from server';
         }
     );
   }

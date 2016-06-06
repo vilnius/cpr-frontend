@@ -1,4 +1,4 @@
-<table *ngIf="!piStatuses?.error" class="table table-striped">
+<table *ngIf="!error" class="table table-striped">
   <thead>
     <tr>
       <th>ID</th>
@@ -16,11 +16,11 @@
     </tr>
   </tbody>
 </table>
-<div *ngIf="piStatuses?.error">
+<div *ngIf="error">
     <div class="alert alert-warning" role="alert">
         <strong>
           Error ocured
         </strong>
-        {{ piStatuses.error }}
+        {{ error }}
     </div>
 </div>
