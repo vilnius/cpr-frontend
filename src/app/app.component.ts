@@ -2,18 +2,8 @@
  * Angular 2 decorators and services
  */
 import { Component } from '@angular/core';
-import { RouteConfig, ROUTER_DIRECTIVES, Router, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import {FORM_PROVIDERS} from '@angular/common';
 
-import {RouterActive, LoggedInRouterOutlet} from './directives';
-import {Home} from './home/home.component';
-import {Index} from './index/index';
-import {About} from './about';
-import {LaneMap} from './lanemap/lanemap';
-import {Login} from './login/login';
-import {Penalties} from './penalties/penalties';
-import {Whitelist} from './whitelist/whitelist';
-import {Dashboard} from './dashboard/dashboard';
 import {Authentication} from './services/authentication';
 import {GoogleMapsAPI} from './lanemap/google-maps-api';
 
@@ -26,10 +16,6 @@ import {GoogleMapsAPI} from './lanemap/google-maps-api';
   providers: [
     ...FORM_PROVIDERS,
     GoogleMapsAPI,
-  ],
-  directives: [
-    RouterActive,
-    LoggedInRouterOutlet,
   ],
   pipes: [],
   styles: [`
@@ -52,33 +38,30 @@ import {GoogleMapsAPI} from './lanemap/google-maps-api';
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li router-active>
-                <a [routerLink]=" ['Index'] ">Index</a>
+              <li>
+                <a [routerLink]=" ['./index'] " routerLinkActive="active">Index</a>
               </li>
-              <li router-active *ngIf="!auth.loggedIn">
-                <a [routerLink]=" ['Login'] ">Login</a>
+              <li *ngIf="!auth.loggedIn">
+                <a [routerLink]=" ['./login'] ">Login</a>
               </li>
             </ul>
             <ul *ngIf="auth.loggedIn" class="nav navbar-nav">
-              <!--<li router-active>
-                <a [routerLink]=" ['Home'] ">Home</a>
-              </li>-->
-              <li router-active>
-                <a [routerLink]=" ['Penalties'] ">Penalties</a>
+              <li>
+                <a [routerLink]=" ['./penalties'] ">Penalties</a>
               </li>
-              <li router-active>
-                <a [routerLink]=" ['LaneMap'] ">Lane Map</a>
+              <li>
+                <a [routerLink]=" ['./lane-map'] ">Lane Map</a>
               </li>
-              <li router-active>
-                <a [routerLink]=" ['About'] ">About</a>
+              <li>
+                <a [routerLink]=" ['./about'] ">About</a>
               </li>
-              <li router-active>
-                <a [routerLink]=" ['Whitelist'] ">Plate Whitelist</a>
+              <li>
+                <a [routerLink]=" ['./whitelist'] ">Plate Whitelist</a>
               </li>
-              <li router-active>
-                <a [routerLink]=" ['Dashboard'] ">Dashboard</a>
+              <li>
+                <a [routerLink]=" ['./dashboard'] ">Dashboard</a>
               </li>
-              <li router-active>
+              <li>
                 <a href="#" (click)="logout($event)">Logout</a>
               </li>
             </ul>
@@ -98,24 +81,12 @@ import {GoogleMapsAPI} from './lanemap/google-maps-api';
     </footer>
   `
 })
-@RouteConfig([
-  { path: '/', component: Index, name: 'Index' },
-  { path: '/home', component: Home, name: 'Home' },
-  { path: '/lane-map', component: LaneMap, name: 'LaneMap' },
-  { path: '/penalties', component: Penalties, name: 'Penalties' },
-  { path: '/whitelist', component: Whitelist, name: 'Whitelist' },
-  { path: '/dashboard', component: Dashboard, name: 'Dashboard' },
-  // Async load a component using Webpack's require with es6-promise-loader and webpack `require`
-  { path: '/about', component: About, name: 'About' },
-  { path: '/login', component: Login, name: 'Login' },
-  { path: '/**', redirectTo: ['Index'] }
-])
 export class App {
   name = 'Car Plate Reader';
-  constructor(public auth: Authentication, public router: Router) {}
+  constructor(public auth: Authentication) {}  // , public router: Router
   logout(event: any) {
     event.preventDefault();
     this.auth.logout();
-    this.router.navigate(['Login'])
+    ///this.router.navigate(['Login'])
   }
 }
