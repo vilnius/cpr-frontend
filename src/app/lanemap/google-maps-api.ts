@@ -11,7 +11,7 @@ const GOOGLE_MAPS_API = 'https://maps.googleapis.com/maps/api/js?';
 @Injectable()
 export class GoogleMapsAPI {
   public updatedData$: Observable<any>;
-  private _map: google.maps.Map;
+  private _map: any;  //google.maps.Map;
   private _scriptLoadingPromise: Promise<void>;
   private _updatedDataObserver: any;
 

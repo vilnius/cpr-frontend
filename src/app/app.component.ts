@@ -3,6 +3,7 @@
  */
 import { Component } from '@angular/core';
 import {FORM_PROVIDERS} from '@angular/common';
+import {Router} from '@angular/router';
 
 import {Authentication} from './services/authentication';
 import {GoogleMapsAPI} from './lanemap/google-maps-api';
@@ -34,32 +35,32 @@ import {GoogleMapsAPI} from './lanemap/google-maps-api';
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" [routerLink]=" ['Index'] ">{{ name }}</a>
+            <a class="navbar-brand" routerLink="/">{{ name }}</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <li>
-                <a [routerLink]=" ['./index'] " routerLinkActive="active">Index</a>
+                <a routerLink="/" routerLinkActive="active">Index</a>
               </li>
               <li *ngIf="!auth.loggedIn">
-                <a [routerLink]=" ['./login'] ">Login</a>
+                <a routerLink="/login" routerLinkActive="active">Login</a>
               </li>
             </ul>
             <ul *ngIf="auth.loggedIn" class="nav navbar-nav">
               <li>
-                <a [routerLink]=" ['./penalties'] ">Penalties</a>
+                <a routerLink="/penalties" routerLinkActive="active">Penalties</a>
               </li>
               <li>
-                <a [routerLink]=" ['./lane-map'] ">Lane Map</a>
+                <a  routerLink="/lane-map" routerLinkActive="active">Lane Map</a>
               </li>
               <li>
-                <a [routerLink]=" ['./about'] ">About</a>
+                <a  routerLink="/about" routerLinkActive="active">About</a>
               </li>
               <li>
-                <a [routerLink]=" ['./whitelist'] ">Plate Whitelist</a>
+                <a routerLink="/whitelist" routerLinkActive="active">Plate Whitelist</a>
               </li>
               <li>
-                <a [routerLink]=" ['./dashboard'] ">Dashboard</a>
+                <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
               </li>
               <li>
                 <a href="#" (click)="logout($event)">Logout</a>
@@ -83,10 +84,10 @@ import {GoogleMapsAPI} from './lanemap/google-maps-api';
 })
 export class App {
   name = 'Car Plate Reader';
-  constructor(public auth: Authentication) {}  // , public router: Router
+  constructor(public auth: Authentication, public router: Router) {}
   logout(event: any) {
     event.preventDefault();
     this.auth.logout();
-    ///this.router.navigate(['Login'])
+    this.router.navigate(['./login'])
   }
 }

@@ -4,11 +4,11 @@ import { DataResolver } from './app.resolver';
 import {Home} from './home/home.component';
 import {Index} from './index/index';
 import {About} from './about';
-import {LaneMap} from './lanemap/lanemap';
 import {Login} from './login/login';
 import {Penalties} from './penalties/penalties';
 import {Whitelist} from './whitelist/whitelist';
 import {Dashboard} from './dashboard/dashboard';
+import {LaneMap} from './lanemap/lanemap';
 
 export const ROUTES: Routes = [
   { path: '', component: Index },

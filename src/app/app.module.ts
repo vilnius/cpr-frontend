@@ -14,9 +14,16 @@ import { ROUTES } from './app.routes';
 import { App } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState } from './app.service';
+import {Authentication} from './services/authentication';
+
 import { Home } from './home';
 import { About } from './about';
-import {Authentication} from './services/authentication';
+import {Index} from './index/index';
+import {Login} from './login/login';
+import {Penalties} from './penalties/penalties';
+import {Whitelist} from './whitelist/whitelist';
+import {Dashboard} from './dashboard/dashboard';
+import {LaneMap} from './lanemap/lanemap';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -33,7 +40,13 @@ const APP_PROVIDERS = [
   declarations: [
     App,
     About,
-    Home
+    Home,
+    Index,
+    Login,
+    Penalties,
+    Whitelist,
+    Dashboard,
+    LaneMap
   ],
   imports: [ // import Angular's modules
     BrowserModule,
