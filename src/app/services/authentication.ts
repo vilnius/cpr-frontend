@@ -1,7 +1,29 @@
-// authentication.ts
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {Router} from '@angular/router-deprecated';
+import {Http, Headers, Request, Response, XHRBackend, BrowserXhr, ResponseOptions} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
+
+
+export class AuthenticationConnectionBackend extends XHRBackend {
+  constructor(_browserXHR: BrowserXhr, _baseResponseOptions: ResponseOptions, private _router: Router) {
+    super(_browserXHR, _baseResponseOptions);
+  }
+  isUnauthorized(status: Number): Boolean {
+    return status === 401 || status === 403;
+  }
+  createConnection(request: Request) {
+    let xhrConnection = super.createConnection(request);
+    xhrConnection.response = xhrConnection.response.catch((error: any) => {
+      if (this.isUnauthorized(error.status)) {
+        // Navigate to login page when 'Unauthorized' is received
+        this._router.navigate(['Login']);
+      }
+      return Observable.throw(error);
+    });
+    return xhrConnection;
+  }
+}
+
 
 @Injectable()
 export class Authentication {
@@ -30,21 +52,6 @@ export class Authentication {
         this.loggedIn = true;
         localStorage.setItem('token', this.token);
       });
-
-    /*
-    let observable;
-
-    if (username === 'admin' && password === 'admin') {
-      this.token = 'token';
-      this.loggedIn = true;
-      localStorage.setItem('token', this.token);
-      observable = Observable.of('token');
-    } else {
-      observable = Observable.throw('authentication failure');
-    }
-
-    return observable;
-    */
   }
 
   logout() {
@@ -60,13 +67,5 @@ export class Authentication {
       },
       err => console.error(err)
     );
-
-    /*
-    this.token = undefined;
-    this.loggedIn = false;
-    localStorage.removeItem('token');
-
-    return Observable.of(true);
-    */
   }
 }
