@@ -17,7 +17,7 @@ const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
  */
 const ENV = process.env.ENV = process.env.NODE_ENV = 'development';
 const HOST = process.env.HOST || 'localhost';
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const HMR = helpers.hasProcessFlag('hot');
 const METADATA = webpackMerge(commonConfig.metadata, {
   host: HOST,
@@ -156,7 +156,13 @@ module.exports = webpackMerge(commonConfig, {
       aggregateTimeout: 300,
       poll: 1000
     },
-    outputPath: helpers.root('dist')
+    outputPath: helpers.root('dist'),
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        secure: false
+      }
+    }
   },
 
   /*
