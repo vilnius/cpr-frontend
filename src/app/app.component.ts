@@ -1,20 +1,12 @@
 /*
  * Angular 2 decorators and services
  */
-import {Component} from '@angular/core';
-import {RouteConfig, Router} from '@angular/router-deprecated';
+import { Component } from '@angular/core';
 import {FORM_PROVIDERS} from '@angular/common';
+import {Router} from '@angular/router';
 
-import {RouterActive, LoggedInRouterOutlet} from './directives';
-import {Home} from './home/home.component';
-import {Index} from './index/index';
-import {About} from './about';
-import {LaneMap} from './lanemap/lanemap';
-import {Login} from './login/login';
-import {Penalties} from './penalties/penalties';
-import {Whitelist} from './whitelist/whitelist';
-import {Dashboard} from './dashboard/dashboard';
 import {Authentication} from './services/authentication';
+import {GoogleMapsAPI} from './lanemap/google-maps-api';
 
 /*
  * App Component
@@ -24,10 +16,7 @@ import {Authentication} from './services/authentication';
   selector: 'app',
   providers: [
     ...FORM_PROVIDERS,
-  ],
-  directives: [
-    RouterActive,
-    LoggedInRouterOutlet,
+    GoogleMapsAPI,
   ],
   pipes: [],
   styles: [`
@@ -46,37 +35,34 @@ import {Authentication} from './services/authentication';
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" [routerLink]=" ['Index'] ">{{ name }}</a>
+            <a class="navbar-brand" routerLink="/">{{ name }}</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li router-active>
-                <a [routerLink]=" ['Index'] ">Index</a>
+              <li>
+                <a routerLink="/" routerLinkActive="active">Index</a>
               </li>
-              <li router-active *ngIf="!auth.loggedIn">
-                <a [routerLink]=" ['Login'] ">Login</a>
+              <li *ngIf="!auth.loggedIn">
+                <a routerLink="/login" routerLinkActive="active">Login</a>
               </li>
             </ul>
             <ul *ngIf="auth.loggedIn" class="nav navbar-nav">
-              <!--<li router-active>
-                <a [routerLink]=" ['Home'] ">Home</a>
-              </li>-->
-              <li router-active>
-                <a [routerLink]=" ['Penalties'] ">Penalties</a>
+              <li>
+                <a routerLink="/penalties" routerLinkActive="active">Penalties</a>
               </li>
-              <li router-active>
-                <a [routerLink]=" ['LaneMap'] ">Lane Map</a>
+              <li>
+                <a  routerLink="/lane-map" routerLinkActive="active">Lane Map</a>
               </li>
-              <li router-active>
-                <a [routerLink]=" ['About'] ">About</a>
+              <li>
+                <a  routerLink="/about" routerLinkActive="active">About</a>
               </li>
-              <li router-active>
-                <a [routerLink]=" ['Whitelist'] ">Plate Whitelist</a>
+              <li>
+                <a routerLink="/whitelist" routerLinkActive="active">Plate Whitelist</a>
               </li>
-              <li router-active>
-                <a [routerLink]=" ['Dashboard'] ">Dashboard</a>
+              <li>
+                <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
               </li>
-              <li router-active>
+              <li>
                 <a href="#" (click)="logout($event)">Logout</a>
               </li>
             </ul>
@@ -96,24 +82,12 @@ import {Authentication} from './services/authentication';
     </footer>
   `
 })
-@RouteConfig([
-  { path: '/', component: Index, name: 'Index' },
-  { path: '/home', component: Home, name: 'Home' },
-  { path: '/lane-map', component: LaneMap, name: 'LaneMap' },
-  { path: '/penalties', component: Penalties, name: 'Penalties' },
-  { path: '/whitelist', component: Whitelist, name: 'Whitelist' },
-  { path: '/dashboard', component: Dashboard, name: 'Dashboard' },
-  // Async load a component using Webpack's require with es6-promise-loader and webpack `require`
-  { path: '/about', component: About, name: 'About' },
-  { path: '/login', component: Login, name: 'Login' },
-  { path: '/**', redirectTo: ['Index'] }
-])
 export class App {
   name = 'Car Plate Reader';
   constructor(public auth: Authentication, public router: Router) {}
   logout(event: any) {
     event.preventDefault();
     this.auth.logout();
-    this.router.navigate(['Login'])
+    this.router.navigate(['./login'])
   }
 }

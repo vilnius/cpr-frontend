@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HmrState } from 'angular2-hmr';
 
 @Injectable()
 export class AppState {
-  // @HmrState() is used by HMR to track the state of any object during a hot module replacement
-  @HmrState() _state = { };
+  _state = { };
 
   constructor() {
 
@@ -23,7 +21,7 @@ export class AppState {
   get(prop?: any) {
     // use our state getter for the clone
     const state = this.state;
-    return state[prop] || state;
+    return state.hasOwnProperty(prop) ? state[prop] : state;
   }
 
   set(prop: string, value: any) {

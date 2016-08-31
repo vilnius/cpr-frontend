@@ -12,13 +12,13 @@ import {Plate} from './plate';
       <div class="form-group">
         <label for="inputPlate" class="col-lg-2 control-label">Plate number</label>
         <div class="col-lg-10">
-          <input id="inputPlate" type="text" class="form-control" placeholder="Plate number" [(ngModel)]="whitePlate.plate">
+          <input name="inputPlate" id="inputPlate" type="text" class="form-control" placeholder="Plate number" [(ngModel)]="whitePlate.plate">
         </div>
       </div>
       <div class="form-group">
         <label for="inputDescription" class="col-lg-2 control-label">Description</label>
         <div class="col-lg-10">
-          <input id="inputDescription" type="text" class="form-control" placeholder="Description" [(ngModel)]="whitePlate.description">
+          <input name="inputDescription" id="inputDescription" type="text" class="form-control" placeholder="Description" [(ngModel)]="whitePlate.description">
         </div>
       </div>
       <div class="form-group">
