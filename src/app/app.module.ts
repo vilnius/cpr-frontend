@@ -1,8 +1,9 @@
 import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { RouterModule } from '@angular/router';
+import { HttpModule, XHRBackend, BrowserXhr, ResponseOptions, XSRFStrategy } from '@angular/http';
+import { Provider } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 
 /*
@@ -14,7 +15,7 @@ import { ROUTES } from './app.routes';
 import { App } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState } from './app.service';
-import { Authentication } from './services/authentication';
+import { Authentication, AuthenticationConnectionBackend } from './services/authentication';
 
 import { Home } from './home';
 import { About } from './about';
@@ -29,7 +30,12 @@ import { LaneMap } from './lanemap/lanemap';
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
   AppState,
-  Authentication
+  Authentication,
+  new Provider(XHRBackend, {
+    useFactory: (browserXhr, responseOptions, xsrfStrategy, router) => 
+      new AuthenticationConnectionBackend(browserXhr, responseOptions, xsrfStrategy, router),
+    deps: [BrowserXhr, ResponseOptions, XSRFStrategy, Router]
+  })
 ];
 
 /**

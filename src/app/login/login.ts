@@ -29,6 +29,7 @@ export class Login {
       .subscribe(
         (token: any) => this.router.navigate(['']),
         (error: any) => {
+          console.log(error);
           this.error = true;
           this.errorMessage = error.status === 401 ?
              'Bad username and/or password' : 'Unable to login';

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router-deprecated';
-import { Http, Headers, Request, Response, XHRBackend, BrowserXhr, ResponseOptions } from '@angular/http';
+import { Router } from '@angular/router';
+import { Http, Headers, Request, Response, XHRBackend, BrowserXhr, XSRFStrategy, ResponseOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 
 export class AuthenticationConnectionBackend extends XHRBackend {
-  constructor(_browserXHR: BrowserXhr, _baseResponseOptions: ResponseOptions, private _router: Router) {
-    super(_browserXHR, _baseResponseOptions);
+  constructor(_browserXhr: BrowserXhr, _baseResponseOptions: ResponseOptions, _xsrfStrategy: XSRFStrategy, private _router: Router) {
+    super(_browserXhr, _baseResponseOptions, _xsrfStrategy);
   }
+
   isUnauthorized(status: Number): Boolean {
     return status === 401 || status === 403;
   }
@@ -16,7 +17,7 @@ export class AuthenticationConnectionBackend extends XHRBackend {
     xhrConnection.response = xhrConnection.response.catch((error: any) => {
       if (this.isUnauthorized(error.status)) {
         // Navigate to login page when 'Unauthorized' is received
-        this._router.navigate(['Login']);
+        this._router.navigate(['./login']);
       }
       return Observable.throw(error);
     });
