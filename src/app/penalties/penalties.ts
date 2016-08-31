@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { Component } from '@angular/core';
+import { Http, Headers } from '@angular/http';
 
-import {GPS} from './gps';
+import { GPS } from './gps';
 
 @Component({
   selector: 'penalties',
@@ -37,7 +37,7 @@ export class Penalties {
     this.getPenalties();
   }
   printDate(dateString) {
-    return dateString.replace(/T/, ' ').replace(/\..*/, '')
+    return dateString.replace(/T/, ' ').replace(/\..*/, '');
   }
   getPenalties() {
     this.http.get('/api/penalties')

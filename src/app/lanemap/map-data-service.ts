@@ -1,6 +1,6 @@
-import {Injectable, NgZone} from '@angular/core';
-import {Http, Headers, RequestOptions} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
+import { Injectable, NgZone } from '@angular/core';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/share';
 
@@ -28,7 +28,7 @@ export class MapDataService {
   };
 
   new = () => {
-    const lanemap = { _id: "vilnius", name: "vilnius", geoJSON: {} };
+    const lanemap = { _id: 'vilnius', name: 'vilnius', geoJSON: {} };
     this.http.post('/api/lanemaps', JSON.stringify(lanemap), httpOptions)
       .map(res => res.json())
       .subscribe(
@@ -59,7 +59,7 @@ export class MapDataService {
   };
 
   save = () => {
-    const lanemap = { _id: "vilnius", name: "vilnius", geoJSON: this._data || {} };
+    const lanemap = { _id: 'vilnius', name: 'vilnius', geoJSON: this._data || {} };
     this.http.post('/api/lanemaps/vilnius', JSON.stringify(lanemap), httpOptions)
       .map(res => res.json())
       .subscribe(

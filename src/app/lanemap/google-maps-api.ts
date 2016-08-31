@@ -1,6 +1,6 @@
-import {Injectable, NgZone} from '@angular/core';
-import {Observer} from 'rxjs/Observer';
-import {Observable} from 'rxjs/Observable';
+import { Injectable, NgZone } from '@angular/core';
+import { Observer } from 'rxjs/Observer';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/share';
 
 declare var google: any;
@@ -11,7 +11,7 @@ const GOOGLE_MAPS_API = 'https://maps.googleapis.com/maps/api/js?';
 @Injectable()
 export class GoogleMapsAPI {
   public updatedData$: Observable<any>;
-  private _map: any;  //google.maps.Map;
+  private _map: any;  // google.maps.Map;
   private _scriptLoadingPromise: Promise<void>;
   private _updatedDataObserver: any;
 
@@ -71,7 +71,7 @@ export class GoogleMapsAPI {
   }
 
   setGeoJson(data: any) {
-    var newData = new google.maps.Data({
+    let newData = new google.maps.Data({
       map: this._map,
       style: this._map.data.getStyle(),
       controls: ['Polygon']

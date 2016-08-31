@@ -2,11 +2,11 @@
  * Angular 2 decorators and services
  */
 import { Component } from '@angular/core';
-import {FORM_PROVIDERS} from '@angular/common';
-import {Router} from '@angular/router';
+import { FORM_PROVIDERS } from '@angular/common';
+import { Router } from '@angular/router';
 
-import {Authentication} from './services/authentication';
-import {GoogleMapsAPI} from './lanemap/google-maps-api';
+import { Authentication } from './services/authentication';
+import { GoogleMapsAPI } from './lanemap/google-maps-api';
 
 /*
  * App Component
@@ -88,6 +88,6 @@ export class App {
   logout(event: any) {
     event.preventDefault();
     this.auth.logout();
-    this.router.navigate(['./login'])
+    this.router.navigate(['./login']);
   }
 }

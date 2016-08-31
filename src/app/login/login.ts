@@ -1,11 +1,11 @@
-import {Component} from '@angular/core';
-import {Router} from '@angular/router';
-import {Authentication} from '../services/authentication';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Authentication } from '../services/authentication';
 
 export class LoginDetails {
   constructor(
-    public username: string = "",
-    public password: string = "",
+    public username: string = '',
+    public password: string = '',
     public remember?: boolean
   ) {  }
 }
@@ -31,7 +31,7 @@ export class Login {
         (error: any) => {
           this.error = true;
           this.errorMessage = error.status === 401 ?
-             "Bad username and/or password": "Unable to login"
+             'Bad username and/or password' : 'Unable to login';
         }
       );
   }

@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {Http, Headers, RequestOptions} from '@angular/http';
-import {Plate} from './plate';
+import { Component, Input } from '@angular/core';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import { Plate } from './plate';
 
 @Component({
   selector: 'white-plate-adder',
@@ -41,7 +41,7 @@ export class WhitePlateAdder {
   ngOnInit() {
   }
   printDate(dateString) {
-    return dateString.replace(/T/, ' ').replace(/\..*/, '')
+    return dateString.replace(/T/, ' ').replace(/\..*/, '');
   }
   logError(err) {
     console.error('There was an error: ' + err);
@@ -56,17 +56,17 @@ export class WhitePlateAdder {
     .subscribe(
       _ => {
         this.onPlateAdded();
-        this.clearInputs()
+        this.clearInputs();
       },
       err => this.logError(err)
     );
   }
   cancel() {
-    this.clearInputs()
+    this.clearInputs();
     this.onCancel();
   }
   clearInputs() {
-    this.newDescription = "";
-    this.newPlateNumber = "";
+    this.newDescription = '';
+    this.newPlateNumber = '';
   }
 }

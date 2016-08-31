@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router-deprecated';
-import {Http, Headers, Request, Response, XHRBackend, BrowserXhr, ResponseOptions} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router-deprecated';
+import { Http, Headers, Request, Response, XHRBackend, BrowserXhr, ResponseOptions } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 
 
 export class AuthenticationConnectionBackend extends XHRBackend {

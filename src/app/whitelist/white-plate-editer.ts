@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {Http, Headers, RequestOptions} from '@angular/http';
-import {Plate} from './plate';
+import { Component, Input } from '@angular/core';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import { Plate } from './plate';
 
 @Component({
   selector: 'white-plate-editer',
@@ -38,7 +38,7 @@ export class WhitePlateEditer {
   ngOnInit() {
   }
   printDate(dateString) {
-    return dateString.replace(/T/, ' ').replace(/\..*/, '')
+    return dateString.replace(/T/, ' ').replace(/\..*/, '');
   }
   logError(err) {
     console.error('There was an error: ' + err);

@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {Http, Headers, RequestOptions} from '@angular/http';
+import { Component, Input } from '@angular/core';
+import { Http, Headers, RequestOptions } from '@angular/http';
 
 @Component({
   selector: 'white-plate-importer',
@@ -23,11 +23,11 @@ export class WhitePlateImporter {
   logError(err) {
     console.error('There was an error: ' + err);
   }
-  fileChangeEvent(fileInput: any){
+  fileChangeEvent(fileInput: any) {
     this.filesToUpload = <Array<File>> fileInput.target.files;
   }
   importWhitelist() {
-    this.makeFileRequest("/api/whitelist/upload", [], this.filesToUpload).then((result) => {
+    this.makeFileRequest('/api/whitelist/upload', [], this.filesToUpload).then((result) => {
       this.onPlateImported();
     }, (error) => {
         console.error(error);
@@ -35,22 +35,22 @@ export class WhitePlateImporter {
   }
   makeFileRequest(url: string, params: Array<string>, files: Array<File>) {
     return new Promise((resolve, reject) => {
-        var formData: any = new FormData();
-        var xhr = new XMLHttpRequest();
-        for(var i = 0; i < files.length; i++) {
-            formData.append("uploads", files[i], files[i].name);
+        let formData: any = new FormData();
+        let xhr = new XMLHttpRequest();
+        for (let i = 0; i < files.length; i++) {
+            formData.append('uploads', files[i], files[i].name);
         }
-        var requestfinished = 4;
+        let requestfinished = 4;
         xhr.onreadystatechange = function () {
-            if (xhr.readyState == requestfinished) {
-                if (xhr.status == 200) {
+            if (xhr.readyState === requestfinished) {
+                if (xhr.status === 200) {
                     resolve(JSON.parse(xhr.response));
                 } else {
                     reject(xhr.response);
                 }
             }
-        }
-        xhr.open("POST", url, true);
+        };
+        xhr.open('POST', url, true);
         xhr.send(formData);
     });
   }

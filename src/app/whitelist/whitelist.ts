@@ -1,11 +1,11 @@
-import {Component} from '@angular/core';
-import {Http, Headers, RequestOptions} from '@angular/http';
-import {PaginatePipe, PaginationControlsCmp, PaginationService} from 'ng2-pagination';
+import { Component } from '@angular/core';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import { PaginatePipe, PaginationControlsCmp, PaginationService } from 'ng2-pagination';
 
-import {WhitePlateAdder} from "./white-plate-adder"
-import {WhitePlateEditer} from "./white-plate-editer"
-import {WhitePlateImporter} from "./white-plate-importer"
-import {Plate} from './plate';
+import { WhitePlateAdder } from './white-plate-adder';
+import { WhitePlateEditer } from './white-plate-editer';
+import { WhitePlateImporter } from './white-plate-importer';
+import { Plate } from './plate';
 
 
 @Component({
@@ -28,12 +28,12 @@ export class Whitelist {
 
   constructor(public http: Http) { }
   ngOnInit() {
-    this.editerPlate = {_id: 1, description:'test', plate:''};
+    this.editerPlate = {_id: 1, description: 'test', plate: ''};
     this.editerVisible = false;
     this.getPlates();
   }
   printDate(dateString) {
-    return dateString.replace(/T/, ' ').replace(/\..*/, '')
+    return dateString.replace(/T/, ' ').replace(/\..*/, '');
   }
   getPlates() {
     this.http.get('/api/whitelist')

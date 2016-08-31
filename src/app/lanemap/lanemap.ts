@@ -1,6 +1,6 @@
-import {Component, Input, OnChanges} from '@angular/core';
-import {Map} from './map';
-import {MapDataService} from './map-data-service';
+import { Component, Input, OnChanges } from '@angular/core';
+import { Map } from './map';
+import { MapDataService } from './map-data-service';
 
 
 @Component({
