@@ -4,7 +4,9 @@ import { GoogleMapsAPI } from './google-maps-api';
 
 @Component({
   selector: 'map',
-  styles: [ require('./lanemap.css') ],
+  styleUrls: [
+    './lanemap.css'
+  ],
   template: `
     <div id="map"></div>
   `
@@ -36,6 +38,10 @@ export class Map {
 
   save() {
     this.mapDataService.save();
+  }
+
+  reload() {
+    this.mapDataService.load();
   }
 
   setmap(geoJSON) {

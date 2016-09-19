@@ -7,7 +7,9 @@ import { MapDataService } from './map-data-service';
   providers: [
     MapDataService,
   ],
-  styles: [ require('./lanemap.css') ],
+  styleUrls: [
+    './lanemap.css'
+  ],
   template: `
     <div id="map-controls">
       <h2>Lane Map</h2>

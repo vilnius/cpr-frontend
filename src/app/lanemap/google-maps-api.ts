@@ -47,7 +47,10 @@ export class GoogleMapsAPI {
   };
 
   setupEventListeners() {
-    this._map.data.addListener('addfeature', this.sendUpdatedData);
+    this._map.data.addListener('addfeature', (data) => {
+      data.feature.setProperty('createdAt', (new Date()).toString());
+      this.sendUpdatedData();
+    });
     this._map.data.addListener('removefeature', this.sendUpdatedData);
     this._map.data.addListener('mouseup', this.sendUpdatedData);
     this._map.data.addListener('rightclick', (event) => {
