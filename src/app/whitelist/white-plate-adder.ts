@@ -4,7 +4,6 @@ import { Plate } from './plate';
 
 @Component({
   selector: 'white-plate-adder',
-  directives: [],
   template: `
   <div class="well bs-component col-xs-6">
     <form class="form-horizontal" (submit)="createPlate(newDescription, newPlateNumber)">

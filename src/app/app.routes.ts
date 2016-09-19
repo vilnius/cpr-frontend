@@ -1,7 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 
 import { DataResolver } from './app.resolver';
-import { Home } from './home/home.component';
 import { Index } from './index/index';
 import { About } from './about';
 import { Login } from './login/login';
@@ -12,7 +11,6 @@ import { LaneMap } from './lanemap/lanemap';
 
 export const ROUTES: Routes = [
   { path: '', component: Index },
-  { path: 'home', component: Home},
   { path: 'lane-map', component: LaneMap },
   { path: 'penalties', component: Penalties },
   { path: 'whitelist', component: Whitelist },

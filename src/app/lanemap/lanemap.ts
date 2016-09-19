@@ -1,34 +1,11 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component } from '@angular/core';
 import { Map } from './map';
 import { MapDataService } from './map-data-service';
-
-
-@Component({
-  selector: 'map-info',
-  template: `<p>Polygons: {{ polygons }}</p>`
-})
-export class MapInfo implements OnChanges {
-  @Input() data: any;
-  public polygons: number;
-  constructor() {}
-
-  ngOnChanges() {
-    if (!this.data) {
-      this.data = { features: [] };
-    }
-    this.polygons = this.data.features.length;
-  }
-}
-
 
 @Component({
   selector: 'lane-map',
   providers: [
     MapDataService,
-  ],
-  directives: [
-    Map,
-    MapInfo,
   ],
   styles: [ require('./lanemap.css') ],
   template: `

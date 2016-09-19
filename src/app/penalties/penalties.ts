@@ -5,7 +5,6 @@ import { GPS } from './gps';
 
 @Component({
   selector: 'penalties',
-  directives: [ GPS ],
   template: `<h2>Penalties</h2>
   <table class="table">
     <thead>

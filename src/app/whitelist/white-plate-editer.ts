@@ -4,7 +4,6 @@ import { Plate } from './plate';
 
 @Component({
   selector: 'white-plate-editer',
-  directives: [],
   styles: [`.padding-5{ padding: 5px;}`],
   template: `
   <div class="well bs-component col-xs-6">

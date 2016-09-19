@@ -2,7 +2,6 @@
  * Angular 2 decorators and services
  */
 import { Component } from '@angular/core';
-import { FORM_PROVIDERS } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { Authentication } from './services/authentication';
@@ -15,10 +14,8 @@ import { GoogleMapsAPI } from './lanemap/google-maps-api';
 @Component({
   selector: 'app',
   providers: [
-    ...FORM_PROVIDERS,
     GoogleMapsAPI,
   ],
-  pipes: [],
   styles: [`
     main {
       padding-top: 60px;
@@ -35,29 +32,29 @@ import { GoogleMapsAPI } from './lanemap/google-maps-api';
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" routerLink="/">{{ name }}</a>
+            <a class="navbar-brand" [routerLink]=" ['./'] ">{{ name }}</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul *ngIf="auth.loggedIn" class="nav navbar-nav">
               <li>
-                <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+                <a [routerLink]=" ['./dashboard'] " routerLinkActive="active">Dashboard</a>
               </li>
               <li>
-                <a routerLink="/penalties" routerLinkActive="active">Penalties</a>
+                <a [routerLink]=" ['./penalties'] " routerLinkActive="active">Penalties</a>
               </li>
               <li>
-                <a  routerLink="/lane-map" routerLinkActive="active">Lane Map</a>
+                <a  [routerLink]=" ['./lane-map'] " routerLinkActive="active">Lane Map</a>
               </li>
               <li>
-                <a routerLink="/whitelist" routerLinkActive="active">Plate Whitelist</a>
+                <a [routerLink]=" ['./whitelist'] " routerLinkActive="active">Plate Whitelist</a>
               </li>
               <li>
-                <a  routerLink="/about" routerLinkActive="active">About</a>
+                <a  [routerLink]=" ['./about'] " routerLinkActive="active">About</a>
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li *ngIf="!auth.loggedIn">
-                <a routerLink="/login" routerLinkActive="active">Login</a>
+                <a [routerLink]=" ['./login'] " routerLinkActive="active">Login</a>
               </li>
               <li *ngIf="auth.loggedIn">
                 <a href="#" (click)="logout($event)">Logout</a>

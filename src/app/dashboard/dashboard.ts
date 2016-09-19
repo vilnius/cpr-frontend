@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
-import { TimeAgoPipe } from 'angular2-moment';
 
 @Component({
   template: require('./dashboard.html'),
-  pipes: [TimeAgoPipe],
 })
 export class Dashboard {
   error: string;

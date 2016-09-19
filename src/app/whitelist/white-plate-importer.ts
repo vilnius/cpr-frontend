@@ -3,7 +3,6 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 
 @Component({
   selector: 'white-plate-importer',
-  directives: [],
   template: `
     <div>
       <input type="file" (change)="fileChangeEvent($event)" placeholder="Import file..." />

@@ -1,18 +1,13 @@
 import { Component } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
-import { PaginatePipe, PaginationControlsCmp, PaginationService } from 'ng2-pagination';
+import { PaginationService } from 'ng2-pagination';
 
-import { WhitePlateAdder } from './white-plate-adder';
-import { WhitePlateEditer } from './white-plate-editer';
-import { WhitePlateImporter } from './white-plate-importer';
 import { Plate } from './plate';
 
 
 @Component({
   selector: 'whitelist',
-  directives: [WhitePlateAdder, WhitePlateEditer, WhitePlateImporter, PaginationControlsCmp],
   template: require('./whitelist.html'),
-  pipes: [PaginatePipe],
   providers: [PaginationService],
   styles: ['.pagination-container{text-align: center;}']
 })
