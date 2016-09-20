@@ -1,8 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/share';
 
 const headers = new Headers({ 'Content-Type': 'application/json' });
 const httpOptions = new RequestOptions({ headers: headers });
@@ -16,14 +14,14 @@ export class MapDataService {
   private _data: any = {};
 
   constructor(private http: Http, private _zone: NgZone) {
-    this.data$ = Observable.create(observer => this._dataObserver = observer).share();
+    this.data$ = new Observable(observer => this._dataObserver = observer);
   }
 
   update = (data: any) => {
-    this.dirty = true;
-    this._data = data;
     this._zone.run(() => {
-        this._dataObserver.next(data);
+      this.dirty = true;
+      this._data = data;
+      this._dataObserver.next(data);
     });
   };
 
@@ -40,7 +38,7 @@ export class MapDataService {
     );
   };
 
-  load = () => {
+  load = (callback) => {
     this.http.get('/api/lanemaps/vilnius')
       .map(res => res.json())
       .subscribe(
@@ -48,6 +46,7 @@ export class MapDataService {
           this.update(data.geoJSON);
           this.isNew = false;
           this.dirty = false;
+          callback(data.geoJSON);
         },
         err => {
           console.error(err);

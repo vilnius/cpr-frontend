@@ -1,7 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/share';
 
 declare var google: any;
 declare var window: any;
@@ -10,13 +9,13 @@ const GOOGLE_MAPS_API = 'https://maps.googleapis.com/maps/api/js?';
 
 @Injectable()
 export class GoogleMapsAPI {
-  public updatedData$: Observable<any>;
+  public mapData$: Observable<any>;
   private _map: any;  // google.maps.Map;
   private _scriptLoadingPromise: Promise<void>;
-  private _updatedDataObserver: any;
+  private _mapDataObserver: any;
 
   constructor(private _zone: NgZone) {
-      this.updatedData$ = Observable.create(observer => this._updatedDataObserver = observer).share();
+      this.mapData$ = new Observable(observer => this._mapDataObserver = observer);
   }
 
   load(): Promise<void> {
@@ -42,13 +41,13 @@ export class GoogleMapsAPI {
 
   sendUpdatedData = () => {
     this._zone.run(() => {
-      this.getGeoJson(data => this._updatedDataObserver.next(data));
-    });
+      this.getGeoJson((data) => this._mapDataObserver.next(data));
+    })
   };
 
   setupEventListeners() {
-    this._map.data.addListener('addfeature', (data) => {
-      data.feature.setProperty('createdAt', (new Date()).toString());
+    this._map.data.addListener('addfeature', (event) => {
+      event.feature.setProperty('createdAt', (new Date()).toString());
       this.sendUpdatedData();
     });
     this._map.data.addListener('removefeature', this.sendUpdatedData);

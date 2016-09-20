@@ -21,18 +21,17 @@ export class Map {
 
   ngOnInit() {
     const container = this._elem.nativeElement.querySelector('#map');
-    this.api.updatedData$.subscribe(data => this.mapDataService.update(data));
-    this.mapDataService.data$.subscribe((data) => this.setmap(data));
+    this.api.mapData$.subscribe((data) => this.mapDataService.update(data));
 
     this.api.createMap({
-        el: container,
-        mapOptions: {
-          center: {lat: 54.69, lng: 25.27},
-          zoom: 14,
-          disableDefaultUI: true
-        }
+      el: container,
+      mapOptions: {
+        center: {lat: 54.69, lng: 25.27},
+        zoom: 14,
+        disableDefaultUI: true
+      }
     }).then(() => {
-      this.mapDataService.load();
+      this.reload();
     });
   };
 
@@ -41,16 +40,12 @@ export class Map {
   }
 
   reload() {
-    this.mapDataService.load();
-  }
-
-  setmap(geoJSON) {
-    this.api.setGeoJson(geoJSON);
+    this.mapDataService.load((data) => this.api.setGeoJson(data));
   }
 
   clear() {
-    this.api.setGeoJson(null);
     this.mapDataService.update(null);
+    this.api.setGeoJson(null);
   }
 
 }
