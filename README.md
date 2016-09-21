@@ -33,8 +33,12 @@ npm install
 # start the server
 npm start
 ```
-Go to [http://0.0.0.0:3000](http://0.0.0.0:3000) or [http://localhost:3000](http://localhost:3000)
+Go to [http://0.0.0.0:8080](http://0.0.0.0:8080) or [http://localhost:8080](http://localhost:8080)
 in your browser. By default server starts in development mode with hot reloading enabled.
+You can also launch [backend node.js solution](https://github.com/vilnius/cpr-server)
+on a separate terminal. Webpack dev server has proxy setup,
+which redirects `/api` calls to `localhost:3000/api`.
+Default credentials to login: `admin/admin`
 
 ## Scripts
 
