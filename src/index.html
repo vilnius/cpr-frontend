@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="">
+<html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title><%= webpackConfig.metadata.title %></title>
+  <title><%= htmlWebpackPlugin.options.title %></title>
 
-  <meta name="description" content="<%= webpackConfig.metadata.title %>">
+  <meta name="description" content="<%= htmlWebpackPlugin.options.title %>">
 
   <% if (webpackConfig.htmlElements.headTags) { %>
   <!-- Configured Head Tags  -->
@@ -15,16 +15,13 @@
   <% } %>
 
   <!-- base url -->
-  <base href="<%= webpackConfig.metadata.baseUrl %>">
+  <base href="<%= htmlWebpackPlugin.options.metadata.baseUrl %>">
 
   <!-- Latest compiled and minified Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <!-- Optional theme -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/paper/bootstrap.min.css">
 
-  <% for (var css in htmlWebpackPlugin.files.css) { %>
-  <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
-  <% } %>
 
 </head>
 
@@ -34,11 +31,11 @@
     Loading...
   </app>
 
-  <% if (webpackConfig.metadata.isDevServer && webpackConfig.metadata.HMR !== true) { %>
+  <% if (htmlWebpackPlugin.options.metadata.isDevServer && htmlWebpackPlugin.options.metadata.HMR !== true) { %>
   <!-- Webpack Dev Server reload -->
   <script src="/webpack-dev-server.js"></script>
   <% } %>
 
+
 </body>
 </html>
-

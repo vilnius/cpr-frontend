@@ -1,0 +1,22 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+  Arnaldas Augutis
+  Andrius Paulauskas
+  Edmundas Rakauskas
+  Justas Savickas
+  Matas Seimys
+
+# THANKS
+
+  Povilas Poderskis
+  Jonas Pidkovas
+  PatrickJS -- @gdi2290
+  AngularClass -- @AngularClass
+
+# TECHNOLOGY COLOPHON
+
+  HTML5, CSS3
+  Angular2, TypeScript, Webpack
