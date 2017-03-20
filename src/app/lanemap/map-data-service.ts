@@ -23,7 +23,7 @@ export class MapDataService {
       this._data = data;
       this._dataObserver.next(data);
     });
-  };
+  }
 
   new = () => {
     const lanemap = { _id: 'vilnius', name: 'vilnius', geoJSON: {} };
@@ -36,7 +36,7 @@ export class MapDataService {
         },
         err => console.error(err)
     );
-  };
+  }
 
   load = (callback) => {
     this.http.get('/api/lanemaps/vilnius')
@@ -55,7 +55,7 @@ export class MapDataService {
           }
         }
       );
-  };
+  }
 
   save = () => {
     const lanemap = { _id: 'vilnius', name: 'vilnius', geoJSON: this._data || {} };
@@ -65,5 +65,5 @@ export class MapDataService {
         _ => this.dirty = false,
         err => console.error(err)
     );
-  };
+  }
 }

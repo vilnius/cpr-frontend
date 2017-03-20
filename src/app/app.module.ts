@@ -1,7 +1,7 @@
 import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpModule, XHRBackend, BrowserXhr, ResponseOptions, XSRFStrategy } from '@angular/http';
+import { HttpModule, XHRBackend, BrowserXhr, ResponseOptions, XSRFStrategy, CookieXSRFStrategy } from '@angular/http';
 import { Router, RouterModule } from '@angular/router';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 
@@ -9,7 +9,7 @@ import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularcla
  * Platform and Environment providers/directives/pipes
  */
 import { TimeAgoPipe } from 'angular2-moment';
-import { PaginatePipe, PaginationControlsCmp, PaginationService } from 'ng2-pagination';
+import { Ng2PaginationModule } from 'ng2-pagination';
 
 import { ENV_PROVIDERS } from './environment';
 import { ROUTES } from './app.routes';
@@ -19,7 +19,7 @@ import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InteralStateType } from './app.service';
 import { Authentication, AuthenticationConnectionBackend } from './services/authentication';
 
-import { About } from './about';
+import { AboutComponent } from './about';
 import { Index } from './index/index';
 import { Login } from './login/login';
 import { Penalties, GPS } from './penalties';
@@ -33,8 +33,11 @@ const APP_PROVIDERS = [
   AppState,
   Authentication,
   {
+    provide: XSRFStrategy,
+    useValue: new CookieXSRFStrategy('XSRF-TOKEN', 'csrf-token') },
+  {
     provide: XHRBackend,
-    useFactory: (browserXhr, responseOptions, xsrfStrategy, router) => 
+    useFactory: (browserXhr, responseOptions, xsrfStrategy, router) =>
       new AuthenticationConnectionBackend(browserXhr, responseOptions, xsrfStrategy, router),
     deps: [BrowserXhr, ResponseOptions, XSRFStrategy, Router]
   }
@@ -53,22 +56,22 @@ type StoreType = {
   bootstrap: [ App ],
   declarations: [
     App,
-    About,
+    AboutComponent,
     Index,
     Login,
-    Penalties, GPS,
+    Penalties,
+    GPS,
     Whitelist, WhitePlateAdder, WhitePlateEditer, WhitePlateImporter,
     Dashboard,
     LaneMap, Map, MapInfo,
-    //
-    TimeAgoPipe,
-    PaginationControlsCmp, PaginatePipe
+    TimeAgoPipe
   ],
   imports: [ // import Angular's modules
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES, { useHash: true })
+    RouterModule.forRoot(ROUTES, { useHash: true }),
+    Ng2PaginationModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
@@ -76,10 +79,16 @@ type StoreType = {
   ]
 })
 export class AppModule {
-  constructor(public appRef: ApplicationRef, public appState: AppState) {}
 
-  hmrOnInit(store: StoreType) {
-    if (!store || !store.state) return;
+  constructor(
+    public appRef: ApplicationRef,
+    public appState: AppState
+  ) {}
+
+  public hmrOnInit(store: StoreType) {
+    if (!store || !store.state) {
+      return;
+    }
     console.log('HMR store', JSON.stringify(store, null, 2));
     // set state
     this.appState._state = store.state;
@@ -94,8 +103,8 @@ export class AppModule {
     delete store.restoreInputValues;
   }
 
-  hmrOnDestroy(store: StoreType) {
-    const cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);
+  public hmrOnDestroy(store: StoreType) {
+    const cmpLocation = this.appRef.components.map((cmp) => cmp.location.nativeElement);
     // save state
     const state = this.appState._state;
     store.state = state;
@@ -107,10 +116,10 @@ export class AppModule {
     removeNgStyles();
   }
 
-  hmrAfterDestroy(store: StoreType) {
+  public hmrAfterDestroy(store: StoreType) {
     // display new elements
     store.disposeOldHosts();
     delete store.disposeOldHosts;
   }
-}
 
+}

@@ -2,7 +2,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { DataResolver } from './app.resolver';
 import { Index } from './index/index';
-import { About } from './about';
+import { AboutComponent } from './about';
 import { Login } from './login/login';
 import { Penalties } from './penalties/penalties';
 import { Whitelist } from './whitelist/whitelist';
@@ -15,7 +15,7 @@ export const ROUTES: Routes = [
   { path: 'penalties', component: Penalties },
   { path: 'whitelist', component: Whitelist },
   { path: 'dashboard', component: Dashboard },
-  { path: 'about', component: About },
+  { path: 'about', component: AboutComponent },
   { path: 'login', component: Login },
   { path: '**', component: Index }
 ];
