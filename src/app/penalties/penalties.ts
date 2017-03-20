@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 
-import { GPS } from './gps';
+import { GpsComponent } from './gps';
 
 @Component({
   selector: 'penalties',
@@ -28,7 +28,7 @@ import { GPS } from './gps';
   </table>
   `
 })
-export class Penalties {
+export class PenaltiesComponent implements OnInit {
   penalties: any;
 
   constructor(public http: Http) {}

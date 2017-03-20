@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { MapDataService } from './map-data-service';
 import { GoogleMapsAPI } from './google-maps-api';
 
@@ -11,7 +11,7 @@ import { GoogleMapsAPI } from './google-maps-api';
     <div id="map"></div>
   `
 })
-export class Map {
+export class MapComponent implements OnInit {
 
   constructor(
     private _elem: ElementRef,

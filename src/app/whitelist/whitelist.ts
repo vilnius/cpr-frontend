@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { PaginationService } from 'ng2-pagination';
 
 import { Plate } from './plate';
-
 
 @Component({
   selector: 'whitelist',
@@ -11,17 +10,17 @@ import { Plate } from './plate';
   providers: [PaginationService],
   styles: ['.pagination-container{text-align: center;}']
 })
-export class Whitelist {
+export class WhitelistComponent implements OnInit {
   whitePlates: Plate[];
   adderVisible: boolean = false;
   editerVisible: boolean = false;
   editerPlate: Plate;
 
+  constructor(public http: Http) { }
+
   public changeEditerCallback = (visible) => {
     this.setEditerVisibility(visible);
   }
-
-  constructor(public http: Http) { }
   ngOnInit() {
     this.editerPlate = {_id: 1, description: 'test', plate: ''};
     this.editerVisible = false;
@@ -43,7 +42,7 @@ export class Whitelist {
   }
   deletePlate(_id) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
+    let options = new RequestOptions({ headers });
 
     return this.http.delete('/api/whitelist/' + _id, options)
       .map(res => res.json())

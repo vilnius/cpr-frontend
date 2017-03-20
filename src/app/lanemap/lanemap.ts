@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Map } from './map';
+import { Component, OnInit } from '@angular/core';
+import { MapComponent } from './map';
 import { MapDataService } from './map-data-service';
 
 @Component({
@@ -24,7 +24,7 @@ import { MapDataService } from './map-data-service';
     <map #map></map>
   `
 })
-export class LaneMap {
+export class LaneMapComponent implements OnInit {
   public mapData: any;
 
   constructor(public mapDataService: MapDataService) {}

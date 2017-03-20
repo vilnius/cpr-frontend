@@ -1,21 +1,21 @@
 import { Routes, RouterModule } from '@angular/router';
 
 import { DataResolver } from './app.resolver';
-import { Index } from './index/index';
+import { IndexComponent } from './index/index';
 import { AboutComponent } from './about';
-import { Login } from './login/login';
-import { Penalties } from './penalties/penalties';
-import { Whitelist } from './whitelist/whitelist';
-import { Dashboard } from './dashboard/dashboard';
-import { LaneMap } from './lanemap/lanemap';
+import { LoginComponent } from './login/login';
+import { PenaltiesComponent } from './penalties/penalties';
+import { WhitelistComponent } from './whitelist/whitelist';
+import { DashboardComponent } from './dashboard/dashboard';
+import { LaneMapComponent } from './lanemap/lanemap';
 
 export const ROUTES: Routes = [
-  { path: '', component: Index },
-  { path: 'lane-map', component: LaneMap },
-  { path: 'penalties', component: Penalties },
-  { path: 'whitelist', component: Whitelist },
-  { path: 'dashboard', component: Dashboard },
+  { path: '', component: IndexComponent },
+  { path: 'lane-map', component: LaneMapComponent },
+  { path: 'penalties', component: PenaltiesComponent },
+  { path: 'whitelist', component: WhitelistComponent },
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'login', component: Login },
-  { path: '**', component: Index }
+  { path: 'login', component: LoginComponent },
+  { path: '**', component: IndexComponent }
 ];

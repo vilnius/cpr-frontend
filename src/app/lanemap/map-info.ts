@@ -4,10 +4,9 @@ import { Component, Input, OnChanges } from '@angular/core';
   selector: 'map-info',
   template: `<p>Polygons: {{ polygons }}</p>`
 })
-export class MapInfo implements OnChanges {
+export class MapInfoComponent implements OnChanges {
   @Input() data: any;
   public polygons: number;
-  constructor() {}
 
   ngOnChanges() {
     if (!this.data) {

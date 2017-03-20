@@ -10,20 +10,18 @@ import { Http, Headers, RequestOptions } from '@angular/http';
     </div>
   `
 })
-export class WhitePlateImporter {
+export class WhitePlateImporterComponent {
   @Input() onPlateImported: Function;
-  filesToUpload: Array<File>;
+  filesToUpload: File[];
 
   constructor(public http: Http) {
     this.filesToUpload = [];
-  }
-  ngOnInit() {
   }
   logError(err) {
     console.error('There was an error: ' + err);
   }
   fileChangeEvent(fileInput: any) {
-    this.filesToUpload = <Array<File>> fileInput.target.files;
+    this.filesToUpload = <File[]> fileInput.target.files;
   }
   importWhitelist() {
     this.makeFileRequest('/api/whitelist/upload', [], this.filesToUpload).then((result) => {
@@ -32,15 +30,15 @@ export class WhitePlateImporter {
         console.error(error);
     });
   }
-  makeFileRequest(url: string, params: Array<string>, files: Array<File>) {
+  makeFileRequest(url: string, params: string[], files: File[]) {
     return new Promise((resolve, reject) => {
         let formData: any = new FormData();
         let xhr = new XMLHttpRequest();
-        for (let i = 0; i < files.length; i++) {
-            formData.append('uploads', files[i], files[i].name);
+        for (let file of files) {
+            formData.append('uploads', file, file.name);
         }
         let requestfinished = 4;
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange = () => {
             if (xhr.readyState === requestfinished) {
                 if (xhr.status === 200) {
                     resolve(JSON.parse(xhr.response));

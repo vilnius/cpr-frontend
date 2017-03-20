@@ -30,12 +30,10 @@ import { Plate } from './plate';
   </div>
   `
 })
-export class WhitePlateEditer {
+export class WhitePlateEditerComponent {
   @Input() public whitePlate: Plate;
   @Input() public onChange: Function;
   constructor(public http: Http) { }
-  ngOnInit() {
-  }
   printDate(dateString) {
     return dateString.replace(/T/, ' ').replace(/\..*/, '');
   }
@@ -45,7 +43,7 @@ export class WhitePlateEditer {
   updatePlate() {
     let body = JSON.stringify(this.whitePlate);
     let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
+    let options = new RequestOptions({ headers });
 
     return this.http.post('/api/whitelist/' + this.whitePlate._id, body, options)
     .map(res => res.json())

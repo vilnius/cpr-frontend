@@ -3,7 +3,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 const headers = new Headers({ 'Content-Type': 'application/json' });
-const httpOptions = new RequestOptions({ headers: headers });
+const httpOptions = new RequestOptions({ headers });
 
 @Injectable()
 export class MapDataService {

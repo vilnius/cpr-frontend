@@ -1,30 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http, Headers, Request, Response, XHRBackend, BrowserXhr, XSRFStrategy, ResponseOptions } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-
-
-export class AuthenticationConnectionBackend extends XHRBackend {
-  constructor(_browserXhr: BrowserXhr, _baseResponseOptions: ResponseOptions, _xsrfStrategy: XSRFStrategy, private _router: Router) {
-    super(_browserXhr, _baseResponseOptions, _xsrfStrategy);
-  }
-
-  isUnauthorized(status: Number): Boolean {
-    return status === 401 || status === 403;
-  }
-  createConnection(request: Request) {
-    let xhrConnection = super.createConnection(request);
-    xhrConnection.response = xhrConnection.response.catch((error: any) => {
-      if (this.isUnauthorized(error.status)) {
-        // Navigate to login page when 'Unauthorized' is received
-        this._router.navigate(['./login']);
-      }
-      return Observable.throw(error);
-    });
-    return xhrConnection;
-  }
-}
-
 
 @Injectable()
 export class Authentication {
@@ -39,10 +16,7 @@ export class Authentication {
   }
 
   login(username: String, password: String) {
-    return this.http.post('/api/auth/login', JSON.stringify({
-        username: username,
-        password: password
-      }), {
+    return this.http.post('/api/auth/login', JSON.stringify({ username, password }), {
         headers: new Headers({
           'Content-Type': 'application/json'
         })
@@ -58,7 +32,7 @@ export class Authentication {
   logout() {
     return this.http.post('/api/auth/logout', null, {
       headers: new Headers({
-        'Token': this.token
+        Token: this.token
       })
     }).subscribe(
       data => {

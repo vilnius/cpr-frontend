@@ -76,7 +76,7 @@ import { GoogleMapsAPI } from './lanemap/google-maps-api';
     </footer>
   `
 })
-export class App {
+export class AppComponent {
   name = 'Car Plate Reader';
   constructor(public auth: Authentication, public router: Router) {}
   logout(event: any) {

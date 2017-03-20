@@ -2,21 +2,13 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Authentication } from '../services/authentication';
 
-export class LoginDetails {
-  constructor(
-    public username: string = '',
-    public password: string = '',
-    public remember?: boolean
-  ) {  }
-}
-
 @Component({
   selector: 'login',
   styles: [`form {margin-top: 20px;}`],
   template: require('./login.html')
 })
-export class Login {
-  details = new LoginDetails();
+export class LoginComponent {
+  details = { username: '', password: '' };
   error: boolean = false;
   errorMessage: string;
 

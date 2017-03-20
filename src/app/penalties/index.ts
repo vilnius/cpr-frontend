@@ -1,2 +1,2 @@
-export { GPS } from './gps';
-export { Penalties } from './penalties';
+export { GpsComponent } from './gps';
+export { PenaltiesComponent } from './penalties';

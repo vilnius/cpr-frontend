@@ -31,7 +31,7 @@ export class GoogleMapsAPI {
     script.src = GOOGLE_MAPS_API + '&callback=' + callbackName;
 
     this._scriptLoadingPromise = new Promise<void>((resolve: Function, reject: Function) => {
-      (<any>window)[callbackName] = () => { resolve(); };
+      (<any> window)[callbackName] = () => { resolve(); };
       script.onerror = (error: Event) => { reject(error); };
     });
 
@@ -42,8 +42,8 @@ export class GoogleMapsAPI {
   sendUpdatedData = () => {
     this._zone.run(() => {
       this.getGeoJson((data) => this._mapDataObserver.next(data));
-    })
-  };
+    });
+  }
 
   setupEventListeners() {
     this._map.data.addListener('addfeature', (event) => {

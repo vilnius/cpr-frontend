@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 
 @Component({
   template: require('./dashboard.html'),
 })
-export class Dashboard {
+export class DashboardComponent implements OnInit {
   error: string;
   piStatuses: any[];
 

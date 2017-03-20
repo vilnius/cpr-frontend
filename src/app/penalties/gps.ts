@@ -8,7 +8,6 @@ import { Component, Input } from '@angular/core';
     </a>
   `
 })
-export class GPS {
+export class GpsComponent {
   @Input() coords: any;
-  constructor() {}
 }

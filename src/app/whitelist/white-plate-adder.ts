@@ -29,7 +29,7 @@ import { Plate } from './plate';
   </div>
   `
 })
-export class WhitePlateAdder {
+export class WhitePlateAdderComponent {
   @Input() onCancel: Function;
   @Input() onPlateAdded: Function;
 
@@ -37,8 +37,6 @@ export class WhitePlateAdder {
   newDescription: string;
   newPlateNumber: string;
   constructor(public http: Http) { }
-  ngOnInit() {
-  }
   printDate(dateString) {
     return dateString.replace(/T/, ' ').replace(/\..*/, '');
   }
@@ -48,7 +46,7 @@ export class WhitePlateAdder {
   createPlate(description, plate) {
     let body = JSON.stringify({ description, plate });
     let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
+    let options = new RequestOptions({ headers });
 
     return this.http.post('/api/whitelist', body, options)
     .map(res => res.json())

@@ -14,18 +14,19 @@ import { Ng2PaginationModule } from 'ng2-pagination';
 import { ENV_PROVIDERS } from './environment';
 import { ROUTES } from './app.routes';
 // App is our top level component
-import { App } from './app.component';
+import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InteralStateType } from './app.service';
-import { Authentication, AuthenticationConnectionBackend } from './services/authentication';
+import { Authentication } from './services/authentication';
+import { AuthenticationConnectionBackend } from './services/authentication.backend';
 
 import { AboutComponent } from './about';
-import { Index } from './index/index';
-import { Login } from './login/login';
-import { Penalties, GPS } from './penalties';
-import { Whitelist, WhitePlateAdder, WhitePlateEditer, WhitePlateImporter } from './whitelist';
-import { Dashboard } from './dashboard/dashboard';
-import { LaneMap, Map, MapInfo } from './lanemap';
+import { IndexComponent } from './index/index';
+import { LoginComponent } from './login/login';
+import { PenaltiesComponent, GpsComponent } from './penalties';
+import { WhitelistComponent, WhitePlateAdderComponent, WhitePlateEditerComponent, WhitePlateImporterComponent } from './whitelist';
+import { DashboardComponent } from './dashboard/dashboard';
+import { LaneMapComponent, MapComponent, MapInfoComponent } from './lanemap';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -53,17 +54,18 @@ type StoreType = {
  * `AppModule` is the main entry point into Angular2's bootstraping process
  */
 @NgModule({
-  bootstrap: [ App ],
+  bootstrap: [ AppComponent ],
   declarations: [
-    App,
+    AppComponent,
     AboutComponent,
-    Index,
-    Login,
-    Penalties,
-    GPS,
-    Whitelist, WhitePlateAdder, WhitePlateEditer, WhitePlateImporter,
-    Dashboard,
-    LaneMap, Map, MapInfo,
+    IndexComponent,
+    LoginComponent,
+    PenaltiesComponent,
+    GpsComponent,
+    WhitelistComponent, WhitePlateAdderComponent,
+    WhitePlateEditerComponent, WhitePlateImporterComponent,
+    DashboardComponent,
+    LaneMapComponent, MapComponent, MapInfoComponent,
     TimeAgoPipe
   ],
   imports: [ // import Angular's modules
