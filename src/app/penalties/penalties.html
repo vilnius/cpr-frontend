@@ -15,32 +15,27 @@
     </tr>
     <!-- Table columns header labels -->
     <tr>
-      <th>ID</th>
       <th>Select</th>
-      <th>Image</th>
       <th>Plate number</th>
+      <th>Image</th>
       <th>Coordinates</th>
       <th>Time</th>
       <th>Actions</th>
     </tr>
   </thead>
-  <tr *ngFor="let penalty of penalties; let i = index">
-    <td>{{i + 1}}</td>
-
+  <tr *ngFor="let penalty of penalties; let i = index" (click)="pushForBulkAction(penalty._id)">
     <!-- Checkbox to select for bulk action -->
     <td>
       <input
-        value={{i}}
+        value={{penalty._id}}
         type="checkbox"
-        [checked]="isCheckedForBulkAction(i)"
-        (change)="pushForBulkAction(i)"
-      >
+        [checked]="isCheckedForBulkAction(penalty._id)"      >
     </td>
 
-    <td><a href="/api/images/{{penalty.image}}" target="_blank"><img height="40" src="/api/images/{{penalty.image}}"/></a></td>
     <td>{{penalty.plate}}</td>
+    <td><a href="/api/images/{{penalty.image}}" target="_blank"><img height="100" src="/api/images/{{penalty.image}}"/></a></td>
     <td><gps [coords]="penalty.gps"></gps></td>
     <td>{{printDate(penalty.shotAt)}}</td>
-    <td><a href="#">Send to Delfi.lt</a> | <a href="#">Send to Avilys</a></td>
+    <td><button class="btn btn-default" (click)='penaltyOverview(penalty._id)'>Process</button></td>
   </tr>
 </table>

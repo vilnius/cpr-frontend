@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { Router } from '@angular/router';
 import { GpsComponent } from './gps';
 
 @Component({
@@ -7,10 +8,10 @@ import { GpsComponent } from './gps';
   templateUrl: 'penalties.html',
 })
 export class PenaltiesComponent implements OnInit {
-  checkedForBulkAction: Array<number = [];
+  checkedForBulkAction: Array<string> = [];
   penalties: any;
 
-  constructor(public http: Http) {
+  constructor(public http: Http, private router: Router) {
   }
 
   ngOnInit() {
@@ -28,9 +29,12 @@ export class PenaltiesComponent implements OnInit {
 
     console.log('I should delete ', this.checkedForBulkAction);
 
-    this.http.delete('/api/penalties'/*, this.checkedForBulkAction */)
+    this.http.delete('/api/penalties', { body: { ids: this.checkedForBulkAction } })
       .catch(err => alert('Ištrinimas nepavyko: ' + err))
-      .flatMap(ok => this.getPenalties())
+      .flatMap(ok => {
+        this.checkedForBulkAction = [];
+        return this.getPenalties()
+      })
       .subscribe(
         data => {
           //
@@ -41,12 +45,12 @@ export class PenaltiesComponent implements OnInit {
       );
   }
 
-  isCheckedForBulkAction(id: number): boolean {
+  isCheckedForBulkAction(id: string): boolean {
     return this.checkedForBulkAction.indexOf(id) !== -1;
   }
 
   // Adds id for bulk actions or removes if already in array
-  pushForBulkAction(id: number): void {
+  pushForBulkAction(id: string): void {
     let chekedArr;
 
     chekedArr = this.checkedForBulkAction
@@ -61,6 +65,10 @@ export class PenaltiesComponent implements OnInit {
 
     }
 
+  }
+
+  penaltyOverview(id) {
+    this.router.navigate(['/penalties', id]);
   }
 
   printDate(dateString) {
