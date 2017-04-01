@@ -1,0 +1,18 @@
+<div *ngIf="penalty === undefined">Loading...</div>
+<div *ngIf="penalty">
+<h4>{{penalty.plate}} <small>{{printDate(penalty.shotAt)}}</small></h4>
+<div class="penalty-overview">
+    <div>ID: {{penalty._id}}</div>
+    <div>Plate number: <b>{{penalty.plate}}</b></div>
+    <div>Coordinates <gps [coords]="penalty.gps"></gps></div>
+    <div>Shot at: {{printDate(penalty.shotAt)}}</div>
+    <div class="penalty-actions">
+    <button class="btn btn-primary">E-mail ePolicija.lt</button>
+    <button class="btn btn-warning" (click)='deletePenalty(penalty._id)'>Delete</button>
+    <button class="btn btn-default" (click)='addToWhitelist(penalty.plate)'>Add to Whitelist</button>
+    </div>
+</div>
+<div class="penalty-image">
+    <a href="/api/images/{{penalty.image}}" target="_blank" download><img src="/api/images/{{penalty.image}}"/></a>
+</div>
+</div>

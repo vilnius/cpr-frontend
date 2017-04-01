@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+
 import { GpsComponent } from './gps';
 
 @Component({
@@ -8,7 +10,7 @@ import { GpsComponent } from './gps';
   templateUrl: 'penalties.html',
 })
 export class PenaltiesComponent implements OnInit {
-  checkedForBulkAction: Array<string> = [];
+  checkedForBulkAction: string[] = [];
   penalties: any;
 
   constructor(public http: Http, private router: Router) {
@@ -18,30 +20,26 @@ export class PenaltiesComponent implements OnInit {
     this.getPenalties().publish().connect();
   }
 
-  requestConfirm(message: string = 'Atlikti veiksmą?'): boolean {
+  requestConfirm(message: string = 'Are you sure?'): boolean {
     return confirm(message);
   }
 
   deleteBulk() {
-    if (!this.requestConfirm('Ar tikrai norite ištrinti pažymėtus duomenis?')) {
+    if (!this.requestConfirm('Are you sure you want to delete?')) {
       return;
     }
 
-    console.log('I should delete ', this.checkedForBulkAction);
-
     this.http.delete('/api/penalties', { body: { ids: this.checkedForBulkAction } })
-      .catch(err => alert('Ištrinimas nepavyko: ' + err))
+      .catch(err => { alert('Delete failed: ' + err); return Observable.throw(err); })
       .flatMap(ok => {
         this.checkedForBulkAction = [];
-        return this.getPenalties()
+        return this.getPenalties();
       })
       .subscribe(
         data => {
           //
         },
-        err => {
-          this.logError(err)
-        }
+        err => this.logError(err)
       );
   }
 
@@ -53,7 +51,7 @@ export class PenaltiesComponent implements OnInit {
   pushForBulkAction(id: string): void {
     let chekedArr;
 
-    chekedArr = this.checkedForBulkAction
+    chekedArr = this.checkedForBulkAction;
 
     if (this.isCheckedForBulkAction(id)) {
 
@@ -87,6 +85,7 @@ export class PenaltiesComponent implements OnInit {
 
   logError(err) {
     console.error('There was an error: ' + err);
+    return Observable.throw(err);
   }
 
 }
