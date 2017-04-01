@@ -1,52 +1,84 @@
 import { Component, OnInit } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-
 import { GpsComponent } from './gps';
 
 @Component({
   selector: 'penalties',
-  template: `<h2>Penalties</h2>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Image</th>
-        <th>Plate number</th>
-        <th>Coordinates</th>
-        <th>Time</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tr *ngFor="let penalty of penalties; let i = index">
-      <td>{{i + 1}}</td>
-      <td><a href="/api/images/{{penalty.image}}" target="_blank"><img height="40" src="/api/images/{{penalty.image}}"/></a></td>
-      <td>{{penalty.plate}}</td>
-      <td><gps [coords]="penalty.gps"></gps></td>
-      <td>{{printDate(penalty.shotAt)}}</td>
-      <td><a href="#">Send to Delfi.lt</a> | <a href="#">Send to Avilys</a></td>
-    </tr>
-  </table>
-  `
+  templateUrl: 'penalties.html',
 })
 export class PenaltiesComponent implements OnInit {
+  checkedForBulkAction: Array<number = [];
   penalties: any;
 
-  constructor(public http: Http) {}
-  ngOnInit() {
-    this.getPenalties();
+  constructor(public http: Http) {
   }
+
+  ngOnInit() {
+    this.getPenalties().publish().connect();
+  }
+
+  requestConfirm(message: string = 'Atlikti veiksmą?'): boolean {
+    return confirm(message);
+  }
+
+  deleteBulk() {
+    if (!this.requestConfirm('Ar tikrai norite ištrinti pažymėtus duomenis?')) {
+      return;
+    }
+
+    console.log('I should delete ', this.checkedForBulkAction);
+
+    this.http.delete('/api/penalties'/*, this.checkedForBulkAction */)
+      .catch(err => alert('Ištrinimas nepavyko: ' + err))
+      .flatMap(ok => this.getPenalties())
+      .subscribe(
+        data => {
+          //
+        },
+        err => {
+          this.logError(err)
+        }
+      );
+  }
+
+  isCheckedForBulkAction(id: number): boolean {
+    return this.checkedForBulkAction.indexOf(id) !== -1;
+  }
+
+  // Adds id for bulk actions or removes if already in array
+  pushForBulkAction(id: number): void {
+    let chekedArr;
+
+    chekedArr = this.checkedForBulkAction
+
+    if (this.isCheckedForBulkAction(id)) {
+
+      chekedArr.splice(id, 1);
+
+    } else {
+
+      chekedArr.push(id);
+
+    }
+
+  }
+
   printDate(dateString) {
     return dateString.replace(/T/, ' ').replace(/\..*/, '');
   }
+
   getPenalties() {
-    this.http.get('/api/penalties')
-      .map(res => res.json())
-      .subscribe(
-        data => this.penalties = data,
-        err => this.logError(err)
-      );
+    return this.http.get('/api/penalties')
+      .catch(err => this.logError(err))
+      .map(res => {
+        res = res.json();
+        this.penalties = res;
+        return res;
+      });
   }
+
   logError(err) {
     console.error('There was an error: ' + err);
   }
+
 }

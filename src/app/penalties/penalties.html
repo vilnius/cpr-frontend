@@ -1,0 +1,46 @@
+<table class="table">
+  <thead>
+    <!-- Header row for bulk actions -->
+    <tr>
+      <th colspan="7">
+        <button
+          [disabled]="!checkedForBulkAction.length"
+          (click)="deleteBulk()"
+          class="btn btn-danger"
+        >
+          Delete selected
+          <span class="badge">{{ checkedForBulkAction.length }}</span>
+        </button>
+      </th>
+    </tr>
+    <!-- Table columns header labels -->
+    <tr>
+      <th>ID</th>
+      <th>Select</th>
+      <th>Image</th>
+      <th>Plate number</th>
+      <th>Coordinates</th>
+      <th>Time</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tr *ngFor="let penalty of penalties; let i = index">
+    <td>{{i + 1}}</td>
+
+    <!-- Checkbox to select for bulk action -->
+    <td>
+      <input
+        value={{i}}
+        type="checkbox"
+        [checked]="isCheckedForBulkAction(i)"
+        (change)="pushForBulkAction(i)"
+      >
+    </td>
+
+    <td><a href="/api/images/{{penalty.image}}" target="_blank"><img height="40" src="/api/images/{{penalty.image}}"/></a></td>
+    <td>{{penalty.plate}}</td>
+    <td><gps [coords]="penalty.gps"></gps></td>
+    <td>{{printDate(penalty.shotAt)}}</td>
+    <td><a href="#">Send to Delfi.lt</a> | <a href="#">Send to Avilys</a></td>
+  </tr>
+</table>
