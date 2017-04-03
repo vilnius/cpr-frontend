@@ -1,31 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { GpsComponent } from './gps';
 
 @Component({
-  selector: 'penalty',
+  selector: 'penalty-overview',
   styles: [`
-    .penalty-overview { width: 40%; display: inline-block; vertical-align: top}
-    .penalty-image { width: 50%; display: inline-block; }
-    .penalty-actions { margin-top: 20px; padding-top: 10px; border-top: 1px solid #DDD }
+    .penalty-actions { padding: 10px 0; }
   `],
   templateUrl: 'penalty-overview.html',
 })
 export class PenaltyOverviewComponent implements OnInit {
-  penalty: any;
+  @Input() penalty: any;
 
   constructor(public http: Http, private route: ActivatedRoute, private router: Router) {}
+
   ngOnInit() {
+    if (this.penalty) return;
     this.route.params
-    // (+) converts string 'id' to a number
-    .switchMap((params: Params) => this.getPenalty(params['id']))
-    .subscribe(
-      data => this.penalty = data,
-      err => this.logError(err)
-    );
+      .switchMap((params: Params) => this.getPenalty(params['id']))
+      .subscribe(
+        data => this.penalty = data,
+        err => this.logError(err)
+      );
   }
+
   printDate(dateString) {
     return dateString.replace(/T/, ' ').replace(/\..*/, '');
   }

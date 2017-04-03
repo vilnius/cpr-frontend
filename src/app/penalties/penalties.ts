@@ -4,14 +4,41 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { GpsComponent } from './gps';
+import { PenaltyOverviewComponent } from './penalty-overview';
 
 @Component({
   selector: 'penalties',
+  styles: [`
+    tr {
+      cursor: pointer;
+    }
+    .active-penalty {
+      background: #f5f5f5;
+    }
+    .penalty-list {
+      position: absolute;
+      top: 64px;
+      bottom: 0;
+      left: 0;
+      width: 40%;
+      overflow: auto;
+    }
+    .penalty-overview {
+      position: absolute;
+      top: 64px;
+      bottom: 0;
+      right: 0;
+      width: 60%;
+      overflow: auto;
+      padding: 0 15px;
+    }
+  `],
   templateUrl: 'penalties.html',
 })
 export class PenaltiesComponent implements OnInit {
   checkedForBulkAction: string[] = [];
   penalties: any;
+  activePenalty;
 
   constructor(public http: Http, private router: Router) {
   }
@@ -49,24 +76,26 @@ export class PenaltiesComponent implements OnInit {
 
   // Adds id for bulk actions or removes if already in array
   pushForBulkAction(id: string): void {
-    let chekedArr;
+    const index = this.checkedForBulkAction.indexOf(id);
 
-    chekedArr = this.checkedForBulkAction;
-
-    if (this.isCheckedForBulkAction(id)) {
-
-      chekedArr.splice(id, 1);
-
+    if (index !== -1) {
+      this.checkedForBulkAction.splice(index, 1);
     } else {
-
-      chekedArr.push(id);
-
+      this.checkedForBulkAction.push(id);
     }
 
   }
 
-  penaltyOverview(id) {
-    this.router.navigate(['/penalties', id]);
+  selectAll() {
+    this.checkedForBulkAction = this.penalties.map(penalty => penalty._id);
+  }
+
+  clearSelection() {
+    this.checkedForBulkAction = [];
+  }
+
+  setActivePenalty(penalty) {
+    this.activePenalty = penalty;
   }
 
   printDate(dateString) {
@@ -79,6 +108,9 @@ export class PenaltiesComponent implements OnInit {
       .map(res => {
         res = res.json();
         this.penalties = res;
+        if (this.penalties.length > 0) {
+          this.setActivePenalty(this.penalties[0]);
+        }
         return res;
       });
   }
