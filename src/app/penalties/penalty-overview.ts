@@ -13,11 +13,14 @@ import { GpsComponent } from './gps';
 })
 export class PenaltyOverviewComponent implements OnInit {
   @Input() penalty: any;
+  editMode = false;
 
   constructor(public http: Http, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
-    if (this.penalty) return;
+    if (this.penalty) {
+      return;
+    }
     this.route.params
       .switchMap((params: Params) => this.getPenalty(params['id']))
       .subscribe(
@@ -32,6 +35,14 @@ export class PenaltyOverviewComponent implements OnInit {
   getPenalty(id: string) {
     return this.http.get('/api/penalties/' + id)
       .map(res => res.json());
+  }
+  savePenalty() {
+    this.http.post('/api/penalties/' + this.penalty._id, this.penalty)
+      .map(res => res.json())
+      .subscribe(
+        _ => this.editMode = false,
+        err => this.logError(err)
+      );
   }
   deletePenalty(id: string) {
     this.http.delete('/api/penalties/', { body: { ids: [id] } })

@@ -1,17 +1,32 @@
 <div *ngIf="!penalty">Loading...</div>
 <div *ngIf="penalty">
 <h4>{{penalty.plate}} <small>{{printDate(penalty.shotAt)}}</small></h4>
-<div class="penalty-actions">
-    <button class="btn btn-primary">E-mail ePolicija.lt</button>
-    <button class="btn btn-warning" (click)='deletePenalty(penalty._id)'>Delete</button>
-    <button class="btn btn-default" (click)='addToWhitelist(penalty.plate)'>Add to Whitelist</button>
+<div class="penalty-actions btn-group">
+  <button class="btn btn-default" *ngIf="!editMode" (click)='editMode=true'>Edit</button>
+  <button class="btn btn-success" *ngIf="editMode" (click)='savePenalty()'>Save</button>
+  <button class="btn btn-warning" (click)='deletePenalty(penalty._id)'>Delete</button>
+  <button class="btn btn-default" (click)='addToWhitelist(penalty.plate)'>Add to Whitelist</button>
+  <button class="btn btn-primary">E-mail ePolicija.lt</button>
 </div>
-<div>
-    <div>ID: {{penalty._id}}</div>
-    <div>Plate number: <b>{{penalty.plate}}</b></div>
-    <div>Coordinates <gps [coords]="penalty.gps"></gps></div>
-    <div>Shot at: {{printDate(penalty.shotAt)}}</div>
-    <a href="/api/images/{{penalty.image}}" target="_blank" download><img src="/api/images/{{penalty.image}}"/></a>
-    <div style="white-space: pre;"><small>{{penalty | json}}</small></div>
-</div>
-<div>
+<form ngNoForm class="form-horizontal">
+  <div class="form-group">
+    <label for="inputPlate" class="col-lg-2 control-label">Plate</label>
+    <div class="col-lg-10">
+      <input type="text" class="form-control" id="inputPlate" [readonly]="!editMode" [(ngModel)]="penalty.plate">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-lg-2 control-label">Coordinates</label>
+    <div class="col-lg-10">
+      <p class="form-control-static"><gps [coords]="penalty.gps"></gps></p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-lg-2 control-label">Shot at</label>
+    <div class="col-lg-10">
+      <p class="form-control-static">{{printDate(penalty.shotAt)}}</p>
+    </div>
+  </div>
+</form>
+<a href="/api/images/{{penalty.image}}" target="_blank" download><img src="/api/images/{{penalty.image}}"/></a>
+<div style="white-space: pre;">Raw data: <small>{{penalty | json}}</small></div>

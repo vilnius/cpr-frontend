@@ -4,26 +4,28 @@
     <!-- Header row for bulk actions -->
     <tr>
       <td colspan="4">
-        <button (click)="selectAll()" class="btn btn-default">Select All</button>
-        <button
-          *ngIf="checkedForBulkAction.length"
-          (click)="clearSelection()"
-          class="btn btn-default"
-        >
-          Clear selection
-        </button>
-        <button
-          *ngIf="checkedForBulkAction.length"
-          (click)="deleteBulk()"
-          class="btn btn-danger"
-        >
-          Delete selected
-          <span class="badge">{{ checkedForBulkAction.length }}</span>
-        </button>
+        <div class="btn-group">
+          <button (click)="selectAll()" class="btn btn-default">Select All</button>
+          <button
+            *ngIf="checkedForBulkAction.length"
+            (click)="clearSelection()"
+            class="btn btn-default"
+          >
+            Clear selection
+          </button>
+          <button
+            *ngIf="checkedForBulkAction.length"
+            (click)="deleteBulk()"
+            class="btn btn-danger"
+          >
+            Delete selected
+            <span class="badge">{{ checkedForBulkAction.length }}</span>
+          </button>
+        </div>
       </td>
     </tr>
   </tbody>
-  <tr *ngFor="let penalty of penalties; let i = index" 
+  <tr *ngFor="let penalty of penalties; let i = index"
     (click)="pushForBulkAction(penalty._id); setActivePenalty(penalty)"
     [ngClass]="{'active-penalty': activePenalty === penalty }">
     <!-- Checkbox to select for bulk action -->
