@@ -28,7 +28,8 @@ export class MapComponent implements OnInit {
       mapOptions: {
         center: {lat: 54.69, lng: 25.27},
         zoom: 14,
-        disableDefaultUI: true
+        disableDefaultUI: true,
+        mapTypeControl: true
       }
     }).then(() => {
       this.reload();
