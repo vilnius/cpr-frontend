@@ -1,44 +1,41 @@
+<div class="penalties-action-bar">
+  <div class="btn-group">
+    <button (click)="selectAll()" class="btn btn-default">Select All</button>
+    <button
+      *ngIf="checkedForBulkAction.length"
+      (click)="clearSelection()"
+      class="btn btn-default"
+    >
+      Clear selection
+    </button>
+    <button
+      *ngIf="checkedForBulkAction.length"
+      (click)="deleteBulk()"
+      class="btn btn-danger"
+    >
+      Delete selected
+      <span class="badge">{{ checkedForBulkAction.length }}</span>
+    </button>
+  </div>
+</div>
 <div class="penalty-list">
 <table class="table">
   <tbody>
-    <!-- Header row for bulk actions -->
-    <tr>
-      <td colspan="4">
-        <div class="btn-group">
-          <button (click)="selectAll()" class="btn btn-default">Select All</button>
-          <button
-            *ngIf="checkedForBulkAction.length"
-            (click)="clearSelection()"
-            class="btn btn-default"
-          >
-            Clear selection
-          </button>
-          <button
-            *ngIf="checkedForBulkAction.length"
-            (click)="deleteBulk()"
-            class="btn btn-danger"
-          >
-            Delete selected
-            <span class="badge">{{ checkedForBulkAction.length }}</span>
-          </button>
-        </div>
+    <tr *ngFor="let penalty of penalties; let i = index"
+      (click)="pushForBulkAction(penalty._id); setActivePenalty(penalty)"
+      [ngClass]="{'active-penalty': activePenalty === penalty }">
+      <!-- Checkbox to select for bulk action -->
+      <td>
+        <input
+          value={{penalty._id}}
+          type="checkbox"
+          [checked]="isCheckedForBulkAction(penalty._id)">
       </td>
+      <td><a href="/api/images/{{penalty.image}}" target="_blank"><img height="50" src="/api/images/{{penalty.image}}"/></a></td>
+      <td>{{penalty.plate}}</td>
+      <td>{{printDate(penalty.shotAt)}}</td>
     </tr>
   </tbody>
-  <tr *ngFor="let penalty of penalties; let i = index"
-    (click)="pushForBulkAction(penalty._id); setActivePenalty(penalty)"
-    [ngClass]="{'active-penalty': activePenalty === penalty }">
-    <!-- Checkbox to select for bulk action -->
-    <td>
-      <input
-        value={{penalty._id}}
-        type="checkbox"
-        [checked]="isCheckedForBulkAction(penalty._id)">
-    </td>
-    <td><a href="/api/images/{{penalty.image}}" target="_blank"><img height="50" src="/api/images/{{penalty.image}}"/></a></td>
-    <td>{{penalty.plate}}</td>
-    <td>{{printDate(penalty.shotAt)}}</td>
-  </tr>
 </table>
 </div>
 <div *ngIf="activePenalty" class="penalty-overview">

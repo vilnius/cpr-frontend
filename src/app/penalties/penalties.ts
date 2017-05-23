@@ -15,13 +15,24 @@ import { PenaltyOverviewComponent } from './penalty-overview';
     .active-penalty {
       background: #f5f5f5;
     }
-    .penalty-list {
+    .penalties-action-bar {
       position: absolute;
       top: 64px;
       bottom: 0;
       left: 0;
       width: 40%;
+      overflow: hidden;
+      padding: 10px 15px;
+      border-right: 1px solid #dddddd;
+    }
+    .penalty-list {
+      position: absolute;
+      top: 118px;
+      bottom: 0;
+      left: 0;
+      width: 40%;
       overflow: auto;
+      border-right: 1px solid #dddddd;
     }
     .penalty-overview {
       position: absolute;
