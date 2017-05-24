@@ -43,13 +43,18 @@ import { PenaltyOverviewComponent } from './penalty-overview';
       overflow: auto;
       padding: 0 15px;
     }
+    .pagination-bar {
+      padding: 0 15px;
+    }
   `],
   templateUrl: 'penalties.html',
 })
 export class PenaltiesComponent implements OnInit {
   checkedForBulkAction: string[] = [];
-  penalties: any;
+  penalties;
   activePenalty;
+  pages = [1];
+  activePage = 1;
 
   constructor(public http: Http, private router: Router) {
   }
@@ -113,12 +118,25 @@ export class PenaltiesComponent implements OnInit {
     return dateString.replace(/T/, ' ').replace(/\..*/, '');
   }
 
+  onPageClicked(pageNumber) {
+    if (pageNumber < 1) {
+      pageNumber = 1;
+    } else if (pageNumber > this.pages.length) {
+      pageNumber = this.pages.length;
+    }
+    if (pageNumber !== this.activePage) {
+      this.activePage = pageNumber;
+      this.getPenalties().publish().connect();
+    }
+  }
+
   getPenalties() {
-    return this.http.get('/api/penalties')
+    return this.http.get('/api/penalties?page=' + this.activePage)
       .catch(err => this.logError(err))
       .map(res => {
         res = res.json();
-        this.penalties = res;
+        this.pages = Array(res.pagination.pages).fill(0).map((x, i) => i + 1);
+        this.penalties = res.objects;
         if (this.penalties.length > 0) {
           this.setActivePenalty(this.penalties[0]);
         }

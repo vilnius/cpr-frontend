@@ -19,6 +19,26 @@
   </div>
 </div>
 <div class="penalty-list">
+<div class="pagination-bar" *ngIf="pages.length > 1">
+  <ul class="pagination">
+    <li>
+      <a href="#" aria-label="Previous"
+        (click)="onPageClicked(activePage - 1); false">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li *ngFor="let page of pages; let i = index"
+      [ngClass]="{'active': page === activePage }">
+      <a href="#" (click)="onPageClicked(page); false">{{page}}</a>
+    </li>
+    <li>
+      <a href="#" aria-label="Next"
+        (click)="onPageClicked(activePage + 1); false">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</div>
 <table class="table">
   <tbody>
     <tr *ngFor="let penalty of penalties; let i = index"
