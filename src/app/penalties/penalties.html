@@ -19,44 +19,35 @@
   </div>
 </div>
 <div class="penalty-list">
-<div class="pagination-bar" *ngIf="pages.length > 1">
-  <ul class="pagination">
-    <li>
-      <a href="#" aria-label="Previous"
-        (click)="onPageClicked(activePage - 1); false">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li *ngFor="let page of pages; let i = index"
-      [ngClass]="{'active': page === activePage }">
-      <a href="#" (click)="onPageClicked(page); false">{{page}}</a>
-    </li>
-    <li>
-      <a href="#" aria-label="Next"
-        (click)="onPageClicked(activePage + 1); false">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</div>
-<table class="table">
-  <tbody>
-    <tr *ngFor="let penalty of penalties; let i = index"
-      (click)="pushForBulkAction(penalty._id); setActivePenalty(penalty)"
-      [ngClass]="{'active-penalty': activePenalty === penalty }">
-      <!-- Checkbox to select for bulk action -->
-      <td>
-        <input
-          value={{penalty._id}}
-          type="checkbox"
-          [checked]="isCheckedForBulkAction(penalty._id)">
-      </td>
-      <td><a href="/api/images/{{penalty.image}}" target="_blank"><img height="50" src="/api/images/{{penalty.image}}"/></a></td>
-      <td>{{penalty.plate}}</td>
-      <td>{{printDate(penalty.shotAt)}}</td>
-    </tr>
-  </tbody>
-</table>
+
+  <penalties-pagination
+    [pages]="pages"
+    [activePage]="activePage"
+    [visiblePages]="visiblePages"
+    [canGoToNextPage]="canGoToNextPage"
+    [canGoToPreviousPage]="canGoToPreviousPage"
+    (onPageClicked)="onPageClicked($event)"
+  >
+  </penalties-pagination>
+
+  <table class="table">
+    <tbody>
+      <tr *ngFor="let penalty of penalties; let i = index"
+        (click)="pushForBulkAction(penalty._id); setActivePenalty(penalty)"
+        [ngClass]="{'active-penalty': activePenalty === penalty }">
+        <!-- Checkbox to select for bulk action -->
+        <td>
+          <input
+            value={{penalty._id}}
+            type="checkbox"
+            [checked]="isCheckedForBulkAction(penalty._id)">
+        </td>
+        <td><a href="/api/images/{{penalty.image}}" target="_blank"><img height="50" src="/api/images/{{penalty.image}}"/></a></td>
+        <td>{{penalty.plate}}</td>
+        <td>{{printDate(penalty.shotAt)}}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 <div *ngIf="activePenalty" class="penalty-overview">
   <penalty-overview [penalty]="activePenalty"></penalty-overview>

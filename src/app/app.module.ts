@@ -25,6 +25,7 @@ import { IndexComponent } from './index/index';
 import { LoginComponent } from './login/login';
 import { PenaltiesComponent, GpsComponent } from './penalties';
 import { PenaltyOverviewComponent } from './penalties/penalty-overview';
+import { PenaltiesPagination } from './penalties/penalties-pagination';
 import { WhitelistComponent, WhitePlateAdderComponent, WhitePlateEditerComponent, WhitePlateImporterComponent } from './whitelist';
 import { DashboardComponent } from './dashboard/dashboard';
 import { LaneMapComponent, MapComponent, MapInfoComponent } from './lanemap';
@@ -63,6 +64,7 @@ type StoreType = {
     LoginComponent,
     PenaltiesComponent,
     PenaltyOverviewComponent,
+    PenaltiesPagination,
     GpsComponent,
     WhitelistComponent, WhitePlateAdderComponent,
     WhitePlateEditerComponent, WhitePlateImporterComponent,

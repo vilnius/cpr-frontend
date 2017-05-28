@@ -1,0 +1,30 @@
+<div class="pagination-bar" *ngIf="pages.length > 1">
+    <ul class="pagination">
+      <!-- Prev -->
+      <li *ngIf="canGoToPreviousPage">
+        <a href="#" aria-label="Previous"
+          (click)="forwardOnPageClicked(activePage - 1); false">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <!-- Visible pagination pages -->
+      <li *ngFor="let page of visiblePages; let i = index"
+        [ngClass]="{'active': page === activePage }">
+        <a href="#" (click)="forwardOnPageClicked(page); false">{{page}}</a>
+      </li>
+      <!-- Forward -->
+      <li *ngIf="canGoToNextPage">
+        <a href="#" aria-label="Next"
+          (click)="forwardOnPageClicked(activePage + 1); false">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+      <!-- Prompt for go to page button -->
+      <li>
+        <a href="#" aria-label="x"
+          (click)="promtForGoToPage(); false">
+          <span aria-hidden="true">?</span>
+        </a>
+      </li>
+    </ul>
+  </div>

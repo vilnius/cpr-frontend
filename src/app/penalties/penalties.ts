@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 
 import { GpsComponent } from './gps';
 import { PenaltyOverviewComponent } from './penalty-overview';
+import { PenaltiesPagination } from './penalties-pagination';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'penalties',
@@ -53,10 +55,14 @@ export class PenaltiesComponent implements OnInit {
   checkedForBulkAction: string[] = [];
   penalties;
   activePenalty;
-  pages = [1];
-  activePage = 1;
+  pages: Array<number> = [ 1 ];
+  activePage: number = 1;
+  visiblePages: Array<number> = [ 1 ];
+  canGoToPreviousPage: boolean = false;
+  canGoToNextPage: boolean = true;
 
   constructor(public http: Http, private router: Router) {
+
   }
 
   ngOnInit() {
@@ -119,15 +125,47 @@ export class PenaltiesComponent implements OnInit {
   }
 
   onPageClicked(pageNumber) {
-    if (pageNumber < 1) {
-      pageNumber = 1;
-    } else if (pageNumber > this.pages.length) {
-      pageNumber = this.pages.length;
+    if (!this.isValidPage(pageNumber)) {
+      return;
     }
-    if (pageNumber !== this.activePage) {
-      this.activePage = pageNumber;
-      this.getPenalties().publish().connect();
-    }
+
+    this.activePage = pageNumber;
+    this.getPenalties()
+      .publish()
+      .connect();
+  }
+
+  isValidPage(page: number): boolean {
+    let isPositive,
+        isLessThatMax;
+
+    isPositive = 1 <= page;
+    isLessThatMax = page <= _.last(this.pages);
+
+    return isPositive && isLessThatMax;
+  }
+
+  createPaginationInfo(res) {
+    let visiblePages,
+        adjustBy;
+
+    visiblePages = _.range(
+      this.activePage - 2,
+      this.activePage + 3
+    );
+
+    adjustBy = visiblePages[ 0 ] < 1
+      ? Math.abs(visiblePages[ 0 ]) + 1
+      : 0;
+
+    visiblePages = visiblePages
+      .map(page => page + adjustBy)
+      .filter(page => this.isValidPage(page));
+
+    this.canGoToPreviousPage = _.first(this.pages) !== this.activePage;
+    this.canGoToNextPage = _.last(this.pages) !== this.activePage;
+
+    this.visiblePages = visiblePages;
   }
 
   getPenalties() {
@@ -135,11 +173,19 @@ export class PenaltiesComponent implements OnInit {
       .catch(err => this.logError(err))
       .map(res => {
         res = res.json();
-        this.pages = Array(res.pagination.pages).fill(0).map((x, i) => i + 1);
+
         this.penalties = res.objects;
+
+        this.pages = Array(res.pagination.pages)
+          .fill(0)
+          .map((x, i) => i + 1);
+
         if (this.penalties.length > 0) {
           this.setActivePenalty(this.penalties[0]);
         }
+
+        this.createPaginationInfo(res);
+
         return res;
       });
   }
