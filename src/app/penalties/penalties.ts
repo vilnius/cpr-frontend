@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-
 import { GpsComponent } from './gps';
 import { PenaltyOverviewComponent } from './penalty-overview';
-import { PenaltiesPagination } from './penalties-pagination';
+import { Pagination } from '../components/pagination';
 import * as _ from 'lodash';
 
 @Component({
@@ -57,9 +56,6 @@ export class PenaltiesComponent implements OnInit {
   activePenalty;
   pages: Array<number> = [ 1 ];
   activePage: number = 1;
-  visiblePages: Array<number> = [ 1 ];
-  canGoToPreviousPage: boolean = false;
-  canGoToNextPage: boolean = true;
 
   constructor(public http: Http, private router: Router) {
 
@@ -124,67 +120,29 @@ export class PenaltiesComponent implements OnInit {
     return dateString.replace(/T/, ' ').replace(/\..*/, '');
   }
 
-  onPageClicked(pageNumber) {
-    if (!this.isValidPage(pageNumber)) {
-      return;
-    }
-
-    this.activePage = pageNumber;
-    this.getPenalties()
+  onPageClicked(pageNumber: number) {
+    this.getPenalties(pageNumber)
       .publish()
       .connect();
   }
 
-  isValidPage(page: number): boolean {
-    let isPositive,
-        isLessThatMax;
-
-    isPositive = 1 <= page;
-    isLessThatMax = page <= _.last(this.pages);
-
-    return isPositive && isLessThatMax;
-  }
-
-  createPaginationInfo(res) {
-    let visiblePages,
-        adjustBy;
-
-    visiblePages = _.range(
-      this.activePage - 2,
-      this.activePage + 3
-    );
-
-    adjustBy = visiblePages[ 0 ] < 1
-      ? Math.abs(visiblePages[ 0 ]) + 1
-      : 0;
-
-    visiblePages = visiblePages
-      .map(page => page + adjustBy)
-      .filter(page => this.isValidPage(page));
-
-    this.canGoToPreviousPage = _.first(this.pages) !== this.activePage;
-    this.canGoToNextPage = _.last(this.pages) !== this.activePage;
-
-    this.visiblePages = visiblePages;
-  }
-
-  getPenalties() {
-    return this.http.get('/api/penalties?page=' + this.activePage)
+  getPenalties(pageNumber?: number) {
+    return this.http.get('/api/penalties?page=' + (pageNumber || 1))
       .catch(err => this.logError(err))
       .map(res => {
         res = res.json();
 
         this.penalties = res.objects;
 
-        this.pages = Array(res.pagination.pages)
-          .fill(0)
-          .map((x, i) => i + 1);
-
         if (this.penalties.length > 0) {
           this.setActivePenalty(this.penalties[0]);
         }
 
-        this.createPaginationInfo(res);
+        if (pageNumber) {
+          this.activePage = pageNumber;
+        }
+
+        this.pages = _.range(1, res.pagination.pages + 1);
 
         return res;
       });

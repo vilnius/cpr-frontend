@@ -20,15 +20,12 @@
 </div>
 <div class="penalty-list">
 
-  <penalties-pagination
+  <pagination
     [pages]="pages"
     [activePage]="activePage"
-    [visiblePages]="visiblePages"
-    [canGoToNextPage]="canGoToNextPage"
-    [canGoToPreviousPage]="canGoToPreviousPage"
     (onPageClicked)="onPageClicked($event)"
   >
-  </penalties-pagination>
+  </pagination>
 
   <table class="table">
     <tbody>
