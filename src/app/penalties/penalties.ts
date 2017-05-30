@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-
 import { GpsComponent } from './gps';
 import { PenaltyOverviewComponent } from './penalty-overview';
+import { Pagination } from '../components/pagination';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'penalties',
@@ -53,10 +54,11 @@ export class PenaltiesComponent implements OnInit {
   checkedForBulkAction: string[] = [];
   penalties;
   activePenalty;
-  pages = [1];
-  activePage = 1;
+  pages: Array<number> = [ 1 ];
+  activePage: number = 1;
 
   constructor(public http: Http, private router: Router) {
+
   }
 
   ngOnInit() {
@@ -118,28 +120,30 @@ export class PenaltiesComponent implements OnInit {
     return dateString.replace(/T/, ' ').replace(/\..*/, '');
   }
 
-  onPageClicked(pageNumber) {
-    if (pageNumber < 1) {
-      pageNumber = 1;
-    } else if (pageNumber > this.pages.length) {
-      pageNumber = this.pages.length;
-    }
-    if (pageNumber !== this.activePage) {
-      this.activePage = pageNumber;
-      this.getPenalties().publish().connect();
-    }
+  onPageClicked(pageNumber: number) {
+    this.getPenalties(pageNumber)
+      .publish()
+      .connect();
   }
 
-  getPenalties() {
-    return this.http.get('/api/penalties?page=' + this.activePage)
+  getPenalties(pageNumber?: number) {
+    return this.http.get('/api/penalties?page=' + (pageNumber || 1))
       .catch(err => this.logError(err))
       .map(res => {
         res = res.json();
-        this.pages = Array(res.pagination.pages).fill(0).map((x, i) => i + 1);
+
         this.penalties = res.objects;
+
         if (this.penalties.length > 0) {
           this.setActivePenalty(this.penalties[0]);
         }
+
+        if (pageNumber) {
+          this.activePage = pageNumber;
+        }
+
+        this.pages = _.range(1, res.pagination.pages + 1);
+
         return res;
       });
   }
