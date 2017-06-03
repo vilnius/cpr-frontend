@@ -1,0 +1,54 @@
+tr {
+    cursor: pointer;
+}
+
+.active-penalty {
+    background: #f5f5f5;
+}
+
+.penalties-action-bar {
+    position: absolute;
+    top: 64px;
+    bottom: 0;
+    left: 0;
+    width: 40%;
+    overflow: hidden;
+    padding: 10px 15px;
+    border-right: 1px solid #dddddd;
+}
+
+.penalty-list {
+    position: absolute;
+    top: 118px;
+    bottom: 0;
+    left: 0;
+    width: 40%;
+    overflow: auto;
+    border-right: 1px solid #dddddd;
+}
+
+.penalty-overview {
+    position: absolute;
+    top: 64px;
+    bottom: 0;
+    right: 0;
+    width: 60%;
+    overflow: auto;
+    padding: 0 15px;
+}
+
+.pagination-bar {
+    padding: 0 15px;
+}
+
+.checkbox-cell {
+    padding: 0;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.checkbox-cell input,
+.checkbox-cell input:after {
+    margin: 0;
+    vertical-align: middle;
+}

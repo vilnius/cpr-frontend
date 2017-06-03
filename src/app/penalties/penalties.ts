@@ -9,45 +9,7 @@ import * as _ from 'lodash';
 
 @Component({
   selector: 'penalties',
-  styles: [`
-    tr {
-      cursor: pointer;
-    }
-    .active-penalty {
-      background: #f5f5f5;
-    }
-    .penalties-action-bar {
-      position: absolute;
-      top: 64px;
-      bottom: 0;
-      left: 0;
-      width: 40%;
-      overflow: hidden;
-      padding: 10px 15px;
-      border-right: 1px solid #dddddd;
-    }
-    .penalty-list {
-      position: absolute;
-      top: 118px;
-      bottom: 0;
-      left: 0;
-      width: 40%;
-      overflow: auto;
-      border-right: 1px solid #dddddd;
-    }
-    .penalty-overview {
-      position: absolute;
-      top: 64px;
-      bottom: 0;
-      right: 0;
-      width: 60%;
-      overflow: auto;
-      padding: 0 15px;
-    }
-    .pagination-bar {
-      padding: 0 15px;
-    }
-  `],
+  styleUrls: [ 'penalties.css' ],
   templateUrl: 'penalties.html',
 })
 export class PenaltiesComponent implements OnInit {
@@ -77,7 +39,8 @@ export class PenaltiesComponent implements OnInit {
     this.http.delete('/api/penalties', { body: { ids: this.checkedForBulkAction } })
       .catch(err => { alert('Delete failed: ' + err); return Observable.throw(err); })
       .flatMap(ok => {
-        this.checkedForBulkAction = [];
+        this.clearSelection();
+        this.activePenalty = null;
         return this.getPenalties();
       })
       .subscribe(
@@ -122,6 +85,10 @@ export class PenaltiesComponent implements OnInit {
 
   onPageClicked(pageNumber: number) {
     this.getPenalties(pageNumber)
+      .map(response => {
+        this.clearSelection();
+        return response;
+      })
       .publish()
       .connect();
   }
@@ -134,9 +101,11 @@ export class PenaltiesComponent implements OnInit {
 
         this.penalties = res.objects;
 
-        if (this.penalties.length > 0) {
-          this.setActivePenalty(this.penalties[0]);
-        }
+        // If we delete last pentalty we need set active
+        // penalty to falsy value to reflect that in UI
+        this.setActivePenalty(
+          _.get(this, 'penalties[0]', null)
+        );
 
         if (pageNumber) {
           this.activePage = pageNumber;

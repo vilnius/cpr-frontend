@@ -30,14 +30,15 @@
   <table class="table">
     <tbody>
       <tr *ngFor="let penalty of penalties; let i = index"
-        (click)="pushForBulkAction(penalty._id); setActivePenalty(penalty)"
+        (click)="setActivePenalty(penalty)"
         [ngClass]="{'active-penalty': activePenalty === penalty }">
         <!-- Checkbox to select for bulk action -->
-        <td>
+        <td class="checkbox-cell" (click)="pushForBulkAction(penalty._id)">
           <input
             value={{penalty._id}}
             type="checkbox"
-            [checked]="isCheckedForBulkAction(penalty._id)">
+            [checked]="isCheckedForBulkAction(penalty._id)"
+          >
         </td>
         <td><a href="/api/images/{{penalty.image}}" target="_blank"><img height="50" src="/api/images/{{penalty.image}}"/></a></td>
         <td>{{penalty.plate}}</td>
