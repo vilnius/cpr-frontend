@@ -45,8 +45,10 @@ export class MapComponent implements OnInit {
   }
 
   clear() {
-    this.mapDataService.update(null);
-    this.api.setGeoJson(null);
+    if (confirm('Do you really want to delete all polygons?')) {
+      this.mapDataService.update(null);
+      this.api.setGeoJson(null);
+    }
   }
 
 }
