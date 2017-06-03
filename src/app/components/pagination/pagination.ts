@@ -35,14 +35,21 @@ export class Pagination implements OnInit {
   }
 
   private createPaginationInfo() {
-    let adjustBy = 0,
-        visiblePages: Array<number> = _.range(
+    let adjustBy = 0, visiblePages,
+        firstOfVisiblePages, lastOfVisiblePages,
+        lastOfAllPages;
+
+    lastOfAllPages = _.last(this.pages);
+
+    visiblePages = lastOfAllPages > 5
+      ? _.range(
           this.activePage - 2,
           this.activePage + 3
-        ),
-        firstOfVisiblePages = _.first(visiblePages),
-        lastOfVisiblePages = _.last(visiblePages),
-        lastOfAllPages = _.last(this.pages);
+        )
+      : _.range(1, lastOfAllPages + 1);
+
+    firstOfVisiblePages = _.first(visiblePages);
+    lastOfVisiblePages = _.last(visiblePages);
 
     if (firstOfVisiblePages < 1) {
 
