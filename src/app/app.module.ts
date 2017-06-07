@@ -23,8 +23,8 @@ import { AuthenticationConnectionBackend } from './services/authentication.backe
 import { AboutComponent } from './about';
 import { IndexComponent } from './index/index';
 import { LoginComponent } from './login/login';
-import { PenaltiesComponent, GpsComponent } from './penalties';
-import { PenaltyOverviewComponent } from './penalties/penalty-overview';
+import { ShotsComponent, GpsComponent } from './shots';
+import { ShotOverviewComponent } from './shots/shot-overview';
 import { Pagination } from './components/pagination/pagination';
 import { WhitelistComponent, WhitePlateAdderComponent, WhitePlateEditerComponent, WhitePlateImporterComponent } from './whitelist';
 import { DashboardComponent } from './dashboard/dashboard';
@@ -62,8 +62,8 @@ type StoreType = {
     AboutComponent,
     IndexComponent,
     LoginComponent,
-    PenaltiesComponent,
-    PenaltyOverviewComponent,
+    ShotsComponent,
+    ShotOverviewComponent,
     Pagination,
     GpsComponent,
     WhitelistComponent, WhitePlateAdderComponent,

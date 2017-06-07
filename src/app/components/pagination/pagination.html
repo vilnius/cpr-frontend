@@ -1,4 +1,4 @@
-<div class="pagination-bar" *ngIf="pages.length > 1">
+<div class="pagination-bar" *ngIf="pages.length > 1 || activePage > 1">
     <ul class="pagination">
       <!-- Prev -->
       <li *ngIf="canGoToPreviousPage">

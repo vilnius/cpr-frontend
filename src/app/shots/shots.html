@@ -1,0 +1,52 @@
+<div class="shots-action-bar">
+  <div class="btn-group">
+    <button (click)="selectAll()" class="btn btn-default">Select All</button>
+    <button
+      *ngIf="checkedForBulkAction.length"
+      (click)="clearSelection()"
+      class="btn btn-default"
+    >
+      Clear selection
+    </button>
+    <button
+      *ngIf="checkedForBulkAction.length"
+      (click)="deleteBulk()"
+      class="btn btn-danger"
+    >
+      Delete selected
+      <span class="badge">{{ checkedForBulkAction.length }}</span>
+    </button>
+  </div>
+</div>
+<div class="shot-list">
+  <div class="pagination-control">
+    <pagination
+      [pages]="pages"
+      [activePage]="activePage"
+      (onPageClicked)="onPageClicked($event)"
+    >
+    </pagination>
+  </div>
+  <table class="table">
+    <tbody>
+      <tr *ngFor="let shot of shots; let i = index"
+        (click)="setActiveShot(shot)"
+        [ngClass]="{'active-shot': activeShot === shot }">
+        <!-- Checkbox to select for bulk action -->
+        <td class="checkbox-cell" (click)="pushForBulkAction(shot._id)">
+          <input
+            value={{shot._id}}
+            type="checkbox"
+            [checked]="isCheckedForBulkAction(shot._id)"
+          >
+        </td>
+        <td><a href="/api/images/{{shot.image}}" target="_blank"><img height="50" src="/api/images/{{shot.image}}"/></a></td>
+        <td>{{shot.plate}}</td>
+        <td>{{printDate(shot.shotAt)}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="activeShot" class="shot-overview">
+  <shot-overview [shot]="activeShot"></shot-overview>
+</div>

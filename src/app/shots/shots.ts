@@ -3,20 +3,20 @@ import { Http, Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { GpsComponent } from './gps';
-import { PenaltyOverviewComponent } from './penalty-overview';
+import { ShotOverviewComponent } from './shot-overview';
 import { Pagination } from '../components/pagination';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'penalties',
-  styleUrls: [ 'penalties.css' ],
-  templateUrl: 'penalties.html',
+  selector: 'shots',
+  styleUrls: [ 'shots.css' ],
+  templateUrl: 'shots.html',
 })
-export class PenaltiesComponent implements OnInit {
+export class ShotsComponent implements OnInit {
   checkedForBulkAction: string[] = [];
-  penalties;
-  activePenalty;
-  pages: Array<number> = [ 1 ];
+  shots;
+  activeShot;
+  pages: number[] = [ 1 ];
   activePage: number = 1;
 
   constructor(public http: Http, private router: Router) {
@@ -24,7 +24,7 @@ export class PenaltiesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getPenalties().publish().connect();
+    this.getShots().publish().connect();
   }
 
   requestConfirm(message: string = 'Are you sure?'): boolean {
@@ -36,12 +36,11 @@ export class PenaltiesComponent implements OnInit {
       return;
     }
 
-    this.http.delete('/api/penalties', { body: { ids: this.checkedForBulkAction } })
+    this.http.delete('/api/shots', { body: { ids: this.checkedForBulkAction } })
       .catch(err => { alert('Delete failed: ' + err); return Observable.throw(err); })
       .flatMap(ok => {
         this.clearSelection();
-        this.activePenalty = null;
-        return this.getPenalties();
+        return this.getShots();
       })
       .subscribe(
         data => {
@@ -68,15 +67,15 @@ export class PenaltiesComponent implements OnInit {
   }
 
   selectAll() {
-    this.checkedForBulkAction = this.penalties.map(penalty => penalty._id);
+    this.checkedForBulkAction = this.shots.map(shot => shot._id);
   }
 
   clearSelection() {
     this.checkedForBulkAction = [];
   }
 
-  setActivePenalty(penalty) {
-    this.activePenalty = penalty;
+  setActiveShot(shot) {
+    this.activeShot = shot;
   }
 
   printDate(dateString) {
@@ -84,7 +83,7 @@ export class PenaltiesComponent implements OnInit {
   }
 
   onPageClicked(pageNumber: number) {
-    this.getPenalties(pageNumber)
+    this.getShots(pageNumber)
       .map(response => {
         this.clearSelection();
         return response;
@@ -93,25 +92,21 @@ export class PenaltiesComponent implements OnInit {
       .connect();
   }
 
-  getPenalties(pageNumber?: number) {
-    return this.http.get('/api/penalties?page=' + (pageNumber || 1))
+  getShots(pageNumber?: number) {
+    pageNumber = pageNumber ? pageNumber : this.activePage;
+
+    return this.http.get('/api/shots?page=' + pageNumber)
       .catch(err => this.logError(err))
       .map(res => {
         res = res.json();
 
-        this.penalties = res.objects;
-
-        // If we delete last pentalty we need set active
-        // penalty to falsy value to reflect that in UI
-        this.setActivePenalty(
-          _.get(this, 'penalties[0]', null)
-        );
-
-        if (pageNumber) {
-          this.activePage = pageNumber;
-        }
-
+        this.activePage = pageNumber;
+        this.shots = res.objects;
         this.pages = _.range(1, res.pagination.pages + 1);
+
+        this.setActiveShot(
+          this.shots.length > 0 ? this.shots[0] : null
+        );
 
         return res;
       });

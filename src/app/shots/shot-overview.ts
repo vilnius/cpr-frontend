@@ -5,26 +5,26 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { GpsComponent } from './gps';
 
 @Component({
-  selector: 'penalty-overview',
+  selector: 'shot-overview',
   styles: [`
-    .penalty-actions { padding: 10px 0; }
+    .shot-actions { padding: 10px 0; }
   `],
-  templateUrl: 'penalty-overview.html',
+  templateUrl: 'shot-overview.html',
 })
-export class PenaltyOverviewComponent implements OnInit {
-  @Input() penalty: any;
+export class ShotOverviewComponent implements OnInit {
+  @Input() shot: any;
   editMode = false;
 
   constructor(public http: Http, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
-    if (this.penalty) {
+    if (this.shot) {
       return;
     }
     this.route.params
-      .switchMap((params: Params) => this.getPenalty(params['id']))
+      .switchMap((params: Params) => this.getShot(params['id']))
       .subscribe(
-        data => this.penalty = data,
+        data => this.shot = data,
         err => this.logError(err)
       );
   }
@@ -32,29 +32,29 @@ export class PenaltyOverviewComponent implements OnInit {
   printDate(dateString) {
     return dateString.replace(/T/, ' ').replace(/\..*/, '');
   }
-  getPenalty(id: string) {
-    return this.http.get('/api/penalties/' + id)
+  getShot(id: string) {
+    return this.http.get('/api/shots/' + id)
       .map(res => res.json());
   }
-  savePenalty() {
-    this.http.post('/api/penalties/' + this.penalty._id, this.penalty)
+  saveShot() {
+    this.http.post('/api/shots/' + this.shot._id, this.shot)
       .map(res => res.json())
       .subscribe(
         _ => this.editMode = false,
         err => this.logError(err)
       );
   }
-  deletePenalty(id: string) {
-    this.http.delete('/api/penalties/', { body: { ids: [id] } })
+  deleteShot(id: string) {
+    this.http.delete('/api/shots/', { body: { ids: [id] } })
       .map(res => res.json())
       .subscribe(
-        _ => this.router.navigate(['/penalties']),
+        _ => this.router.navigate(['/shots']),
         err => this.logError(err)
       );
   }
   addToWhitelist(plate: string) {
     this.http.post('/api/whitelist', {
-      description: 'Added from penalty overview',
+      description: 'Added from shot overview',
       plate
     }).subscribe(
       _ => console.log('Plate added success'),

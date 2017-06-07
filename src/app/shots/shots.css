@@ -2,11 +2,11 @@ tr {
     cursor: pointer;
 }
 
-.active-penalty {
+.active-shot {
     background: #f5f5f5;
 }
 
-.penalties-action-bar {
+.shots-action-bar {
     position: absolute;
     top: 64px;
     bottom: 0;
@@ -17,7 +17,7 @@ tr {
     border-right: 1px solid #dddddd;
 }
 
-.penalty-list {
+.shot-list {
     position: absolute;
     top: 118px;
     bottom: 0;
@@ -27,7 +27,7 @@ tr {
     border-right: 1px solid #dddddd;
 }
 
-.penalty-overview {
+.shot-overview {
     position: absolute;
     top: 64px;
     bottom: 0;
@@ -37,7 +37,7 @@ tr {
     padding: 0 15px;
 }
 
-.pagination-bar {
+.pagination-control {
     padding: 0 15px;
 }
 

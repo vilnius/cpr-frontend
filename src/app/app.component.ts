@@ -36,25 +36,25 @@ import { GoogleMapsAPI } from './lanemap/google-maps-api';
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul *ngIf="auth.loggedIn" class="nav navbar-nav">
-              <li>
-                <a [routerLink]=" ['./dashboard'] " routerLinkActive="active">Dashboard</a>
+              <li routerLinkActive="active">
+                <a [routerLink]=" ['./dashboard'] ">Dashboard</a>
               </li>
-              <li>
-                <a [routerLink]=" ['./penalties'] " routerLinkActive="active">Penalties</a>
+              <li routerLinkActive="active">
+                <a [routerLink]=" ['./shots'] ">Shots</a>
               </li>
-              <li>
-                <a  [routerLink]=" ['./lane-map'] " routerLinkActive="active">Lane Map</a>
+              <li routerLinkActive="active">
+                <a [routerLink]=" ['./lane-map'] ">Lane Map</a>
               </li>
-              <li>
-                <a [routerLink]=" ['./whitelist'] " routerLinkActive="active">Plate Whitelist</a>
+              <li routerLinkActive="active">
+                <a [routerLink]=" ['./whitelist'] ">Plate Whitelist</a>
               </li>
-              <li>
-                <a  [routerLink]=" ['./about'] " routerLinkActive="active">About</a>
+              <li routerLinkActive="active">
+                <a [routerLink]=" ['./about'] ">About</a>
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li *ngIf="!auth.loggedIn">
-                <a [routerLink]=" ['./login'] " routerLinkActive="active">Login</a>
+              <li *ngIf="!auth.loggedIn" routerLinkActive="active">
+                <a [routerLink]=" ['./login'] ">Login</a>
               </li>
               <li *ngIf="auth.loggedIn">
                 <a href="#" (click)="logout($event)">Logout</a>
