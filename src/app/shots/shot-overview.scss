@@ -1,0 +1,14 @@
+.shot-actions {
+    padding: 10px 0;
+}
+
+.shot-image-box {
+    position: relative;
+
+    .leaflet-container {
+        position: absolute;
+        width: 300px;
+        height: 150px;
+        top: 0; left: 0;
+    }
+}

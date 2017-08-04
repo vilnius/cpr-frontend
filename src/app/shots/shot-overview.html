@@ -1,12 +1,28 @@
 <div *ngIf="!shot">Loading...</div>
 <div *ngIf="shot">
-<h4>{{shot.plate}} <small>{{printDate(shot.shotAt)}}</small></h4>
+<!-- Title -->
+<h4>
+  {{shot.plate}}
+  <small>{{printDate(shot.shotAt)}}</small>
+</h4>
+<!--Image with map  -->
+<div class="shot-image-box">
+  <div
+    leaflet
+    [leafletOptions]="leafletOptions"
+    [leafletLayers]="layers"
+  >
+  </div>
+  <a href="/api/images/{{shot.image}}" target="_blank" download>
+    <img src="/api/images/{{shot.image}}"/>
+  </a>
+</div>
+<!-- Actions sections -->
 <div class="shot-actions btn-group">
   <button class="btn btn-default" *ngIf="!editMode" (click)='editMode=true'>Edit</button>
   <button class="btn btn-success" *ngIf="editMode" (click)='saveShot()'>Save</button>
   <button class="btn btn-warning" (click)='deleteShot(shot._id)'>Delete</button>
-  <button class="btn btn-default" (click)='addToWhitelist(shot.plate)'>Add to Whitelist</button>
-  <button class="btn btn-primary">E-mail ePolicija.lt</button>
+  <button class="btn btn-default" (click)='addToWhitelist(shot.plate)'>Whitelist</button>
 </div>
 <form ngNoForm class="form-horizontal">
   <div class="form-group">
@@ -28,5 +44,6 @@
     </div>
   </div>
 </form>
-<a href="/api/images/{{shot.image}}" target="_blank" download><img src="/api/images/{{shot.image}}"/></a>
+
+<!-- JSON Dump  -->
 <div style="white-space: pre;">Raw data: <small>{{shot | json}}</small></div>
