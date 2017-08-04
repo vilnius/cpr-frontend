@@ -30,6 +30,8 @@ import { WhitelistComponent, WhitePlateAdderComponent, WhitePlateEditerComponent
 import { DashboardComponent } from './dashboard/dashboard';
 import { LaneMapComponent, MapComponent, MapInfoComponent } from './lanemap';
 
+import { LeafletModule } from '@asymmetrik/angular2-leaflet';
+
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -77,7 +79,8 @@ type StoreType = {
     FormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: true }),
-    Ng2PaginationModule
+    Ng2PaginationModule,
+    LeafletModule,
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
