@@ -5,12 +5,16 @@
   {{shot.plate}}
   <small>{{printDate(shot.shotAt)}}</small>
 </h4>
+<div>
+  <p class="form-control-static"><gps [coords]="shot.gps"></gps></p>
+</div>
 <!--Image with map  -->
 <div class="shot-image-box">
   <div
     leaflet
     [leafletOptions]="leafletOptions"
     [leafletLayers]="layers"
+    [leafletCenter]="centerPosition"
   >
   </div>
   <a href="/api/images/{{shot.image}}" target="_blank" download>
@@ -19,31 +23,10 @@
 </div>
 <!-- Actions sections -->
 <div class="shot-actions btn-group">
-  <button class="btn btn-default" *ngIf="!editMode" (click)='editMode=true'>Edit</button>
-  <button class="btn btn-success" *ngIf="editMode" (click)='saveShot()'>Save</button>
+  <button class="btn btn-default" (click)='saveShot()'>Edit</button>
   <button class="btn btn-warning" (click)='deleteShot(shot._id)'>Delete</button>
   <button class="btn btn-default" (click)='addToWhitelist(shot.plate)'>Whitelist</button>
 </div>
-<form ngNoForm class="form-horizontal">
-  <div class="form-group">
-    <label for="inputPlate" class="col-lg-2 control-label">Plate</label>
-    <div class="col-lg-10">
-      <input type="text" class="form-control" id="inputPlate" [readonly]="!editMode" [(ngModel)]="shot.plate">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-lg-2 control-label">Coordinates</label>
-    <div class="col-lg-10">
-      <p class="form-control-static"><gps [coords]="shot.gps"></gps></p>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-lg-2 control-label">Shot at</label>
-    <div class="col-lg-10">
-      <p class="form-control-static">{{printDate(shot.shotAt)}}</p>
-    </div>
-  </div>
-</form>
 
 <!-- JSON Dump  -->
 <div style="white-space: pre;">Raw data: <small>{{shot | json}}</small></div>

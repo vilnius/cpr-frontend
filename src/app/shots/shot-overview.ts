@@ -30,6 +30,11 @@ export class ShotOverviewComponent implements OnInit {
 
   layers: L.Layer[] = [];
 
+  centerPosition = L.latLng({
+    lat: this.defaultCenterLat,
+    lng: this.defaultCenterLon
+  });
+
   constructor(public http: Http, private route: ActivatedRoute, private router: Router) {
   }
 
@@ -43,8 +48,7 @@ export class ShotOverviewComponent implements OnInit {
       this.createMapMarker(lat, lon)
     ];
 
-    // Add map centering logic too here
-
+    this.centerPosition = L.latLng({ lat: lat, lng: lon });
   }
 
   ngOnInit() {
@@ -85,11 +89,24 @@ export class ShotOverviewComponent implements OnInit {
   }
 
   saveShot() {
-    this.http.post('/api/shots/' + this.shot._id, this.shot)
+    let newPlate = prompt(
+      'Enter new plate',
+      this.shot.plate
+    );
+
+    this.http.post(
+        '/api/shots/' + this.shot._id,
+        Object.assign({}, this.shot, { plate: newPlate })
+      )
       .map(res => res.json())
       .subscribe(
-        _ => this.editMode = false,
-        err => this.logError(err)
+        responseOk => {
+          // Update plate on succ response
+          this.shot.plate = newPlate;
+        },
+        responseErr => {
+          this.logError(responseErr)
+        }
       );
   }
 
