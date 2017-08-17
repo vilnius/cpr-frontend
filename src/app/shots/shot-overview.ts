@@ -18,7 +18,7 @@ export class ShotOverviewComponent implements OnInit {
   editMode = false;
   leafletOptions = {
     layers: [
-      L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       { maxZoom: 18, attribution: '...' })
     ],
     zoom: 12,
