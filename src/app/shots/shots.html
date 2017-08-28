@@ -41,8 +41,8 @@
           >
         </td>
         <td><img height="50" src="/api/images/{{shot.image}}"/></td>
-        <td>{{shot.plate}}</td>
-        <td>{{printDate(shot.shotAt)}}</td>
+        <td>{{ shot.plate }}</td>
+        <td>{{ shot.shotAt | isoDate }}</td>
       </tr>
     </tbody>
   </table>

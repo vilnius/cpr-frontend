@@ -13,16 +13,34 @@
       <div id="navbar" class="navbar-collapse collapse">
         <ul *ngIf="auth.loggedIn" class="nav navbar-nav">
           <li routerLinkActive="active">
-            <a [routerLink]=" ['./dashboard'] ">Dashboard</a>
+            <a [routerLink]=" ['./dashboard'] ">
+              <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span>
+              Dashboard
+            </a>
           </li>
           <li routerLinkActive="active">
-            <a [routerLink]=" ['./shots'] ">Shots</a>
+            <a [routerLink]=" ['./shots'] ">
+              <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+              Shots
+            </a>
           </li>
           <li routerLinkActive="active">
-            <a [routerLink]=" ['./lane-map'] ">Lane Map</a>
+            <a [routerLink]=" ['./violations'] ">
+              <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>
+              Violations
+            </a>
           </li>
           <li routerLinkActive="active">
-            <a [routerLink]=" ['./whitelist'] ">Plate Whitelist</a>
+            <a [routerLink]=" ['./lane-map'] ">
+              <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+              Lane Map
+            </a>
+          </li>
+          <li routerLinkActive="active">
+            <a [routerLink]=" ['./whitelist'] ">
+              <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+              Plate Whitelist
+            </a>
           </li>
           <li routerLinkActive="active">
             <a [routerLink]=" ['./about'] ">About</a>

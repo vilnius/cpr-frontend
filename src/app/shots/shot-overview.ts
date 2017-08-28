@@ -79,10 +79,6 @@ export class ShotOverviewComponent implements OnInit {
     });
   }
 
-  printDate(dateString) {
-    return dateString.replace(/T/, ' ').replace(/\..*/, '');
-  }
-
   getShot(id: string) {
     return this.http.get('/api/shots/' + id)
       .map(res => res.json());

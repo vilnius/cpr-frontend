@@ -26,9 +26,6 @@ export class WhitelistComponent implements OnInit {
     this.editerVisible = false;
     this.getPlates();
   }
-  printDate(dateString) {
-    return dateString.replace(/T/, ' ').replace(/\..*/, '');
-  }
   getPlates() {
     this.http.get('/api/whitelist')
       .map(res => res.json())

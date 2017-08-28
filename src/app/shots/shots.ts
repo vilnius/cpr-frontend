@@ -19,7 +19,7 @@ export class ShotsComponent implements OnInit {
   pages: number[] = [ 1 ];
   activePage: number = 1;
 
-  constructor(public http: Http, private router: Router) {
+  constructor(private http: Http, private router: Router) {
 
   }
 
@@ -76,10 +76,6 @@ export class ShotsComponent implements OnInit {
 
   setActiveShot(shot) {
     this.activeShot = shot;
-  }
-
-  printDate(dateString) {
-    return dateString.replace(/T/, ' ').replace(/\..*/, '');
   }
 
   onPageClicked(pageNumber: number) {

@@ -37,9 +37,6 @@ export class WhitePlateAdderComponent {
   newDescription: string;
   newPlateNumber: string;
   constructor(public http: Http) { }
-  printDate(dateString) {
-    return dateString.replace(/T/, ' ').replace(/\..*/, '');
-  }
   logError(err) {
     console.error('There was an error: ' + err);
   }

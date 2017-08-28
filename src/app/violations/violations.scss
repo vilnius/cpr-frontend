@@ -1,0 +1,23 @@
+tr {
+  cursor: pointer;
+}
+
+.violation-list {
+  width: 40%;
+  padding-top: 11.5px;
+  float: left;
+}
+
+.violation-overview {
+  width: 60%;
+  padding: 0 8px;
+  float: left;
+}
+
+.full-screen {
+  width: 100%;
+}
+
+.active-violation {
+  background: #f5f5f5;
+}
