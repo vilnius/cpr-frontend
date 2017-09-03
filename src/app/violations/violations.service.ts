@@ -22,4 +22,12 @@ export class ViolationsService {
     const url = VIOLATIONS_API + '/' + id;
     return this.http.get(url).map(value => value.json());
   }
+
+  saveViolation(violation) {
+    let url = VIOLATIONS_API;
+    if (violation._id) {
+      url += '/' + violation._id;
+    }
+    return this.http.post(url, violation).map(value => value.json());
+  }
 }

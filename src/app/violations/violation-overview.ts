@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+
 import { ViolationsService } from './violations.service'
 
 @Component({
@@ -20,6 +22,7 @@ export class ViolationOverviewComponent implements OnInit {
     }
 
     this.route.params
+      .filter((params: Params) => 'id' in params)
       .switchMap((params: Params) => this.violationsService.getViolation(params['id']))
       .subscribe(
         data => {
@@ -27,6 +30,20 @@ export class ViolationOverviewComponent implements OnInit {
         },
         err => this.logError(err)
       );
+  }
+
+  resetForm(f: NgForm) {
+    f.form.reset();
+  }
+
+  saveViolation(f: NgForm) {
+    this.violationsService.saveViolation(this.violation).subscribe(
+      response => {
+        console.log("SAVED", response);
+        f.form.markAsPristine();
+      },
+      err => this.logError(err)
+    );
   }
 
   logError(err) {
