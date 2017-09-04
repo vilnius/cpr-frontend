@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { GpsComponent } from './gps';
@@ -13,6 +13,8 @@ import * as L from 'leaflet';
 })
 export class ShotOverviewComponent implements OnInit {
   @Input() shot: any = null;
+  @Output() shotDeleted = new EventEmitter();
+
   defaultCenterLat: number = 54.674705555555555;
   defaultCenterLon: number = 25.249775;
   editMode = false;
@@ -110,13 +112,8 @@ export class ShotOverviewComponent implements OnInit {
       );
   }
 
-  deleteShot(id: string) {
-    this.http.delete('/api/shots/', { body: { ids: [id] } })
-      .map(res => res.json())
-      .subscribe(
-        _ => this.router.navigate(['/shots']),
-        err => this.logError(err)
-      );
+  deleteShot() {
+    this.shotDeleted.emit(this.shot._id);
   }
 
   addToWhitelist(plate: string) {

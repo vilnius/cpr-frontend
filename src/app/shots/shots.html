@@ -48,5 +48,5 @@
   </table>
 </div>
 <div *ngIf="activeShot" class="shot-overview">
-  <shot-overview [shot]="activeShot"></shot-overview>
+  <shot-overview [shot]="activeShot" (shotDeleted)="handleDelete($event)"></shot-overview>
 </div>
