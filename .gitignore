@@ -1,4 +1,3 @@
-*.orig
 
 # Logs
 logs
@@ -59,11 +58,11 @@ dll/
 
 # Doc #
 /doc/
+/documentation/
 
 # IDE #
 .idea/
 *.swp
-*.sublime-*
 
 
 # Angular #

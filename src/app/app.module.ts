@@ -30,7 +30,7 @@ import { WhitelistComponent, WhitePlateAdderComponent, WhitePlateEditerComponent
 import { DashboardComponent } from './dashboard/dashboard';
 import { LaneMapComponent, MapComponent, MapInfoComponent } from './lanemap';
 
-import { LeafletModule } from '@asymmetrik/angular2-leaflet';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 // Application wide providers
 const APP_PROVIDERS = [
