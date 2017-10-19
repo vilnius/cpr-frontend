@@ -1,18 +1,36 @@
 <table *ngIf="!error" class="table table-striped">
   <thead>
     <tr>
-      <th>ID</th>
+      <th>UID</th>
       <th>Live</th>
+      <th>Updated</th>
+      <th>Uptime</th>
+      <th>Free Mem</th>
+      <th>Temperature</th>
+      <th>In Polygon</th>
+      <th>GPS HDOP</th>
+      <th>GPS Satellites</th>
+      <th>VPN IP</th>
+      <th>Hostname</th>
+      <th>Version</th>
       <th>First Reg</th>
-      <th>IP</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let piStatus of piStatuses; let i = index">
-      <td>{{ piStatus.id }}</td>
+      <td>{{ piStatus.uid }}</td>
       <td>{{ piStatus.connected ? 'Yes' : 'No' }}</td>
+      <td>{{ piStatus.updatedAt | amTimeAgo }}</td>
+      <td>{{ piStatus.uptime }}</td>
+      <td>{{ piStatus.freemem }}</td>
+      <td>{{ piStatus.temp }}</td>
+      <td>{{ piStatus.gps.inPolygon }}</td>
+      <td>{{ piStatus.gps.hdop }}</td>
+      <td>{{ piStatus.gps.satelites }}</td>
+      <td>{{ piStatus.vpnIp }}</td>
+      <td>{{ piStatus.hostname }}</td>
+      <td>{{ piStatus.version }}</td>
       <td>{{ piStatus.createdAt | amTimeAgo }}</td>
-      <td>{{ piStatus.ip }}</td>
     </tr>
   </tbody>
 </table>
