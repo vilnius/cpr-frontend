@@ -1,8 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { GpsComponent } from './gps';
 import * as L from 'leaflet';
+
+import { GpsComponent } from './gps';
+import { Violation } from '../violations/models';
+import { ViolationsService } from '../violations/violations.service';
+
 
 @Component({
   selector: 'shot-overview',
@@ -37,7 +41,12 @@ export class ShotOverviewComponent implements OnInit {
     lng: this.defaultCenterLon
   });
 
-  constructor(public http: Http, private route: ActivatedRoute, private router: Router) {
+  constructor(
+    public http: Http,
+    private route: ActivatedRoute,
+    private router: Router,
+    private violationsService: ViolationsService
+  ) {
   }
 
   ngOnChanges(changeObject) {
@@ -81,10 +90,6 @@ export class ShotOverviewComponent implements OnInit {
     });
   }
 
-  printDate(dateString) {
-    return dateString.replace(/T/, ' ').replace(/\..*/, '');
-  }
-
   getShot(id: string) {
     return this.http.get('/api/shots/' + id)
       .map(res => res.json());
@@ -126,6 +131,18 @@ export class ShotOverviewComponent implements OnInit {
       },
       err => this.logError(err)
     );
+  }
+
+  createViolation() {
+    const  newViolation = new Violation();
+    newViolation.plate = this.shot.plate;
+    newViolation.shotAt = this.shot.createdAt;
+    newViolation.images = [this.shot.image];
+    newViolation.location.gps = this.shot.gps;
+
+    this.violationsService.saveViolation(newViolation).subscribe(responseOk => {
+      this.router.navigate(['./violations']);
+    }, err => this.logError(err));
   }
 
   logError(err) {

@@ -19,9 +19,9 @@
   </thead>
   <tr *ngFor="let whitePlate of whitePlates | paginate: { itemsPerPage: 10, currentPage: p }; let i=index">
     <td>{{i + 1}}</td>
-    <td>{{whitePlate.plate}}</td>
-    <td>{{whitePlate.description}}</td>
-    <td>{{printDate(whitePlate.createdAt)}}</td>
+    <td>{{ whitePlate.plate }}</td>
+    <td>{{ whitePlate.description }}</td>
+    <td>{{ whitePlate.createdAt | isoDate }}</td>
     <td>
       <div (click)='deletePlate(whitePlate._id)' class="btn btn-warning">Remove</div>
       <div (click)="editPlate(whitePlate)" class="btn">Edit</div>

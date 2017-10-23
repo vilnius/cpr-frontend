@@ -1,6 +1,7 @@
 import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, XHRBackend, BrowserXhr, ResponseOptions, XSRFStrategy, CookieXSRFStrategy } from '@angular/http';
 import { Router, RouterModule } from '@angular/router';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
@@ -10,6 +11,7 @@ import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularcla
  */
 import { TimeAgoPipe } from 'angular2-moment';
 import { Ng2PaginationModule } from 'ng2-pagination';
+import { LeafletModule } from '@asymmetrik/angular2-leaflet';
 
 import { ENV_PROVIDERS } from './environment';
 import { ROUTES } from './app.routes';
@@ -19,18 +21,21 @@ import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InteralStateType } from './app.service';
 import { Authentication } from './services/authentication';
 import { AuthenticationConnectionBackend } from './services/authentication.backend';
+import { IsoDatePipe } from './pipes/iso-date';
+import { DurationPipe } from './pipes/duration';
+import { ViolationsService } from './violations/violations.service';
 
 import { AboutComponent } from './about';
 import { IndexComponent } from './index/index';
 import { LoginComponent } from './login/login';
 import { ShotsComponent, GpsComponent } from './shots';
 import { ShotOverviewComponent } from './shots/shot-overview';
+import { ViolationsComponent } from './violations';
+import { ViolationOverviewComponent } from './violations/violation-overview';
 import { Pagination } from './components/pagination/pagination';
 import { WhitelistComponent, WhitePlateAdderComponent, WhitePlateEditerComponent, WhitePlateImporterComponent } from './whitelist';
 import { DashboardComponent } from './dashboard/dashboard';
 import { LaneMapComponent, MapComponent, MapInfoComponent } from './lanemap';
-
-import { LeafletModule } from '@asymmetrik/angular2-leaflet';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -39,13 +44,15 @@ const APP_PROVIDERS = [
   Authentication,
   {
     provide: XSRFStrategy,
-    useValue: new CookieXSRFStrategy('XSRF-TOKEN', 'csrf-token') },
+    useValue: new CookieXSRFStrategy('XSRF-TOKEN', 'csrf-token')
+  },
   {
     provide: XHRBackend,
     useFactory: (browserXhr, responseOptions, xsrfStrategy, router) =>
       new AuthenticationConnectionBackend(browserXhr, responseOptions, xsrfStrategy, router),
     deps: [BrowserXhr, ResponseOptions, XSRFStrategy, Router]
-  }
+  },
+  ViolationsService
 ];
 
 type StoreType = {
@@ -66,17 +73,27 @@ type StoreType = {
     LoginComponent,
     ShotsComponent,
     ShotOverviewComponent,
+    ViolationsComponent,
+    ViolationOverviewComponent,
     Pagination,
     GpsComponent,
-    WhitelistComponent, WhitePlateAdderComponent,
-    WhitePlateEditerComponent, WhitePlateImporterComponent,
+    WhitelistComponent,
+    WhitePlateAdderComponent,
+    WhitePlateEditerComponent,
+    WhitePlateImporterComponent,
     DashboardComponent,
-    LaneMapComponent, MapComponent, MapInfoComponent,
-    TimeAgoPipe
+    LaneMapComponent,
+    MapComponent,
+    MapInfoComponent,
+    /* Pipes */
+    TimeAgoPipe,
+    IsoDatePipe,
+    DurationPipe,
   ],
   imports: [ // import Angular's modules
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: true }),
     Ng2PaginationModule,

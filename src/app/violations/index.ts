@@ -1,0 +1,1 @@
+export { ViolationsComponent } from './violations';

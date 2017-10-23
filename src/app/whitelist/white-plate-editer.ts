@@ -34,9 +34,6 @@ export class WhitePlateEditerComponent {
   @Input() public whitePlate: Plate;
   @Input() public onChange: Function;
   constructor(public http: Http) { }
-  printDate(dateString) {
-    return dateString.replace(/T/, ' ').replace(/\..*/, '');
-  }
   logError(err) {
     console.error('There was an error: ' + err);
   }

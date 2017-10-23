@@ -1,0 +1,15 @@
+<div class="violation-list" [ngClass]="{ 'full-screen': !activeViolation }">
+  <table class="table">
+    <tbody>
+      <tr *ngFor="let violation of violations; let i = index"
+        (click)="setActiveViolation(violation)"
+        [ngClass]="{ 'active-violation': activeViolation === violation }">
+        <!-- Checkbox to select for bulk action -->
+        <td>{{ violation.createdAt | isoDate }}</td>
+        <td>{{ violation.status }}</td>
+        <td>{{ violation.plate }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<violation-overview [violation]="activeViolation" (violationChanged)="handleViolationChanged($event)"></violation-overview>

@@ -3,7 +3,7 @@
 <!-- Title -->
 <h4>
   {{shot.plate}}
-  <small>{{printDate(shot.shotAt)}}</small>
+  <small>{{ shot.shotAt | isoDate }}</small>
 </h4>
 <div>
   <p class="form-control-static"><gps [coords]="shot.gps"></gps></p>
@@ -25,7 +25,8 @@
 <div class="shot-actions btn-group">
   <button class="btn btn-default" (click)='saveShot()'>Edit</button>
   <button class="btn btn-warning" (click)='deleteShot(shot._id)'>Delete</button>
-  <button class="btn btn-default" (click)='addToWhitelist(shot.plate)'>Whitelist</button>
+  <button class="btn btn-default" (click)='addToWhitelist(shot.plate)'>Add to Whitelist</button>
+  <button class="btn btn-primary" (click)='createViolation()'>Create Violation</button>
 </div>
 
 <!-- JSON Dump  -->
