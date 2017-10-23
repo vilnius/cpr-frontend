@@ -23,6 +23,7 @@ import { Authentication } from './services/authentication';
 import { AuthenticationConnectionBackend } from './services/authentication.backend';
 import { IsoDatePipe } from './pipes/iso-date';
 import { DurationPipe } from './pipes/duration';
+import { FormatFileSizePipe } from './pipes/format-file-size';
 import { ViolationsService } from './violations/violations.service';
 
 import { AboutComponent } from './about';
@@ -89,6 +90,7 @@ type StoreType = {
     TimeAgoPipe,
     IsoDatePipe,
     DurationPipe,
+    FormatFileSizePipe,
   ],
   imports: [ // import Angular's modules
     BrowserModule,

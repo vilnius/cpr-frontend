@@ -21,8 +21,8 @@
       <td>{{ piStatus.uid }}</td>
       <td>{{ piStatus.connected ? 'Yes' : 'No' }}</td>
       <td>{{ piStatus.updatedAt | amTimeAgo }}</td>
-      <td>{{ piStatus.uptime }}</td>
-      <td>{{ piStatus.freemem }}</td>
+      <td>{{ piStatus.uptime | duration }}</td>
+      <td>{{ piStatus.freemem | formatFileSize }}</td>
       <td>{{ piStatus.temp }}</td>
       <td>{{ piStatus.gps.inPolygon }}</td>
       <td>{{ piStatus.gps.hdop }}</td>
