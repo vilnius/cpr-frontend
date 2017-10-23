@@ -1,8 +1,10 @@
-export enum ViolationStatus {
-  NEW = 'NEW',
-  SENT = 'SENT',
-  CLOSED = 'CLOSED'
+export const ViolationStatus = {
+  NEW: 'NEW',
+  SENT: 'SENT',
+  CLOSED: 'CLOSED',
 };
+
+type ViolationStatusType = keyof typeof ViolationStatus;
 
 export class Person {
   firstName: String = '';
@@ -30,7 +32,7 @@ export class Violation {
   _id?: String;
   createdAt?: Date;
   updatedAt?: Date;
-  status?: ViolationStatus;
+  status?: ViolationStatusType;
   shotAt: Date;
   plate: String;
   images: String[];

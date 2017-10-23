@@ -22,6 +22,7 @@ import { AppState, InteralStateType } from './app.service';
 import { Authentication } from './services/authentication';
 import { AuthenticationConnectionBackend } from './services/authentication.backend';
 import { IsoDatePipe } from './pipes/iso-date';
+import { DurationPipe } from './pipes/duration';
 import { ViolationsService } from './violations/violations.service';
 
 import { AboutComponent } from './about';
@@ -87,6 +88,7 @@ type StoreType = {
     /* Pipes */
     TimeAgoPipe,
     IsoDatePipe,
+    DurationPipe,
   ],
   imports: [ // import Angular's modules
     BrowserModule,
