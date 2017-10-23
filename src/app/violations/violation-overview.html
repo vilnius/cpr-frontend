@@ -1,19 +1,39 @@
 <div *ngIf="violation" class="violation-overview">
-<h4>Overview {{ violation.plate }}</h4>
-<form (ngSubmit)="saveViolation(violationForm)" #violationForm="ngForm">
+<h4>{{ violation.plate }}</h4>
+<div *ngFor="let image of violation.images">
+  <a href="/api/images/{{image}}" target="_blank">
+    <img src="/api/images/{{image}}" class="thumbnail"/>
+  </a>
+</div>
+<form [formGroup]="violationForm" novalidate>
   <div class="form-group">
-    <label for="witness-firstName">Witness First Name</label>
-    <input type="text" class="form-control" id="witness-firstName" required [(ngModel)]="violation.witness.firstName" name="witness-firstName">
+    <label class="center-block">Status:
+      <select class="form-control" formControlName="status">
+        <option *ngFor="let status of statuses" [value]="status">{{status}}</option>
+      </select>
+    </label>
   </div>
   <div class="form-group">
-    <label for="witness-lastName">Witness Last Name</label>
-    <input type="text" class="form-control" id="witness-lastName" required [(ngModel)]="violation.witness.lastName" name="witness-lastName">
+    <label for="plate">Plate</label>
+    <input type="text" class="form-control" id="plate" formControlName="plate">
   </div>
+  <div formGroupName="witness">
+    <div class="form-group">
+      <label for="witness-firstName">Witness First Name</label>
+      <input type="text" class="form-control" id="witness-firstName" formControlName="firstName">
+    </div>
+    <div class="form-group">
+      <label for="witness-lastName">Witness Last Name</label>
+      <input type="text" class="form-control" id="witness-lastName" formControlName="lastName">
+    </div>
+</div>
   <div class="form-group">
     <label for="notes">Notes</label>
-    <input type="text" class="form-control" id="notes" required [(ngModel)]="violation.notes" name="name">
+    <input type="text" class="form-control" id="notes" formControlName="notes">
   </div>
-  <button type="submit" class="btn btn-success" [disabled]="!violationForm.form.valid || violationForm.form.pristine">Save</button>
-  <button type="submit" class="btn btn-default" (click)="resetForm(violationForm)">Reset</button>
+  <button type="submit" class="btn btn-success" [disabled]="violationForm.pristine" (click)="saveViolation()">Save</button>
+  <button type="submit" class="btn btn-default" [disabled]="violationForm.pristine" (click)="resetForm()">Reset</button>
 </form>
+<br/>
+<p>DEBUG form value: {{ violationForm.value | json }}</p>
 </div>

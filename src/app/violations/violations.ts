@@ -30,4 +30,11 @@ export class ViolationsComponent implements OnInit {
   setActiveViolation(violation) {
     this.activeViolation = violation;
   }
+
+  handleViolationChanged(violation) {
+    const index = this.violations.indexOf(this.activeViolation);
+    if (index !== -1) {
+      this.activeViolation = this.violations[index] = violation;
+    }
+  }
 }
