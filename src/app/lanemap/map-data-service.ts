@@ -14,10 +14,10 @@ export class MapDataService {
   private _data: any = {};
 
   constructor(private http: Http, private _zone: NgZone) {
-    this.data$ = new Observable(observer => this._dataObserver = observer);
+    this.data$ = new Observable((observer) => this._dataObserver = observer);
   }
 
-  update = (data: any) => {
+  public update = (data: any) => {
     this._zone.run(() => {
       this.dirty = true;
       this._data = data;
@@ -25,30 +25,30 @@ export class MapDataService {
     });
   }
 
-  new = () => {
+  public new = () => {
     const lanemap = { _id: 'vilnius', name: 'vilnius', geoJSON: {} };
     this.http.post('/api/lanemaps', JSON.stringify(lanemap), httpOptions)
-      .map(res => res.json())
+      .map((res) => res.json())
       .subscribe(
-        _ => {
+        () => {
           this.isNew = false;
           this.dirty = true;
         },
-        err => console.error(err)
+        (err) => console.error(err)
     );
   }
 
-  load = (callback) => {
+  public load = (callback) => {
     this.http.get('/api/lanemaps/vilnius')
-      .map(res => res.json())
+      .map((res) => res.json())
       .subscribe(
-        data => {
+        (data) => {
           this.update(data.geoJSON);
           this.isNew = false;
           this.dirty = false;
           callback(data.geoJSON);
         },
-        err => {
+        (err) => {
           console.error(err);
           if (err.status === 404) {
             this.isNew = true;
@@ -57,13 +57,13 @@ export class MapDataService {
       );
   }
 
-  save = () => {
+  public save = () => {
     const lanemap = { _id: 'vilnius', name: 'vilnius', geoJSON: this._data || {} };
     this.http.post('/api/lanemaps/vilnius', JSON.stringify(lanemap), httpOptions)
-      .map(res => res.json())
+      .map((res) => res.json())
       .subscribe(
-        _ => this.dirty = false,
-        err => console.error(err)
+        () => this.dirty = false,
+        (err) => console.error(err)
     );
   }
 }

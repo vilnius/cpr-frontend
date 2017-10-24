@@ -12,14 +12,13 @@ import { GoogleMapsAPI } from './google-maps-api';
   `
 })
 export class MapComponent implements OnInit {
-
   constructor(
     private _elem: ElementRef,
     private api: GoogleMapsAPI,
     private mapDataService: MapDataService
   ) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     const container = this._elem.nativeElement.querySelector('#map');
     this.api.mapData$.subscribe((data) => this.mapDataService.update(data));
 
@@ -36,15 +35,15 @@ export class MapComponent implements OnInit {
     });
   };
 
-  save() {
+  public save() {
     this.mapDataService.save();
   }
 
-  reload() {
+  public reload() {
     this.mapDataService.load((data) => this.api.setGeoJson(data));
   }
 
-  clear() {
+  public clear() {
     if (confirm('Do you really want to delete all polygons?')) {
       this.mapDataService.update(null);
       this.api.setGeoJson(null);

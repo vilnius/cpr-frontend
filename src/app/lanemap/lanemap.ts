@@ -14,10 +14,13 @@ import { MapDataService } from './map-data-service';
     <div id="map-controls">
       <h2>Lane Map</h2>
       <p>Draw using menu in the top left corner of the map. Right click to delete a polygon</p>
-      <button (click)="mapDataService.new()" class="btn btn-primary" [class.hidden]="!mapDataService.isNew">New</button>
-      <button (click)="map.clear()" class="btn btn-default">Clear Map</button>
-      <button (click)="map.reload()" [class.hidden]="!mapDataService.dirty" class="btn btn-default">Reload</button>
-      <button (click)="map.save()" [class.hidden]="!mapDataService.dirty" class="btn btn-success">Save</button>
+      <button class="btn btn-primary" (click)="mapDataService.new()"
+        [class.hidden]="!mapDataService.isNew">New</button>
+      <button class="btn btn-default" (click)="map.clear()">Clear Map</button>
+      <button class="btn btn-default" (click)="map.reload()"
+        [class.hidden]="!mapDataService.dirty" >Reload</button>
+      <button class="btn btn-success" (click)="map.save()"
+        [class.hidden]="!mapDataService.dirty">Save</button>
       <hr/>
       <map-info [data]="mapData"></map-info>
     </div>
@@ -29,11 +32,11 @@ export class LaneMapComponent implements OnInit {
 
   constructor(public mapDataService: MapDataService) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.mapDataService.data$.subscribe((data) => this.updateMapData(data));
   }
 
-  updateMapData(data) {
+  public updateMapData(data) {
     this.mapData = data;
   }
 

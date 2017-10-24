@@ -6,70 +6,82 @@ import { Plate } from './plate';
 
 @Component({
   selector: 'whitelist',
-  template: require('./whitelist.html'),
+  templateUrl: 'whitelist.html',
   providers: [PaginationService],
-  styles: ['.pagination-container{text-align: center;}']
+  styles: ['.pagination-container {text-align: center;}']
 })
 export class WhitelistComponent implements OnInit {
-  whitePlates: Plate[];
-  adderVisible: boolean = false;
-  editerVisible: boolean = false;
-  editerPlate: Plate;
+  public p: number = 1;
+  public whitePlates: Plate[];
+  public adderVisible: boolean = false;
+  public editerVisible: boolean = false;
+  public editerPlate: Plate;
 
   constructor(public http: Http) { }
 
   public changeEditerCallback = (visible) => {
     this.setEditerVisibility(visible);
   }
-  ngOnInit() {
+
+  public ngOnInit() {
     this.editerPlate = {_id: 1, description: 'test', plate: ''};
     this.editerVisible = false;
     this.getPlates();
   }
-  getPlates() {
+
+  public getPlates() {
     this.http.get('/api/whitelist')
-      .map(res => res.json())
+      .map((res) => res.json())
       .subscribe(
-      data => this.whitePlates = data,
-      err => this.logError(err)
+        (data) => this.whitePlates = data,
+        (err) => this.logError(err)
       );
   }
-  logError(err) {
+
+  public logError(err) {
     console.error('There was an error: ' + err);
   }
-  deletePlate(_id) {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers });
+
+  public deletePlate(_id) {
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const options = new RequestOptions({ headers });
 
     return this.http.delete('/api/whitelist/' + _id, options)
-      .map(res => res.json())
+      .map((res) => res.json())
       .subscribe(
-        _ => this.getPlates(),
-        err => this.logError(err)
+        () => this.getPlates(),
+        (err) => this.logError(err)
       );
   }
-  showAdder = () => {
+
+  public showAdder = () => {
     this.adderVisible = true;
   }
-  hideAdder = () => {
+
+  public hideAdder = () => {
     this.adderVisible = false;
   }
-  handlePlateAdded = () => {
+
+  public handlePlateAdded = () => {
     this.hideAdder();
     this.getPlates();
   }
-  onPlateImported = () =>  {
+
+  public onPlateImported = () =>  {
     this.getPlates();
   }
-  editPlate(plate) {
+
+  public editPlate(plate) {
     this.editerPlate = plate;
     this.setEditerVisibility(true);
   }
-  setEditerVisibility(visible) {
+
+  public setEditerVisibility(visible) {
     this.editerVisible = visible;
     this.getPlates();
   }
-  isEditerVisible() {
+
+  public isEditerVisible() {
     return this.editerVisible;
   }
 }

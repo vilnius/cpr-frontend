@@ -12,10 +12,10 @@ import { Violation, ViolationStatus } from './models';
   templateUrl: 'violation-overview.html',
 })
 export class ViolationOverviewComponent implements OnInit, OnChanges {
-  @Input() violation: any = null;
-  @Output() violationChanged = new EventEmitter<any>();
-  violationForm: FormGroup;
-  statuses = Object.keys(ViolationStatus);
+  @Input() public violation: any = null;
+  @Output() public violationChanged = new EventEmitter<any>();
+  public violationForm: FormGroup;
+  public statuses = Object.keys(ViolationStatus);
 
   constructor(
     private violationsService: ViolationsService,
@@ -33,19 +33,19 @@ export class ViolationOverviewComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.route.params
       .filter((params: Params) => 'id' in params)
       .switchMap((params: Params) => this.violationsService.getViolation(params['id']))
       .subscribe(
-        data => {
-          this.violation = data;
+        (responseOk) => {
+          this.violation = responseOk;
         },
-        err => this.logError(err)
+        (err) => this.logError(err)
       );
   }
 
-  ngOnChanges() {
+  public ngOnChanges() {
     if (!this.violation) {
       return;
     }
@@ -61,11 +61,11 @@ export class ViolationOverviewComponent implements OnInit, OnChanges {
     });
   }
 
-  resetForm() {
+  public resetForm() {
     this.ngOnChanges();
   }
 
-  prepareSaveViolation(): Violation {
+  public prepareSaveViolation(): Violation {
     const saveViolation: Violation = {
       ...this.violation,
       ...this.violationForm.value
@@ -73,16 +73,16 @@ export class ViolationOverviewComponent implements OnInit, OnChanges {
     return saveViolation;
   }
 
-  saveViolation() {
+  public saveViolation() {
     this.violationsService.saveViolation(this.prepareSaveViolation()).subscribe(
-      response => {
-        this.violationChanged.emit(response);
+      (responseOk) => {
+        this.violationChanged.emit(responseOk);
       },
-      err => this.logError(err)
+      (err) => this.logError(err)
     );
   }
 
-  logError(err) {
+  public logError(err) {
     console.error(err);
   }
 

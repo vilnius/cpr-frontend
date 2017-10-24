@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import * as L from 'leaflet';
@@ -7,7 +7,6 @@ import { GpsComponent } from './gps';
 import { Violation } from '../violations/models';
 import { ViolationsService } from '../violations/violations.service';
 
-
 @Component({
   selector: 'shot-overview',
   styleUrls: [
@@ -15,14 +14,14 @@ import { ViolationsService } from '../violations/violations.service';
   ],
   templateUrl: 'shot-overview.html',
 })
-export class ShotOverviewComponent implements OnInit {
-  @Input() shot: any = null;
-  @Output() shotDeleted = new EventEmitter();
+export class ShotOverviewComponent implements OnInit, OnChanges {
+  @Input() public shot: any = null;
+  @Output() public shotDeleted = new EventEmitter();
 
-  defaultCenterLat: number = 54.674705555555555;
-  defaultCenterLon: number = 25.249775;
-  editMode = false;
-  leafletOptions = {
+  public defaultCenterLat: number = 54.674705555555555;
+  public defaultCenterLon: number = 25.249775;
+  public editMode = false;
+  public leafletOptions = {
     layers: [
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       { maxZoom: 18, attribution: '...' })
@@ -34,9 +33,9 @@ export class ShotOverviewComponent implements OnInit {
     })
   };
 
-  layers: L.Layer[] = [];
+  public layers: L.Layer[] = [];
 
-  centerPosition = L.latLng({
+  public centerPosition = L.latLng({
     lat: this.defaultCenterLat,
     lng: this.defaultCenterLon
   });
@@ -49,21 +48,18 @@ export class ShotOverviewComponent implements OnInit {
   ) {
   }
 
-  ngOnChanges(changeObject) {
-    let lat, lon;
-
-    lat = this.shot.gps.lat;
-    lon = this.shot.gps.lon;
+  public ngOnChanges(changeObject) {
+    const lat = this.shot.gps.lat;
+    const lon = this.shot.gps.lon;
 
     this.layers = [
       this.createMapMarker(lat, lon)
     ];
 
-    this.centerPosition = L.latLng({ lat: lat, lng: lon });
+    this.centerPosition = L.latLng({ lat, lng: lon });
   }
 
-  ngOnInit() {
-
+  public ngOnInit() {
     if (this.shot) {
       return;
     }
@@ -71,15 +67,15 @@ export class ShotOverviewComponent implements OnInit {
     this.route.params
       .switchMap((params: Params) => this.getShot(params['id']))
       .subscribe(
-        data => {
+        (data) => {
           this.shot = data;
         },
-        err => this.logError(err)
+        (err) => this.logError(err)
       );
 
   }
 
-  createMapMarker(lat: number, lon: number) {
+  public createMapMarker(lat: number, lon: number) {
     return L.marker([ lat, lon ], {
       icon: L.icon({
         iconSize: [ 25, 41 ],
@@ -90,12 +86,12 @@ export class ShotOverviewComponent implements OnInit {
     });
   }
 
-  getShot(id: string) {
+  public getShot(id: string) {
     return this.http.get('/api/shots/' + id)
-      .map(res => res.json());
+      .map((res) => res.json());
   }
 
-  saveShot() {
+  public saveShot() {
     let newPlate = prompt(
       'Enter new plate',
       this.shot.plate
@@ -105,47 +101,44 @@ export class ShotOverviewComponent implements OnInit {
         '/api/shots/' + this.shot._id,
         Object.assign({}, this.shot, { plate: newPlate })
       )
-      .map(res => res.json())
+      .map((res) => res.json())
       .subscribe(
-        responseOk => {
+        () => {
           // Update plate on succ response
           this.shot.plate = newPlate;
         },
-        responseErr => {
-          this.logError(responseErr)
-        }
+        (responseErr) => this.logError(responseErr)
       );
   }
 
-  deleteShot() {
+  public deleteShot() {
     this.shotDeleted.emit(this.shot._id);
   }
 
-  addToWhitelist(plate: string) {
+  public addToWhitelist(plate: string) {
     this.http.post('/api/whitelist', {
         description: 'Added from shot overview',
         plate
       }).subscribe(
-      responseOk => {
-        alert('Plate added to whitelist');
-      },
-      err => this.logError(err)
-    );
+        () => alert('Plate added to whitelist'),
+        (responseErr) => this.logError(responseErr)
+      );
   }
 
-  createViolation() {
+  public createViolation() {
     const  newViolation = new Violation();
     newViolation.plate = this.shot.plate;
     newViolation.shotAt = this.shot.createdAt;
     newViolation.images = [this.shot.image];
     newViolation.location.gps = this.shot.gps;
 
-    this.violationsService.saveViolation(newViolation).subscribe(responseOk => {
-      this.router.navigate(['./violations']);
-    }, err => this.logError(err));
+    this.violationsService.saveViolation(newViolation).subscribe(
+      (responseOk) => this.router.navigate(['./violations']),
+      (responseErr) => this.logError(responseErr)
+    );
   }
 
-  logError(err) {
+  public logError(err) {
     console.error('There was an error: ' + err);
     return [];
   }

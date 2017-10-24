@@ -9,5 +9,5 @@ import { Component, Input } from '@angular/core';
   `
 })
 export class GpsComponent {
-  @Input() coords: any;
+  @Input() public coords: any;
 }

@@ -5,18 +5,18 @@ import { Authentication } from '../services/authentication';
 @Component({
   selector: 'login',
   styles: [`form {margin-top: 20px;}`],
-  template: require('./login.html')
+  templateUrl: 'login.html'
 })
 export class LoginComponent {
-  details = { username: '', password: '' };
-  error: boolean = false;
-  errorMessage: string;
+  public details = { username: '', password: '' };
+  public error: boolean = false;
+  public errorMessage: string;
 
   constructor(public auth: Authentication, public router: Router) {
     this.auth.logout();
   }
 
-  onSubmit() {
+  public onSubmit() {
     this.auth.login(this.details.username, this.details.password)
       .subscribe(
         (token: any) => this.router.navigate(['']),

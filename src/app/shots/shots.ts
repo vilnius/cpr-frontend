@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { GpsComponent } from './gps';
 import { ShotOverviewComponent } from './shot-overview';
-import { Pagination } from '../components/pagination';
 import * as _ from 'lodash';
 
 @Component({
@@ -13,61 +12,62 @@ import * as _ from 'lodash';
   templateUrl: 'shots.html',
 })
 export class ShotsComponent implements OnInit {
-  checkedForBulkAction: string[] = [];
-  shots;
-  activeShot;
-  pages: number[] = [ 1 ];
-  activePage: number = 1;
+  public checkedForBulkAction: string[] = [];
+  public shots;
+  public activeShot;
+  public pages: number[] = [ 1 ];
+  public activePage: number = 1;
 
   constructor(private http: Http, private router: Router) {
-
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.getShots().publish().connect();
   }
 
-  requestConfirm(message: string = 'Are you sure?'): boolean {
+  public requestConfirm(message: string = 'Are you sure?'): boolean {
     return confirm(message);
   }
 
-  handleDelete(shotId: string) {
+  public handleDelete(shotId: string) {
     this.http.delete('/api/shots/', { body: { ids: [shotId] } })
-      .map(res => res.json())
+      .map((res) => res.json())
       .flatMap(() => this.getShots())
       .subscribe(
-        _ => {
+        () => {
           //
         },
-        err => this.logError(err)
+        (err) => this.logError(err)
       );
   }
 
-  deleteBulk() {
+  public deleteBulk() {
     if (!this.requestConfirm('Are you sure you want to delete?')) {
       return;
     }
 
     this.http.delete('/api/shots', { body: { ids: this.checkedForBulkAction } })
-      .catch(err => { alert('Delete failed: ' + err); return Observable.throw(err); })
-      .flatMap(ok => {
+      .catch((err) => {
+        alert('Delete failed: ' + err);
+        return Observable.throw(err);
+      }).flatMap((ok) => {
         this.clearSelection();
         return this.getShots();
       })
       .subscribe(
-        data => {
+        (data) => {
           //
         },
-        err => this.logError(err)
+        (err) => this.logError(err)
       );
   }
 
-  isCheckedForBulkAction(id: string): boolean {
+  public isCheckedForBulkAction(id: string): boolean {
     return this.checkedForBulkAction.indexOf(id) !== -1;
   }
 
   // Adds id for bulk actions or removes if already in array
-  pushForBulkAction(id: string): void {
+  public pushForBulkAction(id: string): void {
     const index = this.checkedForBulkAction.indexOf(id);
 
     if (index !== -1) {
@@ -75,24 +75,23 @@ export class ShotsComponent implements OnInit {
     } else {
       this.checkedForBulkAction.push(id);
     }
-
   }
 
-  selectAll() {
-    this.checkedForBulkAction = this.shots.map(shot => shot._id);
+  public selectAll() {
+    this.checkedForBulkAction = this.shots.map((shot) => shot._id);
   }
 
-  clearSelection() {
+  public clearSelection() {
     this.checkedForBulkAction = [];
   }
 
-  setActiveShot(shot) {
+  public setActiveShot(shot) {
     this.activeShot = shot;
   }
 
-  onPageClicked(pageNumber: number) {
+  public onPageClicked(pageNumber: number) {
     this.getShots(pageNumber)
-      .map(response => {
+      .map((response) => {
         this.clearSelection();
         return response;
       })
@@ -100,12 +99,12 @@ export class ShotsComponent implements OnInit {
       .connect();
   }
 
-  getShots(pageNumber?: number) {
+  public getShots(pageNumber?: number) {
     pageNumber = pageNumber ? pageNumber : this.activePage;
 
     return this.http.get('/api/shots?page=' + pageNumber)
-      .catch(err => this.logError(err))
-      .map(res => {
+      .catch((err) => this.logError(err))
+      .map((res) => {
         res = res.json();
 
         this.activePage = pageNumber;
@@ -120,9 +119,8 @@ export class ShotsComponent implements OnInit {
       });
   }
 
-  logError(err) {
+  public logError(err) {
     console.error('There was an error: ' + err);
     return Observable.throw(err);
   }
-
 }

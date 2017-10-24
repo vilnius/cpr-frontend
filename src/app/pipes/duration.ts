@@ -1,18 +1,18 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({name: 'duration'})
+@Pipe({name: 'myDuration'})
 export class DurationPipe implements PipeTransform {
-  transform(value: string): string {
-    const sec_num = parseInt(value, 10);
-    if (isNaN(sec_num)) {
+  public transform(value: string): string {
+    const seconds = parseInt(value, 10);
+    if (isNaN(seconds)) {
       return '-';
     }
-    const hours = Math.floor(sec_num / 3600) % 24;
-    const minutes = Math.floor(sec_num / 60) % 60;
-    const seconds = sec_num % 60;
-    return [hours, minutes, seconds]
-      .map(v => v < 10 ? '0' + v : v)
-      .filter((v,i) => v !== '00' || i > 0)
+    const hours = Math.floor(seconds / 3600) % 24;
+    const minutes = Math.floor(seconds / 60) % 60;
+    const sec = seconds % 60;
+    return [hours, minutes, sec]
+      .map((v) => v < 10 ? '0' + v : v)
+      .filter((v, i) => v !== '00' || i > 0)
       .join(':');
   }
 }

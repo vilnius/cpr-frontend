@@ -24,12 +24,12 @@ import { GoogleMapsAPI } from './lanemap/google-maps-api';
   templateUrl: 'app.component.html',
 })
 export class AppComponent {
-  name = 'Car Plate Reader';
+  public name = 'Car Plate Reader';
 
   constructor(public auth: Authentication, public router: Router) {
   }
 
-  logout(event: any) {
+  public logout(event: any) {
     event.preventDefault();
     this.auth.logout();
     this.router.navigate(['./login']);

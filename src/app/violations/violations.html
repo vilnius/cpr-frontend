@@ -5,7 +5,7 @@
         (click)="setActiveViolation(violation)"
         [ngClass]="{ 'active-violation': activeViolation === violation }">
         <!-- Checkbox to select for bulk action -->
-        <td>{{ violation.createdAt | isoDate }}</td>
+        <td>{{ violation.createdAt | myIsoDate }}</td>
         <td>{{ violation.status }}</td>
         <td>{{ violation.plate }}</td>
       </tr>

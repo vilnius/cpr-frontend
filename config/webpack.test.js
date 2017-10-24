@@ -167,8 +167,12 @@ module.exports = function (options) {
             /\.(e2e|spec)\.ts$/,
             /node_modules/
           ]
-        }
+        },
 
+        {
+          test: /\.png$/,
+          loader: "url-loader?mimetype=image/png"
+        }
       ]
     },
 

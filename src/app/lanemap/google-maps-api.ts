@@ -15,10 +15,10 @@ export class GoogleMapsAPI {
   private _mapDataObserver: any;
 
   constructor(private _zone: NgZone) {
-      this.mapData$ = new Observable(observer => this._mapDataObserver = observer);
+      this.mapData$ = new Observable((observer) => this._mapDataObserver = observer);
   }
 
-  load(): Promise<void> {
+  public load(): Promise<void> {
     if (this._scriptLoadingPromise) {
       return this._scriptLoadingPromise;
     }
@@ -39,13 +39,13 @@ export class GoogleMapsAPI {
     return this._scriptLoadingPromise;
   }
 
-  sendUpdatedData = () => {
+  public sendUpdatedData = () => {
     this._zone.run(() => {
       this.getGeoJson((data) => this._mapDataObserver.next(data));
     });
   }
 
-  setupEventListeners() {
+  public setupEventListeners() {
     this._map.data.addListener('addfeature', (event) => {
       event.feature.setProperty('createdAt', (new Date()).toString());
       this.sendUpdatedData();
@@ -58,7 +58,7 @@ export class GoogleMapsAPI {
     });
   }
 
-  createMap(options: {el: HTMLElement, mapOptions: any}): Promise<void> {
+  public createMap(options: {el: HTMLElement, mapOptions: any}): Promise<void> {
     return this.load().then(() => {
       this._map = new google.maps.Map(options.el, options.mapOptions);
       this._map.data.setControls(['Polygon']);
@@ -72,7 +72,7 @@ export class GoogleMapsAPI {
     });
   }
 
-  setGeoJson(data: any) {
+  public setGeoJson(data: any) {
     let newData = new google.maps.Data({
       map: this._map,
       style: this._map.data.getStyle(),
@@ -88,7 +88,7 @@ export class GoogleMapsAPI {
     }
   }
 
-  getGeoJson(callback: any) {
+  public getGeoJson(callback: any) {
     this._map.data.toGeoJson(callback);
   }
 

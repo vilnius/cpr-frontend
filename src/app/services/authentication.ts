@@ -5,8 +5,8 @@ import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class Authentication {
-  token: string;
-  loggedIn: boolean = false;
+  public token: string;
+  public loggedIn: boolean = false;
 
   constructor(public http: Http) {
     this.token = localStorage.getItem('token');
@@ -15,32 +15,32 @@ export class Authentication {
     }
   }
 
-  login(username: String, password: String) {
+  public login(username: String, password: String) {
     return this.http.post('/api/auth/login', JSON.stringify({ username, password }), {
         headers: new Headers({
           'Content-Type': 'application/json'
         })
       })
-      .map(res => res.json())
-      .map(data => {
+      .map((res) => res.json())
+      .map((data) => {
         this.token = data.token;
         this.loggedIn = true;
         localStorage.setItem('token', this.token);
       });
   }
 
-  logout() {
+  public logout() {
     return this.http.post('/api/auth/logout', null, {
       headers: new Headers({
         Token: this.token
       })
     }).subscribe(
-      data => {
+      (data) => {
         this.token = undefined;
         this.loggedIn = false;
         localStorage.removeItem('token');
       },
-      err => console.error(err)
+      (err) => console.error(err)
     );
   }
 }

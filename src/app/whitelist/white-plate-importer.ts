@@ -23,38 +23,43 @@ import { Observable } from 'rxjs';
   `]
 })
 export class WhitePlateImporterComponent {
-  @Input() onPlateImported: Function;
-  filesToUpload: File[];
-  message: string;
-  error: string;
+  @Input() public onPlateImported: Function;
+  public filesToUpload: File[];
+  public message: string;
+  public error: string;
 
   constructor(public http: Http) {
     this.filesToUpload = [];
   }
-  logError(err) {
+
+  public logError(err) {
     console.error('There was an error: ' + err);
   }
-  fileChangeEvent(fileInput: any) {
+
+  public fileChangeEvent(fileInput: any) {
     this.filesToUpload = <File[]> fileInput.target.files;
   }
-  importWhitelist() {
+
+  public importWhitelist() {
     this.message = this.error = '';
     this.makeFileRequest('/api/whitelist/upload', [], this.filesToUpload).subscribe(
-      result => {
-        this.message = `Total plate numbers: ${result.total}. Imported: ${result.imported}. New: ${result.new}`;
+      (result) => {
+        this.message = `Total plate numbers: ${result.total}.
+          Imported: ${result.imported}. New: ${result.new}`;
         this.onPlateImported();
       },
-      err => {
+      (err) => {
         this.error = 'Import failed: ' + err;
         return Observable.throw(err);
       }
     );
   }
-  makeFileRequest(url: string, params: string[], files: File[]) {
+
+  public makeFileRequest(url: string, params: string[], files: File[]) {
     let formData: any = new FormData();
     for (let file of files) {
         formData.append('uploads', file, file.name);
     }
-    return this.http.post(url, formData).map(res => res.json());
+    return this.http.post(url, formData).map((res) => res.json());
   }
 }

@@ -9,13 +9,9 @@ import { Component } from '@angular/core';
       width: 100%;
     }
   `],
-  template: `
-    <a [href]="url" target="_blank" class="">
-      <img [src]="codeForVilniusLogo">
-    </a>
-  `
+  template: `<img [src]="codeForVilniusLogo">`
 })
 export class IndexComponent {
-  codeForVilniusLogo = 'assets/img/c4v-logo.jpeg';
-  url = 'http://codeforvilnius.lt';
+  public codeForVilniusLogo = 'assets/img/c4v-logo.jpeg';
+  public url = 'http://codeforvilnius.lt';
 }

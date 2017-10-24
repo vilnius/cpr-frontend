@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Pagination } from '../components/pagination';
-import { ViolationsService } from './violations.service'
+// import { PaginationComponent } from '../components/pagination';
+import { ViolationsService } from './violations.service';
 import { ViolationOverviewComponent } from './violation-overview';
-
 
 @Component({
   selector: 'violations',
@@ -11,27 +10,26 @@ import { ViolationOverviewComponent } from './violation-overview';
   providers: [ ViolationsService ]
 })
 export class ViolationsComponent implements OnInit {
-  violations: any = [];
-  activeViolation: any = null;
-  errorMessage;
+  public violations: any = [];
+  public activeViolation: any = null;
+  public errorMessage;
 
-  constructor(private violationsService: ViolationsService) {
-  }
+  constructor(private violationsService: ViolationsService) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.violationsService
       .getViolations()
       .subscribe(
-        violations => this.violations = violations,
-        error =>  this.errorMessage = <any>error
+        (violations) => this.violations = violations,
+        (err) => this.errorMessage = err
       );
   }
 
-  setActiveViolation(violation) {
+  public setActiveViolation(violation) {
     this.activeViolation = violation;
   }
 
-  handleViolationChanged(violation) {
+  public handleViolationChanged(violation) {
     const index = this.violations.indexOf(this.activeViolation);
     if (index !== -1) {
       this.activeViolation = this.violations[index] = violation;

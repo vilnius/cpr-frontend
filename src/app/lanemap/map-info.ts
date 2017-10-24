@@ -5,10 +5,10 @@ import { Component, Input, OnChanges } from '@angular/core';
   template: `<p>Polygons: {{ polygons }}</p>`
 })
 export class MapInfoComponent implements OnChanges {
-  @Input() data: any;
+  @Input() public data: any;
   public polygons: number;
 
-  ngOnChanges() {
+  public ngOnChanges() {
     if (!this.data) {
       this.data = { features: [] };
     }

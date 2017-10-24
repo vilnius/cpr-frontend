@@ -1,8 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({name: 'isoDate'})
+@Pipe({name: 'myIsoDate'})
 export class IsoDatePipe implements PipeTransform {
-  transform(value: string): string {
+  public transform(value: string): string {
     return value.replace(/T/, ' ').replace(/\..*/, '');
   }
 }
