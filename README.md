@@ -1,19 +1,20 @@
 <p align="center">
-  <a href="http://codeforvilnius.lt" target="_blank">
-    <img src="https://raw.githubusercontent.com/vilnius/cpr-frontend/master/src/assets/img/c4v-logo.jpeg">
-  </a>
+  <img src="https://raw.githubusercontent.com/vilnius/cpr-frontend/master/src/assets/img/c4v-logo.jpeg">
 </p>
 
 # Car Plate Reader - Frontend
 
+[![Build Status](https://api.travis-ci.org/vilnius/cpr-frontend.svg?branch=master)](https://travis-ci.org/vilnius/cpr-frontend)
+
 > **This repository is just for frontend code!** Backend code is located at
 [cpr-server](https://github.com/vilnius/cpr-server).
-
+Make sure you configure `cpr-server` to serve files from `cpr-frontend`'s `dist` folder.
+<br>
 > This code is written in [TypeScript](http://www.typescriptlang.org/) and is based
-on [Angular2 Webpack Starter Kit](https://github.com/AngularClass/angular2-webpack-starter)
+on [Angular Starter Kit](https://github.com/AngularClass/angular-starter)
 from [AngularClass](https://angularclass.com). Please read their great readme file for
 all additional information.
-
+<br>
 > Style is based on Bootstrap [Paper theme](https://bootswatch.com/paper/)
 
 ## Quick start
@@ -27,17 +28,12 @@ cd cpr-frontend
 
 # install dependencies with npm
 npm install
-# sit back and relax, this will take a while
-# it will also execute postinstall script that installs typescript typings
 
-# start the server
-npm start
+# watch and produce output in dist folder
+npm run watch
 ```
-Go to [http://0.0.0.0:8080](http://0.0.0.0:8080) or [http://localhost:8080](http://localhost:8080)
-in your browser. By default server starts in development mode with hot reloading enabled.
-You can also launch [backend node.js solution](https://github.com/vilnius/cpr-server)
-on a separate terminal. Webpack dev server has proxy setup,
-which redirects `/api` calls to `localhost:3000/api`.
+
+Launch `cpr-server` with `npm start` and navigate to home page at [http://localhost:3000](http://localhost:3000).
 Default credentials to login: `admin/admin`
 
 ## Scripts
@@ -47,7 +43,6 @@ Default credentials to login: `admin/admin`
 # development
 npm run build:dev
 # production
-npm run clean:dist
 npm run build:prod
 # all files can be found in folder 'dist'
 ```
@@ -64,21 +59,7 @@ npm run watch:test
 
 ### run end-to-end tests
 ```bash
-# make sure you have your server running in another terminal
 npm run e2e
-```
-
-### run webdriver (for end-to-end)
-```bash
-npm run webdriver:update
-npm run webdriver:start
-```
-
-### run Protractor's elementExplorer (for end-to-end)
-```bash
-npm run webdriver:start
-# in another terminal
-npm run e2e:live
 ```
 
 # License
