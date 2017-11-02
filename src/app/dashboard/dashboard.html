@@ -24,9 +24,9 @@
       <td>{{ piStatus.uptime | myDuration }}</td>
       <td>{{ piStatus.freemem | myFormatFileSize }}</td>
       <td>{{ piStatus.temp }}</td>
-      <td>{{ piStatus.gps.inPolygon }}</td>
-      <td>{{ piStatus.gps.hdop }}</td>
-      <td>{{ piStatus.gps.satelites }}</td>
+      <td>{{ piStatus.gps ? piStatus.gps.inPolygon : '-' }}</td>
+      <td>{{ piStatus.gps ? piStatus.gps.hdop : '-' }}</td>
+      <td>{{ piStatus.gps ? piStatus.gps.satelites : '-' }}</td>
       <td>{{ piStatus.vpnIp }}</td>
       <td>{{ piStatus.hostname }}</td>
       <td>{{ piStatus.version }}</td>
