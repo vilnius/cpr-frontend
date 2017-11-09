@@ -15,7 +15,7 @@ addons:
 
 node_js:
   - "7"
-  - "node"
+  - "8"
 
 matrix:
   fast_finish: true
