@@ -1,24 +1,23 @@
 <table *ngIf="!error" class="table table-striped">
   <thead>
     <tr>
-      <th>UID</th>
-      <th>Live</th>
-      <th>Updated</th>
-      <th>Uptime</th>
-      <th>Free Mem</th>
-      <th>Temperature</th>
+      <th sortBy="hostname" [currentSort]="sortBy" [currentDirection]="sortDirection">Hostname</th>
+      <th sortBy="connected" [currentSort]="sortBy" [currentDirection]="sortDirection">Live</th>
+      <th sortBy="updatedAt" [currentSort]="sortBy" [currentDirection]="sortDirection">Updated</th>
+      <th sortBy="uptime" [currentSort]="sortBy" [currentDirection]="sortDirection">Uptime</th>
+      <th sortBy="freemem" [currentSort]="sortBy" [currentDirection]="sortDirection">Free Mem</th>
+      <th sortBy="temp" [currentSort]="sortBy" [currentDirection]="sortDirection">Temperature</th>
       <th>In Polygon</th>
       <th>GPS HDOP</th>
       <th>GPS Satellites</th>
-      <th>VPN IP</th>
-      <th>Hostname</th>
-      <th>Version</th>
-      <th>First Reg</th>
+      <th sortBy="vpnIp" [currentSort]="sortBy" [currentDirection]="sortDirection">VPN IP</th>
+      <th sortBy="version" [currentSort]="sortBy" [currentDirection]="sortDirection">Version</th>
+      <th sortBy="createdAt" [currentSort]="sortBy" [currentDirection]="sortDirection">First Reg</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let piStatus of piStatuses; let i = index">
-      <td>{{ piStatus.uid }}</td>
+    <tr *ngFor="let piStatus of sortedPiStatuses; let i = index">
+      <td>{{ piStatus.hostname }}</td>
       <td>{{ piStatus.connected ? 'Yes' : 'No' }}</td>
       <td>{{ piStatus.updatedAt | amTimeAgo }}</td>
       <td>{{ piStatus.uptime | myDuration }}</td>
@@ -28,7 +27,6 @@
       <td>{{ piStatus.gps ? piStatus.gps.hdop : '-' }}</td>
       <td>{{ piStatus.gps ? piStatus.gps.satelites : '-' }}</td>
       <td>{{ piStatus.vpnIp }}</td>
-      <td>{{ piStatus.hostname }}</td>
       <td>{{ piStatus.version }}</td>
       <td>{{ piStatus.createdAt | amTimeAgo }}</td>
     </tr>

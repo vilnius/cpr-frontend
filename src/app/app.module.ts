@@ -32,6 +32,7 @@ import { IsoDatePipe } from './pipes/iso-date';
 import { DurationPipe } from './pipes/duration';
 import { FormatFileSizePipe } from './pipes/format-file-size';
 import { ViolationsService } from './violations/violations.service';
+import { SortableColumnDirective } from './dashboard/dashboard';
 
 import { AboutComponent } from './about';
 import { IndexComponent } from './index/index';
@@ -109,13 +110,15 @@ type StoreType = {
     IsoDatePipe,
     DurationPipe,
     FormatFileSizePipe,
+    /* Directives */
+    SortableColumnDirective,
   ],
   imports: [ // import Angular's modules
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES, { useHash: true }),
+    RouterModule.forRoot(ROUTES, { useHash: false }),
     Ng2PaginationModule,
     LeafletModule,
     MomentModule,
