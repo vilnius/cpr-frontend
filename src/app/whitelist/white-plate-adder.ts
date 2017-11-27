@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Headers, RequestOptions } from '@angular/http';
+
+import { AuthHttp } from '../auth/http';
 import { Plate } from './plate';
 
 @Component({
@@ -39,7 +41,7 @@ export class WhitePlateAdderComponent {
   public newDescription: string;
   public newPlateNumber: string;
 
-  constructor(public http: Http) {}
+  constructor(public http: AuthHttp) {}
 
   public logError(err) {
     console.error('There was an error: ' + err);

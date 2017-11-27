@@ -1,6 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { AuthHttp } from '../auth/http';
 
 const headers = new Headers({ 'Content-Type': 'application/json' });
 const httpOptions = new RequestOptions({ headers });
@@ -13,7 +14,7 @@ export class MapDataService {
   private _dataObserver: any;
   private _data: any = {};
 
-  constructor(private http: Http, private _zone: NgZone) {
+  constructor(private http: AuthHttp, private _zone: NgZone) {
     this.data$ = new Observable((observer) => this._dataObserver = observer);
   }
 

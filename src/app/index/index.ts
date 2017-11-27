@@ -13,5 +13,4 @@ import { Component } from '@angular/core';
 })
 export class IndexComponent {
   public codeForVilniusLogo = 'assets/img/c4v-logo.jpeg';
-  public url = 'http://codeforvilnius.lt';
 }

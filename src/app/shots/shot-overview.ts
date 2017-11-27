@@ -1,8 +1,9 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Headers, RequestOptions } from '@angular/http';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import * as L from 'leaflet';
 
+import { AuthHttp } from '../auth/http';
 import { GpsComponent } from './gps';
 import { Violation } from '../violations/models';
 import { ViolationsService } from '../violations/violations.service';
@@ -41,7 +42,7 @@ export class ShotOverviewComponent implements OnInit, OnChanges {
   });
 
   constructor(
-    public http: Http,
+    public http: AuthHttp,
     private route: ActivatedRoute,
     private router: Router,
     private violationsService: ViolationsService

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { AuthHttp } from '../auth/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { GpsComponent } from './gps';
@@ -18,7 +18,7 @@ export class ShotsComponent implements OnInit {
   public pages: number[] = [ 1 ];
   public activePage: number = 1;
 
-  constructor(private http: Http, private router: Router) {
+  constructor(private http: AuthHttp, private router: Router) {
   }
 
   public ngOnInit() {

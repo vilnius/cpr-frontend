@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Http, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
+import { AuthHttp } from '../auth/http';
 import { Violation } from './models';
 
 const VIOLATIONS_API = '/api/violations';
 
 @Injectable()
 export class ViolationsService {
-  constructor(private http: Http) {
+  constructor(private http: AuthHttp) {
   }
 
   public getViolations(): Observable<Violation[]> {

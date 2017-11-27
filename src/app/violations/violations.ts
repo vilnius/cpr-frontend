@@ -6,8 +6,7 @@ import { ViolationOverviewComponent } from './violation-overview';
 @Component({
   selector: 'violations',
   styleUrls: [ 'violations.scss' ],
-  templateUrl: 'violations.html',
-  providers: [ ViolationsService ]
+  templateUrl: 'violations.html'
 })
 export class ViolationsComponent implements OnInit {
   public violations: any = [];

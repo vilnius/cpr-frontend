@@ -1,5 +1,6 @@
 import { Directive, Component, OnInit, ElementRef, Input, HostListener, Renderer2, OnChanges } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
+import { AuthHttp } from '../auth/http';
 
 type DashboardSort = 'hostname' | 'live' | 'connected' | 'updatedAt' | 'uptime' | 'freemem' | 'temp' | 'vpnIp' | 'version' | 'createdAt';
 
@@ -29,7 +30,7 @@ export class DashboardComponent implements OnInit {
   public sortBy: DashboardSort;
   public sortDirection: Number = -1;
 
-  constructor(public http: Http) { }
+  constructor(public http: AuthHttp) { }
 
   public ngOnInit() {
     this.getDashbaord();

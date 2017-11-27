@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
+
+import { AuthHttp } from '../auth/http';
 
 @Component({
   selector: 'white-plate-importer',
@@ -28,7 +30,7 @@ export class WhitePlateImporterComponent {
   public message: string;
   public error: string;
 
-  constructor(public http: Http) {
+  constructor(public http: AuthHttp) {
     this.filesToUpload = [];
   }
 

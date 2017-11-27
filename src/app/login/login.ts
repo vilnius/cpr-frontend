@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Authentication } from '../services/authentication';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'login',
@@ -12,14 +12,14 @@ export class LoginComponent {
   public error: boolean = false;
   public errorMessage: string;
 
-  constructor(public auth: Authentication, public router: Router) {
+  constructor(public auth: AuthService, public router: Router) {
     this.auth.logout();
   }
 
   public onSubmit() {
     this.auth.login(this.details.username, this.details.password)
       .subscribe(
-        (token: any) => this.router.navigate(['']),
+        () => this.router.navigate(['']),
         (error: any) => {
           console.log(error);
           this.error = true;

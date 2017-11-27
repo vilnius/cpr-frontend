@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Headers, RequestOptions } from '@angular/http';
 import { PaginationService } from 'ng2-pagination';
 
+import { AuthHttp } from '../auth/http';
 import { Plate } from './plate';
 
 @Component({
@@ -17,7 +18,7 @@ export class WhitelistComponent implements OnInit {
   public editerVisible: boolean = false;
   public editerPlate: Plate;
 
-  constructor(public http: Http) { }
+  constructor(public http: AuthHttp) { }
 
   public changeEditerCallback = (visible) => {
     this.setEditerVisibility(visible);

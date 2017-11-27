@@ -11,7 +11,7 @@
         <a class="navbar-brand" [routerLink]=" ['./'] ">{{ name }}</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
-        <ul *ngIf="auth.loggedIn" class="nav navbar-nav">
+        <ul *ngIf="auth.loggedIn()" class="nav navbar-nav">
           <li routerLinkActive="active">
             <a [routerLink]=" ['./dashboard'] ">
               <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span>
@@ -47,10 +47,10 @@
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li *ngIf="!auth.loggedIn" routerLinkActive="active">
+          <li *ngIf="!auth.loggedIn()" routerLinkActive="active">
             <a [routerLink]=" ['./login'] ">Login</a>
           </li>
-          <li *ngIf="auth.loggedIn">
+          <li *ngIf="auth.loggedIn()">
             <a href="#" (click)="logout($event)">Logout</a>
           </li>
         </ul>

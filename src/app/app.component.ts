@@ -4,7 +4,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Authentication } from './services/authentication';
+import { AuthService } from './auth/auth.service';
 import { GoogleMapsAPI } from './lanemap/google-maps-api';
 
 /*
@@ -26,7 +26,7 @@ import { GoogleMapsAPI } from './lanemap/google-maps-api';
 export class AppComponent {
   public name = 'Car Plate Reader';
 
-  constructor(public auth: Authentication, public router: Router) {
+  constructor(public auth: AuthService, public router: Router) {
   }
 
   public logout(event: any) {

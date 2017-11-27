@@ -2,14 +2,8 @@ import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-  HttpModule,
-  XHRBackend,
-  BrowserXhr,
-  ResponseOptions,
-  XSRFStrategy,
-  CookieXSRFStrategy
-} from '@angular/http';
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 
@@ -26,8 +20,8 @@ import { ROUTES } from './app.routes';
 import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
-import { Authentication } from './services/authentication';
-import { AuthenticationConnectionBackend } from './services/authentication.backend';
+import { AuthService } from './auth/auth.service';
+import { AuthHttp } from './auth/http';
 import { IsoDatePipe } from './pipes/iso-date';
 import { DurationPipe } from './pipes/duration';
 import { FormatFileSizePipe } from './pipes/format-file-size';
@@ -51,28 +45,12 @@ import {
 import { DashboardComponent } from './dashboard/dashboard';
 import { LaneMapComponent, MapComponent, MapInfoComponent } from './lanemap';
 
-export function xsrfStrategyFactory() {
-  return new CookieXSRFStrategy('XSRF-TOKEN', 'csrf-token');
-}
-
-export function authBackendFactory(browserXhr, responseOptions, xsrfStrategy, router) {
-  return new AuthenticationConnectionBackend(browserXhr, responseOptions, xsrfStrategy, router);
-}
-
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
   AppState,
-  Authentication,
-  {
-    provide: XSRFStrategy,
-    useFactory: xsrfStrategyFactory
-  },
-  {
-    provide: XHRBackend,
-    useFactory: authBackendFactory,
-    deps: [BrowserXhr, ResponseOptions, XSRFStrategy, Router]
-  },
+  AuthService,
+  AuthHttp,
   ViolationsService,
 ];
 
@@ -118,6 +96,7 @@ type StoreType = {
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    HttpClientModule,
     RouterModule.forRoot(ROUTES, { useHash: false }),
     Ng2PaginationModule,
     LeafletModule,

@@ -20,23 +20,23 @@ export class Gps {
 };
 
 export class Location {
-  public city: String = '';
-  public subdistrict: String = '';
-  public country: String = 'Lietuva';
-  public street: String = '';
-  public houseNumber: String = '';
+  public city?: String = '';
+  public subdistrict?: String = '';
+  public country?: String = 'Lietuva';
+  public street?: String = '';
+  public houseNumber?: String = '';
   public gps: Gps;
 };
 
 export class Violation {
   public _id?: String;
-  public createdAt?: Date;
-  public updatedAt?: Date;
+  public createdAt?: String;  // ISO Date
+  public updatedAt?: String;  // ISO Date
   public status?: ViolationStatusType;
-  public shotAt: Date;
+  public shotAt: String;  // ISO Date
   public plate: String;
   public images: String[];
   public location: Location = new Location();
-  public notes: String;
-  public witness: Person = new Person();
+  public notes?: String;
+  public witness?: Person = new Person();
 };

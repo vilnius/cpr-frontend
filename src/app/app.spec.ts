@@ -12,10 +12,10 @@ import { RouterTestingModule } from '@angular/router/testing';
  */
 import { AppComponent } from './app.component';
 import { AppState } from './app.service';
-import { Authentication } from './services/authentication';
+import { AuthService } from './auth/auth.service';
 
-class MockAuthentication {
-  public loggedIn: boolean = true;
+class MockAuthService {
+  public loggedIn = () => true;
 }
 
 describe(`App`, () => {
@@ -28,10 +28,13 @@ describe(`App`, () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AppComponent ],
-      schemas: [NO_ERRORS_SCHEMA],
+      schemas: [ NO_ERRORS_SCHEMA ],
       providers: [
         AppState,
-        { provide: Authentication, useValue: MockAuthentication }
+        {
+          provide: AuthService,
+          useClass: MockAuthService
+        }
       ],
       imports: [
         RouterTestingModule.withRoutes([]),
@@ -56,7 +59,7 @@ describe(`App`, () => {
     fixture.detectChanges();
   });
 
-  it(`should be readly initialized`, () => {
+  it(`should be properly initialized`, () => {
     expect(fixture).toBeDefined();
     expect(comp).toBeDefined();
   });
