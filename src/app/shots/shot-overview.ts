@@ -113,17 +113,20 @@ export class ShotOverviewComponent implements OnInit, OnChanges {
   }
 
   public deleteShot() {
-    this.shotDeleted.emit(this.shot._id);
+    this.shotDeleted.emit({ ids: [this.shot._id] });
   }
 
   public addToWhitelist(plate: string) {
     this.http.post('/api/whitelist', {
-        description: 'Added from shot overview',
-        plate
-      }).subscribe(
-        () => alert('Plate added to whitelist'),
-        (responseErr) => this.logError(responseErr)
-      );
+      description: 'Added from shot overview',
+      plate
+    }).subscribe(
+      () => {
+        this.shotDeleted.emit({ plate });
+        alert('Plate added to whitelist');
+      },
+      (responseErr) => this.logError(responseErr)
+    );
   }
 
   public createViolation() {

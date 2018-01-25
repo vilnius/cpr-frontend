@@ -29,8 +29,8 @@ export class ShotsComponent implements OnInit {
     return confirm(message);
   }
 
-  public handleDelete(shotId: string) {
-    this.http.delete('/api/shots/', { body: { ids: [shotId] } })
+  public handleDelete(query: any) {
+    this.http.delete('/api/shots/', { body: query })
       .map((res) => res.json())
       .flatMap(() => this.getShots())
       .subscribe(
