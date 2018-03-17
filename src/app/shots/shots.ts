@@ -1,10 +1,14 @@
+import * as _ from 'lodash';
+
 import { Component, OnInit } from '@angular/core';
 import { AuthHttp } from '../auth/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+
 import { GpsComponent } from './gps';
 import { ShotOverviewComponent } from './shot-overview';
-import * as _ from 'lodash';
+import { Violation } from '../violations/models';
+import { ViolationsService } from '../violations/violations.service';
 
 @Component({
   selector: 'shots',
@@ -18,7 +22,11 @@ export class ShotsComponent implements OnInit {
   public pages: number[] = [ 1 ];
   public activePage: number = 1;
 
-  constructor(private http: AuthHttp, private router: Router) {
+  constructor(
+    private http: AuthHttp,
+    private router: Router,
+    private violationsService: ViolationsService,
+  ) {
   }
 
   public ngOnInit() {
@@ -41,12 +49,12 @@ export class ShotsComponent implements OnInit {
       );
   }
 
-  public deleteBulk() {
-    if (!this.requestConfirm('Are you sure you want to delete?')) {
+  public deleteBulk({ showConfirmation = true, deleteImages = true }) {
+    if (showConfirmation && !this.requestConfirm('Are you sure you want to delete?')) {
       return;
     }
 
-    this.http.delete('/api/shots', { body: { ids: this.checkedForBulkAction } })
+    this.http.delete('/api/shots', { body: { ids: this.checkedForBulkAction, deleteImages } })
       .catch((err) => {
         alert('Delete failed: ' + err);
         return Observable.throw(err);
@@ -60,6 +68,25 @@ export class ShotsComponent implements OnInit {
         },
         (err) => this.logError(err)
       );
+  }
+
+  public createViolationBulk() {
+    if (!this.requestConfirm('Are you sure you want create violation?')) {
+      return;
+    }
+    const shots = this.shots.filter((shot) => _.includes(this.checkedForBulkAction, shot._id));
+    const shot = shots[0];
+
+    const newViolation = new Violation();
+    newViolation.plate = shot.plate;
+    newViolation.shotAt = shot.createdAt;
+    newViolation.images = _.map(shots, (shot: any) => shot.image);
+    newViolation.location.gps = shot.gps;
+
+    this.violationsService.saveViolation(newViolation).subscribe(
+      (responseOk) => this.deleteBulk({ showConfirmation: false, deleteImages: false }),
+      (responseErr) => this.logError(responseErr)
+    );
   }
 
   public isCheckedForBulkAction(id: string): boolean {

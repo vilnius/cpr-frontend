@@ -1,6 +1,6 @@
 <div *ngIf="violation" class="violation-overview">
 <h4>{{ violation.plate }}</h4>
-<div *ngFor="let image of violation.images">
+<div *ngFor="let image of violation.images" class="violation-thumbnail">
   <a href="/api/images/{{image}}" target="_blank">
     <img src="/api/images/{{image}}" class="thumbnail"/>
   </a>

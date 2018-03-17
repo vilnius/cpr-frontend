@@ -16,6 +16,14 @@
       Delete selected
       <span class="badge">{{ checkedForBulkAction.length }}</span>
     </button>
+    <button
+      *ngIf="checkedForBulkAction.length"
+      (click)="createViolationBulk()"
+      class="btn btn-primary"
+    >
+      Create violation
+      <span class="badge">{{ checkedForBulkAction.length }}</span>
+  </button>
   </div>
 </div>
 <div class="shot-list">

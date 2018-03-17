@@ -130,7 +130,7 @@ export class ShotOverviewComponent implements OnInit, OnChanges {
   }
 
   public createViolation() {
-    const  newViolation = new Violation();
+    const newViolation = new Violation();
     newViolation.plate = this.shot.plate;
     newViolation.shotAt = this.shot.createdAt;
     newViolation.images = [this.shot.image];
