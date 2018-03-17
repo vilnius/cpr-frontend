@@ -6,7 +6,11 @@
         [ngClass]="{ 'active-violation': activeViolation === violation }">
         <!-- Checkbox to select for bulk action -->
         <td>{{ violation.createdAt | myIsoDate }}</td>
-        <td>{{ violation.status }}</td>
+        <td [ngSwitch]="violation.status">
+          <span *ngSwitchCase="ViolationStatus.NEW" class="label label-success">NEW</span>
+          <span *ngSwitchCase="ViolationStatus.SENT" class="label label-primary">SENT</span>
+          <span *ngSwitchCase="ViolationStatus.CLOSED" class="label label-default">CLOSED</span>
+        </td>
         <td>{{ violation.plate }}</td>
       </tr>
     </tbody>

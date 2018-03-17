@@ -16,6 +16,7 @@ export class ViolationOverviewComponent implements OnInit, OnChanges {
   @Output() public violationChanged = new EventEmitter<any>();
   public violationForm: FormGroup;
   public statuses = Object.keys(ViolationStatus);
+  public ViolationStatus = ViolationStatus;
 
   constructor(
     private violationsService: ViolationsService,
@@ -75,6 +76,19 @@ export class ViolationOverviewComponent implements OnInit, OnChanges {
 
   public saveViolation() {
     this.violationsService.saveViolation(this.prepareSaveViolation()).subscribe(
+      (responseOk) => {
+        this.violationChanged.emit(responseOk);
+      },
+      (err) => this.logError(err)
+    );
+  }
+
+  public sumbitPoliceReport() {
+    if (!confirm('Are you sure you want to submit police report?')) {
+      return;
+    }
+
+    this.violationsService.sendViolationToPolice(this.violation).subscribe(
       (responseOk) => {
         this.violationChanged.emit(responseOk);
       },

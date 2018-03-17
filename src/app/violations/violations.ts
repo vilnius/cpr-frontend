@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 // import { PaginationComponent } from '../components/pagination';
 import { ViolationsService } from './violations.service';
 import { ViolationOverviewComponent } from './violation-overview';
+import { ViolationStatus } from './models';
 
 @Component({
   selector: 'violations',
@@ -12,6 +13,7 @@ export class ViolationsComponent implements OnInit {
   public violations: any = [];
   public activeViolation: any = null;
   public errorMessage;
+  public ViolationStatus = ViolationStatus;
 
   constructor(private violationsService: ViolationsService) {}
 
