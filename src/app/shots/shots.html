@@ -10,7 +10,7 @@
     </button>
     <button
       *ngIf="checkedForBulkAction.length"
-      (click)="deleteBulk()"
+      (click)="deleteBulk({ showConfirmation: true })"
       class="btn btn-danger"
     >
       Delete selected
